@@ -81,7 +81,7 @@
         .navbar {
             background: rgba(0, 0, 0, 0.9);
             backdrop-filter: blur(20px);
-            padding: 20px 40px;
+            padding: 15px 20px;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -94,10 +94,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 800;
             background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
             -webkit-background-clip: text;
@@ -105,18 +106,19 @@
             background-clip: text;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
+            z-index: 1001;
         }
 
         .logo-icon {
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1rem;
             animation: logoFloat 6s ease-in-out infinite;
             box-shadow: 0 0 30px rgba(255, 0, 110, 0.4);
         }
@@ -125,10 +127,72 @@
             0%, 100% { transform: translateY(0px) rotate(0deg); box-shadow: 0 0 30px rgba(255, 0, 110, 0.4); }
             50% { transform: translateY(-5px) rotate(5deg); box-shadow: 0 0 50px rgba(131, 56, 236, 0.6); }
         }
-        
+
+        /* Hamburger Menu */
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 1001;
+            padding: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            margin: 3px 0;
+            transition: 0.3s;
+            border-radius: 2px;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(-45deg) translate(-5px, 6px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(45deg) translate(-5px, -6px);
+        }
+
+        /* Desktop Navigation */
         .nav-buttons {
             display: flex;
             gap: 20px;
+        }
+
+        /* Mobile Navigation */
+        .mobile-nav {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            padding: 80px 30px 30px;
+            transition: right 0.3s ease;
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .mobile-nav.active {
+            right: 0;
+        }
+
+        .mobile-nav .btn {
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+            padding: 18px 24px;
+            font-size: 1.1rem;
         }
         
         .btn {
@@ -190,7 +254,7 @@
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
             color: white;
-            padding: 100px 40px;
+            padding: 80px 30px;
             text-align: center;
             position: relative;
             z-index: 10;
@@ -209,7 +273,7 @@
         }
         
         .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-size: clamp(2rem, 5vw, 4rem);
             font-weight: 900;
             margin-bottom: 2rem;
             background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
@@ -234,7 +298,7 @@
         }
         
         .hero p {
-            font-size: 1.3rem;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
             opacity: 0.9;
             max-width: 600px;
             margin: 0 auto 3rem;
@@ -290,9 +354,13 @@
             backdrop-filter: blur(15px);
             animation: ctaReveal 2s ease-out 1s both;
         }
+
+        .auth-required .btn {
+            margin: 8px;
+        }
         
         .pricing-section {
-            padding: 120px 40px;
+            padding: 80px 20px;
             max-width: 1400px;
             margin: 0 auto;
             position: relative;
@@ -301,12 +369,12 @@
         
         .section-header {
             text-align: center;
-            margin-bottom: 80px;
+            margin-bottom: 60px;
             color: white;
         }
         
         .section-header h2 {
-            font-size: 3.5rem;
+            font-size: clamp(2rem, 4vw, 3.5rem);
             font-weight: 800;
             margin-bottom: 20px;
             background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
@@ -316,7 +384,7 @@
         }
 
         .section-header p {
-            font-size: 1.3rem;
+            font-size: clamp(1rem, 2vw, 1.3rem);
             color: rgba(255, 255, 255, 0.8);
             max-width: 600px;
             margin: 0 auto;
@@ -324,8 +392,8 @@
         
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
             margin-top: 60px;
         }
         
@@ -333,7 +401,7 @@
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
             border-radius: 30px;
-            padding: 50px 40px;
+            padding: 40px 30px;
             text-align: center;
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
             position: relative;
@@ -368,7 +436,6 @@
         
         .pricing-card.popular {
             border-color: rgba(255, 0, 110, 0.5);
-            transform: scale(1.05);
             background: rgba(255, 0, 110, 0.1);
         }
         
@@ -380,9 +447,9 @@
             transform: translateX(-50%);
             background: linear-gradient(135deg, #ff006e, #8338ec);
             color: white;
-            padding: 8px 24px;
+            padding: 8px 20px;
             border-radius: 50px;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -390,7 +457,7 @@
         }
 
         .pricing-card.popular:hover {
-            transform: translateY(-10px) scale(1.05);
+            transform: translateY(-10px);
         }
 
         .pricing-card-content {
@@ -399,14 +466,14 @@
         }
         
         .plan-name {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: 700;
             color: white;
             margin-bottom: 15px;
         }
         
         .plan-price {
-            font-size: 3.5rem;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
             font-weight: 900;
             background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
             -webkit-background-clip: text;
@@ -418,50 +485,50 @@
         .plan-period {
             color: rgba(255, 255, 255, 0.7);
             margin-bottom: 15px;
-            font-size: 1.1rem;
+            font-size: 1rem;
         }
         
         .plan-videos {
             background: linear-gradient(135deg, #ff006e, #8338ec);
             color: white;
-            padding: 12px 25px;
+            padding: 10px 20px;
             border-radius: 30px;
             font-weight: 700;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             display: inline-block;
-            font-size: 1.1rem;
+            font-size: 1rem;
             box-shadow: 0 10px 30px rgba(255, 0, 110, 0.3);
         }
         
         .plan-features {
             list-style: none;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             text-align: left;
         }
         
         .plan-features li {
-            padding: 12px 0;
+            padding: 10px 0;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             color: rgba(255, 255, 255, 0.9);
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
         
         .plan-features li::before {
             content: '✨';
             flex-shrink: 0;
-            font-size: 1.2rem;
+            font-size: 1rem;
         }
         
         .plan-cta {
             width: 100%;
-            padding: 18px;
+            padding: 16px;
             background: linear-gradient(135deg, #ff006e, #8338ec);
             color: white;
             border: none;
             border-radius: 15px;
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.4s ease;
@@ -502,7 +569,7 @@
         
         .debug-section {
             margin: 60px auto;
-            padding: 40px;
+            padding: 30px;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
             border-radius: 30px;
@@ -515,7 +582,7 @@
         .debug-section h3 {
             color: #ff006e;
             margin-bottom: 20px;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
         }
 
         .debug-section p {
@@ -524,14 +591,14 @@
         }
         
         .debug-button {
-            margin: 8px;
-            padding: 12px 20px;
+            margin: 6px;
+            padding: 10px 16px;
             background: rgba(255, 255, 255, 0.1);
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 25px;
+            border-radius: 20px;
             cursor: pointer;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             transition: all 0.3s ease;
             backdrop-filter: blur(10px);
         }
@@ -543,15 +610,15 @@
         }
         
         #debugInfo {
-            margin-top: 25px;
-            padding: 20px;
+            margin-top: 20px;
+            padding: 15px;
             background: rgba(0, 0, 0, 0.3);
-            border-radius: 15px;
+            border-radius: 12px;
             font-family: 'Courier New', monospace;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             text-align: left;
             white-space: pre-wrap;
-            max-height: 400px;
+            max-height: 300px;
             overflow-y: auto;
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: rgba(255, 255, 255, 0.9);
@@ -580,54 +647,111 @@
             color: #ff6b6b;
         }
 
-        /* Responsive Design */
+        /* Mobile Responsive Design */
         @media (max-width: 768px) {
-            .navbar {
-                padding: 15px 20px;
+            .hamburger {
+                display: flex;
+            }
+
+            .nav-buttons {
+                display: none;
+            }
+
+            .logo {
+                font-size: 1.3rem;
+            }
+
+            .logo-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 0.9rem;
             }
 
             .hero {
-                padding: 80px 20px;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
+                padding: 60px 20px;
             }
 
             .pricing-section {
-                padding: 80px 20px;
+                padding: 60px 15px;
             }
 
             .pricing-grid {
                 grid-template-columns: 1fr;
-                gap: 30px;
+                gap: 25px;
+                margin-top: 40px;
             }
             
+            .pricing-card {
+                padding: 30px 25px;
+            }
+
             .pricing-card.popular {
                 transform: none;
+                margin-top: 20px;
             }
             
             .pricing-card.popular:hover {
                 transform: translateY(-10px);
             }
 
-            .debug-section {
-                margin: 40px 20px;
-                padding: 30px 20px;
+            .pricing-card.popular::after {
+                font-size: 0.6rem;
+                padding: 6px 16px;
             }
 
-            .section-header h2 {
-                font-size: 2.5rem;
+            .plan-features li {
+                font-size: 0.85rem;
+                padding: 8px 0;
+            }
+
+            .plan-cta {
+                padding: 14px;
+                font-size: 13px;
+            }
+
+            .debug-section {
+                margin: 40px 15px;
+                padding: 25px 20px;
+            }
+
+            .debug-button {
+                font-size: 0.75rem;
+                padding: 8px 12px;
+                margin: 4px;
+            }
+
+            .auth-required {
+                margin: 20px 15px;
+                padding: 18px;
+            }
+
+            .auth-required .btn {
+                display: block;
+                width: 100%;
+                margin: 10px 0;
             }
         }
 
         @media (max-width: 480px) {
-            .pricing-card {
-                padding: 40px 30px;
+            .hero {
+                padding: 50px 15px;
             }
 
-            .plan-price {
-                font-size: 3rem;
+            .pricing-card {
+                padding: 25px 20px;
+            }
+
+            .plan-features li {
+                font-size: 0.8rem;
+            }
+
+            .debug-section {
+                padding: 20px 15px;
+            }
+
+            #debugInfo {
+                font-size: 0.65rem;
+                max-height: 250px;
             }
         }
     </style>
@@ -643,10 +767,25 @@
                 <div class="logo-icon">🎬</div>
                 MagicCutAI
             </div>
+
+            <!-- Desktop Navigation -->
             <div class="nav-buttons">
                 <a href="index.html" class="btn btn-secondary">Home</a>
                 <a href="#" class="btn btn-primary" onclick="checkAppAccess()">Dashboard</a>
             </div>
+
+            <!-- Hamburger Menu -->
+            <div class="hamburger" onclick="toggleMobileMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <div class="mobile-nav" id="mobileNav">
+            <a href="index.html" class="btn btn-secondary">🏠 Home</a>
+            <a href="#" class="btn btn-primary" onclick="checkAppAccess()">📊 Dashboard</a>
         </div>
     </nav>
 
@@ -663,8 +802,8 @@
         <div id="authRequired" class="auth-required" style="display: none;">
             <p><strong>Please log in to choose a subscription plan.</strong></p>
             <div style="margin-top: 20px;">
-                <a href="login.html" class="btn btn-primary" style="margin: 8px;">Login</a>
-                <a href="register.html" class="btn btn-secondary" style="margin: 8px;">Register</a>
+                <a href="login.html" class="btn btn-primary">Login</a>
+                <a href="register.html" class="btn btn-secondary">Register</a>
             </div>
         </div>
     </section>
@@ -716,7 +855,7 @@
                         <li>Advanced character analysis</li>
                         <li>Premium templates</li>
                         <li>4K quality available</li>
-                        <li>Priority support</l>
+                        <li>Priority support</li>
                         <li>Analytics dashboard</li>
                         <li>Cancel anytime</li>
                     </ul>
@@ -742,8 +881,6 @@
                         <li>Dedicated account manager</li>
                         <li>Team collaboration tools</li>
                         <li>Priority processing queue</li>
-                      
-
                     </ul>
                     <button class="plan-cta" onclick="subscribeToPlan('business', 270, 30)" data-plan="business">
                         Start Business Plan
@@ -774,7 +911,7 @@
         // Create floating particles
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
-            const particleCount = 40;
+            const particleCount = window.innerWidth < 768 ? 25 : 40;
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
@@ -784,6 +921,28 @@
                 particle.style.animationDuration = (Math.random() * 6 + 8) + 's';
                 particlesContainer.appendChild(particle);
             }
+        }
+
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const mobileNav = document.getElementById('mobileNav');
+            
+            hamburger.classList.toggle('active');
+            mobileNav.classList.toggle('active');
+            
+            // Prevent body scroll when menu is open
+            document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+        }
+
+        // Close mobile menu when clicking on a link
+        function closeMobileMenu() {
+            const hamburger = document.querySelector('.hamburger');
+            const mobileNav = document.getElementById('mobileNav');
+            
+            hamburger.classList.remove('active');
+            mobileNav.classList.remove('active');
+            document.body.style.overflow = '';
         }
 
         // Initialize particles
@@ -1218,9 +1377,25 @@
         
         function updateDebugInfo(text) {
             const debugDiv = document.getElementById('debugInfo');
-            debugDiv.textContent = text;
+            if (debugDiv) {
+                debugDiv.textContent = text;
+            }
             console.log('🔧 Debug:', text);
         }
+
+        // Close mobile menu when clicking nav links
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('btn') && window.innerWidth <= 768) {
+                closeMobileMenu();
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 768) {
+                closeMobileMenu();
+            }
+        });
 
         // Make functions globally available
         window.subscribeToPlan = subscribeToPlan;
@@ -1229,6 +1404,7 @@
         window.forceUpdatePlan = forceUpdatePlan;
         window.cancelCurrentSubscription = cancelCurrentSubscription;
         window.checkAppAccess = checkAppAccess;
+        window.toggleMobileMenu = toggleMobileMenu;
     </script>
 </body>
 </html>

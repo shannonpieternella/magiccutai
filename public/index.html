@@ -20,23 +20,22 @@
             background: #000;
         }
         
-        /* Enhanced Navbar */
+        /* Enhanced Mobile-First Navbar */
         .navbar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(20px);
-            padding: 20px 40px;
+            padding: 15px 20px;
             z-index: 10000;
             transition: all 0.4s ease;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .navbar.scrolled {
-            background: rgba(0, 0, 0, 0.95);
-            padding: 15px 40px;
+            background: rgba(0, 0, 0, 0.98);
             box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
         }
         
@@ -46,10 +45,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
         
         .logo {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 800;
             background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
             -webkit-background-clip: text;
@@ -57,33 +57,106 @@
             background-clip: text;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             position: relative;
+            z-index: 10001;
         }
         
         .logo-icon {
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1rem;
             animation: logoFloat 6s ease-in-out infinite;
             box-shadow: 0 0 30px rgba(255, 0, 110, 0.4);
         }
         
         @keyframes logoFloat {
             0%, 100% { transform: translateY(0px) rotate(0deg); box-shadow: 0 0 30px rgba(255, 0, 110, 0.4); }
-            50% { transform: translateY(-5px) rotate(5deg); box-shadow: 0 0 50px rgba(131, 56, 236, 0.6); }
+            50% { transform: translateY(-3px) rotate(5deg); box-shadow: 0 0 50px rgba(131, 56, 236, 0.6); }
         }
         
+        /* Hamburger Menu Button */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 10001;
+            background: none;
+            border: none;
+            padding: 5px;
+        }
+        
+        .hamburger-line {
+            width: 25px;
+            height: 3px;
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            margin: 3px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        
+        .mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+        
+        /* Desktop Navigation */
         .nav-buttons {
             display: flex;
             gap: 20px;
             align-items: center;
         }
+        
+        /* Mobile Navigation Menu */
+        .mobile-nav-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10000;
+            padding: 80px 40px 40px;
+        }
+        
+        .mobile-nav-menu.active {
+            right: 0;
+        }
+        
+        .mobile-nav-item {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.4s ease;
+        }
+        
+        .mobile-nav-menu.active .mobile-nav-item {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .mobile-nav-menu.active .mobile-nav-item:nth-child(1) { transition-delay: 0.1s; }
+        .mobile-nav-menu.active .mobile-nav-item:nth-child(2) { transition-delay: 0.2s; }
+        .mobile-nav-menu.active .mobile-nav-item:nth-child(3) { transition-delay: 0.3s; }
+        .mobile-nav-menu.active .mobile-nav-item:nth-child(4) { transition-delay: 0.4s; }
         
         .btn {
             padding: 12px 24px;
@@ -99,6 +172,7 @@
             letter-spacing: 1px;
             position: relative;
             overflow: hidden;
+            text-align: center;
         }
         
         .btn-small {
@@ -143,6 +217,24 @@
             background: rgba(255, 255, 255, 0.2);
             transform: translateY(-3px);
             border-color: rgba(255, 255, 255, 0.4);
+        }
+        
+        /* Mobile Navigation Buttons */
+        .mobile-nav-item .btn {
+            width: 250px;
+            padding: 18px 30px;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+        
+        .mobile-nav-item .btn-primary {
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            box-shadow: 0 15px 35px rgba(255, 0, 110, 0.4);
+        }
+        
+        .mobile-nav-item .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
         }
         
         /* Cinematic Hero Section */
@@ -215,15 +307,15 @@
             z-index: 5;
             max-width: 1000px;
             margin: 0 auto;
-            padding: 150px 40px 40px;
+            padding: 120px 20px 40px;
             text-align: center;
             color: white;
         }
         
         .hero h1 {
-            font-size: clamp(3rem, 6vw, 5rem);
+            font-size: clamp(2rem, 8vw, 4rem);
             font-weight: 900;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -247,8 +339,8 @@
         }
         
         .hero p {
-            font-size: clamp(1.2rem, 2.5vw, 1.6rem);
-            margin-bottom: 3rem;
+            font-size: clamp(1rem, 3vw, 1.3rem);
+            margin-bottom: 2.5rem;
             opacity: 0.9;
             max-width: 700px;
             margin-left: auto;
@@ -272,10 +364,10 @@
         
         .cta-buttons {
             display: flex;
-            gap: 25px;
+            gap: 20px;
             justify-content: center;
             flex-wrap: wrap;
-            margin-bottom: 4rem;
+            margin-bottom: 3rem;
             animation: ctaReveal 2s ease-out 1s both;
         }
         
@@ -291,8 +383,8 @@
         }
         
         .btn-hero {
-            padding: 18px 40px;
-            font-size: 16px;
+            padding: 16px 32px;
+            font-size: 15px;
             border-radius: 50px;
             font-weight: 700;
             position: relative;
@@ -324,7 +416,7 @@
         .trust-indicators {
             display: flex;
             justify-content: center;
-            gap: 40px;
+            gap: 30px;
             flex-wrap: wrap;
             animation: trustReveal 2s ease-out 1.5s both;
         }
@@ -343,11 +435,11 @@
         .trust-item {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-size: 0.95rem;
+            gap: 10px;
+            font-size: 0.9rem;
             opacity: 0.8;
             transition: all 0.3s ease;
-            padding: 12px 20px;
+            padding: 10px 16px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 50px;
             backdrop-filter: blur(10px);
@@ -362,844 +454,116 @@
         }
         
         .trust-item span:first-child {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
         }
 
-        /* Social Proof Section */
-        .social-proof {
-            padding: 60px 40px;
-            background: linear-gradient(135deg, rgba(255, 0, 110, 0.05), rgba(131, 56, 236, 0.05));
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-        }
-
-        .social-proof-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .user-count {
-            font-size: 3rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
-        }
-
-        .user-count-text {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 1.1rem;
-            margin-bottom: 40px;
-        }
-
-        .company-logos {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 60px;
-            flex-wrap: wrap;
-            opacity: 0.6;
-        }
-
-        .company-logo {
-            padding: 15px 25px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 15px;
-            color: rgba(255, 255, 255, 0.7);
-            font-weight: 600;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .company-logo:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.9);
-            transform: translateY(-3px);
-        }
-
-        /* Services Grid Section */
-        .services-section {
-            padding: 120px 40px;
-            background: linear-gradient(180deg, #000 0%, #0a0a0a 50%, #000 100%);
-        }
-
-        .services-header {
-            text-align: center;
-            margin-bottom: 80px;
-            color: white;
-        }
-
-        .services-title {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .services-subtitle {
-            font-size: 1.3rem;
-            color: rgba(255, 255, 255, 0.8);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .services-grid {
-            max-width: 1400px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-            gap: 40px;
-        }
-
-        .service-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border-radius: 30px;
-            padding: 40px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(135deg, rgba(255, 0, 110, 0.1), rgba(131, 56, 236, 0.1));
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            z-index: 1;
-        }
-
-        .service-card:hover::before {
-            opacity: 1;
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(255, 0, 110, 0.3);
-            box-shadow: 0 30px 80px rgba(255, 0, 110, 0.2);
-        }
-
-        .service-card-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .service-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #ff006e, #8338ec);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            margin-bottom: 30px;
-            box-shadow: 0 20px 40px rgba(255, 0, 110, 0.3);
-        }
-
-        .service-title {
-            font-size: 2rem;
-            font-weight: 700;
-            color: white;
-            margin-bottom: 20px;
-        }
-
-        .service-description {
-            font-size: 1.1rem;
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-
-        .service-features {
-            list-style: none;
-            margin-bottom: 30px;
-        }
-
-        .service-features li {
-            color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 10px;
-            padding-left: 25px;
-            position: relative;
-        }
-
-        .service-features li::before {
-            content: '✨';
-            position: absolute;
-            left: 0;
-            top: 0;
-        }
-
-        .service-cta {
-            text-decoration: none;
-            color: #ff006e;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .service-cta:hover {
-            color: #8338ec;
-            transform: translateX(5px);
-        }
-        
-        /* Video Showcase Section */
-        .video-showcase {
-            padding: 120px 40px;
-            background: linear-gradient(180deg, #000 0%, #0a0a0a 50%, #000 100%);
-            position: relative;
-        }
-        
-        .showcase-header {
-            text-align: center;
-            margin-bottom: 80px;
-            color: white;
-        }
-        
-        .showcase-title {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            animation: fadeInUp 1s ease-out;
-        }
-        
-        .showcase-subtitle {
-            font-size: 1.3rem;
-            color: rgba(255, 255, 255, 0.8);
-            max-width: 600px;
-            margin: 0 auto;
-            animation: fadeInUp 1s ease-out 0.3s both;
-        }
-        
-        /* Enhanced Video Slider */
-        .video-slider-container {
-            position: relative;
-            max-width: 1400px;
-            margin: 0 auto;
-            border-radius: 30px;
-            overflow: hidden;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
-        }
-        
-        .video-slider {
-            display: flex;
-            transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            height: 70vh;
-            min-height: 500px;
-        }
-        
-        .video-slide {
-            min-width: 100%;
-            height: 100%;
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-        
-        .slide-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 1;
-            display: none;
-            cursor: pointer;
-        }
-        
-        .video-play-button {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 80px;
-            height: 80px;
-            background: rgba(255, 0, 110, 0.9);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            z-index: 5;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            animation: playButtonPulse 2s ease-in-out infinite;
-        }
-        
-        @keyframes playButtonPulse {
-            0%, 100% { 
-                transform: translate(-50%, -50%) scale(1);
-                box-shadow: 0 0 0 0 rgba(255, 0, 110, 0.7);
+        /* Responsive Design for Mobile */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 12px 20px;
             }
-            50% { 
-                transform: translate(-50%, -50%) scale(1.05);
-                box-shadow: 0 0 0 10px rgba(255, 0, 110, 0);
+            
+            .mobile-menu-toggle {
+                display: flex;
+            }
+            
+            .nav-buttons {
+                display: none;
+            }
+            
+            .hero-content {
+                padding: 100px 20px 40px;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+                margin-bottom: 1rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+                margin-bottom: 2rem;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .btn-hero {
+                width: 100%;
+                max-width: 280px;
+                padding: 18px 30px;
+                font-size: 16px;
+            }
+            
+            .trust-indicators {
+                flex-direction: column;
+                gap: 15px;
+                align-items: center;
+            }
+            
+            .trust-item {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+            }
+            
+            .logo {
+                font-size: 1.3rem;
+            }
+            
+            .logo-icon {
+                width: 30px;
+                height: 30px;
+                font-size: 0.9rem;
             }
         }
         
-        .slide-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.8), rgba(0,0,0,0.9));
-            padding: 50px;
-            color: white;
-            z-index: 3;
-            display: none;
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .btn-hero {
+                padding: 16px 24px;
+                font-size: 15px;
+            }
+            
+            .mobile-nav-item .btn {
+                width: 220px;
+                padding: 16px 25px;
+                font-size: 15px;
+            }
+            
+            .trust-item {
+                padding: 10px 16px;
+                font-size: 0.85rem;
+            }
         }
         
-        .slide-title {
-            font-size: 2.8rem;
-            font-weight: 800;
-            margin-bottom: 15px;
-            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            line-height: 1.2;
-        }
-        
-        .slide-description {
-            font-size: 1.3rem;
-            color: rgba(255, 255, 255, 0.9);
-            max-width: 600px;
-            line-height: 1.5;
-        }
-        
-        .slide-placeholder {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, rgba(255, 0, 110, 0.2), rgba(131, 56, 236, 0.2));
-            color: white;
-            text-align: center;
-            padding: 40px;
-            z-index: 2;
-        }
-        
-        .placeholder-icon {
-            width: 120px;
-            height: 120px;
-            background: linear-gradient(135deg, #ff006e, #8338ec);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            margin-bottom: 30px;
-            animation: iconPulse 3s ease-in-out infinite;
-            box-shadow: 0 20px 60px rgba(255, 0, 110, 0.4);
-        }
-        
-        @keyframes iconPulse {
-            0%, 100% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.1) rotate(5deg); }
-        }
-        
-        .placeholder-title {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        
-        .placeholder-description {
-            font-size: 1.2rem;
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.6;
-            max-width: 500px;
-        }
-        
-        /* Slider Controls */
-        .slider-controls {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 15px;
-            z-index: 10;
-        }
-        
-        .slider-dot {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.3);
-            cursor: pointer;
-            transition: all 0.4s ease;
-            border: 2px solid transparent;
-            position: relative;
-        }
-        
-        .slider-dot.active {
-            background: linear-gradient(135deg, #ff006e, #8338ec);
-            transform: scale(1.3);
-            box-shadow: 0 0 20px rgba(255, 0, 110, 0.6);
-        }
-        
-        .slider-arrows {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 50%;
-            width: 70px;
-            height: 70px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.4s ease;
-            font-size: 1.8rem;
-            color: white;
-            z-index: 10;
-        }
-        
-        .slider-arrows:hover {
-            background: rgba(255, 0, 110, 0.3);
-            border-color: rgba(255, 0, 110, 0.5);
-            transform: translateY(-50%) scale(1.1);
-            box-shadow: 0 10px 30px rgba(255, 0, 110, 0.3);
-        }
-        
-        .arrow-prev {
-            left: 30px;
-        }
-        
-        .arrow-next {
-            right: 30px;
-        }
-
-        /* How It Works Section */
-        .how-it-works {
-            padding: 120px 40px;
-            background: linear-gradient(135deg, #0a0a0a 0%, #1a0b2e 50%, #0a0a0a 100%);
-        }
-
-        .how-it-works-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .section-title {
-            font-size: 3.5rem;
-            font-weight: 800;
-            margin-bottom: 20px;
-            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .section-subtitle {
-            font-size: 1.3rem;
-            color: rgba(255, 255, 255, 0.8);
-            max-width: 600px;
-            margin: 0 auto 80px;
-        }
-
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 50px;
-            margin-bottom: 60px;
-        }
-
-        .step-card {
-            text-align: center;
-            color: white;
-        }
-
-        .step-number {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #ff006e, #8338ec);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            font-weight: 800;
-            margin: 0 auto 30px;
-            box-shadow: 0 20px 40px rgba(255, 0, 110, 0.3);
-        }
-
-        .step-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-
-        .step-description {
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.6;
-        }
-
-        /* Pricing Section */
-        .pricing-section {
-            padding: 120px 40px;
-            background: linear-gradient(180deg, #000 0%, #0a0a0a 50%, #000 100%);
-        }
-
-        .pricing-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 40px;
-            margin-top: 80px;
-        }
-
-        .pricing-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border-radius: 30px;
-            padding: 40px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s ease;
-            position: relative;
-            color: white;
-        }
-
-        .pricing-card.featured {
-            border-color: rgba(255, 0, 110, 0.5);
-            transform: scale(1.05);
-            background: rgba(255, 0, 110, 0.1);
-        }
-
-        .pricing-card.featured::before {
-            content: 'MOST POPULAR';
-            position: absolute;
-            top: -15px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: linear-gradient(135deg, #ff006e, #8338ec);
-            color: white;
-            padding: 8px 24px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        .pricing-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(255, 0, 110, 0.3);
-            box-shadow: 0 30px 80px rgba(255, 0, 110, 0.2);
-        }
-
-        .pricing-card.featured:hover {
-            transform: translateY(-10px) scale(1.05);
-        }
-
-        .plan-name {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
-
-        .plan-price {
-            font-size: 3rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
-        }
-
-        .plan-billing {
-            color: rgba(255, 255, 255, 0.6);
-            margin-bottom: 30px;
-        }
-
-        .plan-features {
-            list-style: none;
-            margin-bottom: 40px;
-            text-align: left;
-        }
-
-        .plan-features li {
-            color: rgba(255, 255, 255, 0.8);
-            margin-bottom: 15px;
-            padding-left: 25px;
-            position: relative;
-        }
-
-        .plan-features li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            top: 0;
-            color: #ff006e;
-            font-weight: bold;
-        }
-
-        /* Testimonials Section */
-        .testimonials {
-            padding: 120px 40px;
-            background: linear-gradient(135deg, rgba(255, 0, 110, 0.05), rgba(131, 56, 236, 0.05));
-        }
-
-        .testimonials-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-            margin-top: 80px;
-        }
-
-        .testimonial-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border-radius: 30px;
-            padding: 40px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.4s ease;
-            color: white;
-        }
-
-        .testimonial-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(255, 0, 110, 0.3);
-            box-shadow: 0 30px 80px rgba(255, 0, 110, 0.2);
-        }
-
-        .testimonial-text {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            margin-bottom: 30px;
-            color: rgba(255, 255, 255, 0.9);
-            font-style: italic;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .testimonial-avatar {
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #ff006e, #8338ec);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-        }
-
-        .author-info h4 {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-
-        .author-info p {
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
-        }
-
-        /* FAQ Section */
-        .faq-section {
-            padding: 120px 40px;
-            background: linear-gradient(180deg, #000 0%, #0a0a0a 50%, #000 100%);
-        }
-
-        .faq-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .faq-grid {
-            margin-top: 60px;
-        }
-
-        .faq-item {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border-radius: 20px;
-            margin-bottom: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .faq-item:hover {
-            border-color: rgba(255, 0, 110, 0.3);
-        }
-
-        .faq-question {
-            padding: 30px;
-            cursor: pointer;
-            color: white;
-            font-weight: 600;
-            font-size: 1.1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .faq-answer {
-            padding: 0 30px 30px;
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.6;
-            display: none;
-        }
-
-        .faq-item.active .faq-answer {
-            display: block;
-        }
-
-        .faq-toggle {
-            font-size: 1.5rem;
-            transition: transform 0.3s ease;
-        }
-
-        .faq-item.active .faq-toggle {
-            transform: rotate(45deg);
-        }
-
-        /* CTA Section */
-        .final-cta {
-            padding: 120px 40px;
-            background: linear-gradient(135deg, #1a0b2e 0%, #16213e 50%, #0f3460 100%);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .final-cta::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(circle at 30% 70%, rgba(255, 0, 110, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 70% 30%, rgba(131, 56, 236, 0.2) 0%, transparent 50%);
-            pointer-events: none;
-        }
-
-        .final-cta-content {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-            color: white;
-        }
-
-        .final-cta h2 {
-            font-size: 3.5rem;
-            font-weight: 900;
-            margin-bottom: 30px;
-            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .final-cta p {
-            font-size: 1.3rem;
-            margin-bottom: 50px;
-            color: rgba(255, 255, 255, 0.9);
-        }
-
-        /* Footer */
-        .footer {
-            background: #000;
-            padding: 60px 40px 30px;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-        }
-
-        .footer-section h3 {
-            color: white;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-
-        .footer-section ul {
-            list-style: none;
-        }
-
-        .footer-section ul li {
-            margin-bottom: 10px;
-        }
-
-        .footer-section ul li a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .footer-section ul li a:hover {
-            color: #ff006e;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 40px;
-            padding-top: 30px;
-            text-align: center;
+        /* Desktop specific */
+        @media (min-width: 769px) {
+            .navbar {
+                padding: 20px 40px;
+            }
+            
+            .navbar.scrolled {
+                padding: 15px 40px;
+            }
+            
+            .mobile-menu-toggle {
+                display: none;
+            }
+            
+            .mobile-nav-menu {
+                display: none;
+            }
         }
         
         /* Fade in animations */
@@ -1213,153 +577,41 @@
             opacity: 1;
             transform: translateY(0);
         }
-        
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .navbar {
-                padding: 15px 20px;
-            }
-            
-            .nav-content {
-                flex-direction: column;
-                gap: 20px;
-            }
-            
-            .hero-content {
-                padding: 120px 20px 40px;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero p {
-                font-size: 1.1rem;
-            }
-            
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            
-            .btn-hero {
-                width: 100%;
-                max-width: 300px;
-            }
-            
-            .trust-indicators {
-                flex-direction: column;
-                gap: 20px;
-                align-items: center;
-            }
-
-            .services-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .steps-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .pricing-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .testimonials-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .video-showcase {
-                padding: 80px 20px;
-            }
-            
-            .video-slider {
-                height: 50vh;
-                min-height: 400px;
-            }
-            
-            .slide-overlay {
-                padding: 30px 20px;
-            }
-            
-            .slide-title {
-                font-size: 2rem;
-            }
-            
-            .slide-description {
-                font-size: 1rem;
-            }
-            
-            .placeholder-title {
-                font-size: 1.8rem;
-            }
-            
-            .placeholder-description {
-                font-size: 1rem;
-            }
-            
-            .slider-arrows {
-                width: 50px;
-                height: 50px;
-                font-size: 1.4rem;
-            }
-            
-            .arrow-prev {
-                left: 15px;
-            }
-            
-            .arrow-next {
-                right: 15px;
-            }
-
-            .section-title {
-                font-size: 2.5rem;
-            }
-
-            .final-cta h2 {
-                font-size: 2.5rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .slider-arrows {
-                display: none;
-            }
-            
-            .video-slider-container {
-                border-radius: 15px;
-            }
-
-            .services-grid {
-                grid-template-columns: 1fr;
-                gap: 30px;
-            }
-
-            .service-card {
-                padding: 30px;
-            }
-
-            .pricing-card.featured {
-                transform: none;
-            }
-
-            .pricing-card.featured:hover {
-                transform: translateY(-10px);
-            }
-        }
     </style>
 </head>
 <body>
-    <!-- Enhanced Navigation -->
+    <!-- Enhanced Mobile-First Navigation -->
     <nav class="navbar" id="navbar">
         <div class="nav-content">
             <div class="logo">
                 <div class="logo-icon">🎬</div>
                 MagicCutAI
             </div>
+            
+            <!-- Desktop Navigation -->
             <div class="nav-buttons" id="navButtons">
                 <a href="login.html" class="btn btn-secondary btn-small">Login</a>
                 <a href="register.html" class="btn btn-primary btn-small">Register</a>
+            </div>
+            
+            <!-- Mobile Hamburger Menu -->
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+            </button>
+        </div>
+        
+        <!-- Mobile Navigation Menu -->
+        <div class="mobile-nav-menu" id="mobileNavMenu">
+            <div class="mobile-nav-item">
+                <a href="#services" class="btn btn-secondary" onclick="closeMobileMenu()">🎨 See Services</a>
+            </div>
+            <div class="mobile-nav-item">
+                <a href="login.html" class="btn btn-secondary" onclick="closeMobileMenu()">Login</a>
+            </div>
+            <div class="mobile-nav-item">
+                <a href="register.html" class="btn btn-primary" onclick="closeMobileMenu()">🚀 Start Creating</a>
             </div>
         </div>
     </nav>
@@ -1394,417 +646,11 @@
         </div>
     </section>
 
-    <!-- Social Proof Section -->
-    <section class="social-proof fade-in">
-        <div class="social-proof-content">
-            <div class="user-count">50,000+</div>
-            <div class="user-count-text">Creators already using MagicCutAI</div>
-            
-            <div class="company-logos">
-                <div class="company-logo">TechCorp</div>
-                <div class="company-logo">CreativeStudio</div>
-                <div class="company-logo">BrandForge</div>
-                <div class="company-logo">MediaFlow</div>
-                <div class="company-logo">DesignLab</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section class="services-section fade-in" id="services">
-        <div class="services-header">
-            <h2 class="services-title">All-in-One Creative AI Suite</h2>
-            <p class="services-subtitle">Three powerful AI tools to revolutionize your content creation workflow</p>
-        </div>
-        
-        <div class="services-grid">
-            <!-- AI Video Generation -->
-            <div class="service-card">
-                <div class="service-card-content">
-                    <div class="service-icon">🎬</div>
-                    <h3 class="service-title">AI Video Generation</h3>
-                    <p class="service-description">Create cinematic videos with perfect character consistency, natural dialogue, and professional cinematography powered by AI technology.</p>
-                    <ul class="service-features">
-                        <li>Character consistency across scenes</li>
-                        <li>Natural dialogue generation</li>
-                        <li>Professional cinematography</li>
-                       
-                       
-                    </ul>
-                    <a href="register.html" class="service-cta">Start Creating Videos →</a>
-                </div>
-            </div>
-
-            <!-- AI Image Generation -->
-            <div class="service-card">
-                <div class="service-card-content">
-                    <div class="service-icon">🎨</div>
-                    <h3 class="service-title">AI Image Generation</h3>
-                    <p class="service-description">Generate stunning, high-resolution images for marketing, social media, and creative projects with style consistency and brand alignment.</p>
-                    <ul class="service-features">
-                        <li>High-resolution outputs (up to 4K)</li>
-                        <li>Multiple artistic styles</li>
-                        <li>Brand color consistency</li>
-                        <li>Batch generation capabilities</li>
-                        <li>Commercial usage rights</li>
-                    </ul>
-                    <a href="register.html" class="service-cta">Generate Images →</a>
-                </div>
-            </div>
-
-            <!-- AI Logo Design -->
-            <div class="service-card">
-                <div class="service-card-content">
-                    <div class="service-icon">⚡</div>
-                    <h3 class="service-title">AI Logo Design</h3>
-                    <p class="service-description">Design professional logos and brand identities with AI precision. Get scalable vector files and complete brand packages instantly.</p>
-                    <ul class="service-features">
-                        <li>Vector-based logo designs</li>
-                        <li>Multiple format exports</li>
-                        <li>Brand guideline generation</li>
-                        <li>Color palette suggestions</li>
-                        <li>Trademark-safe designs</li>
-                    </ul>
-                    <a href="register.html" class="service-cta">Design Your Logo →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Professional Video Showcase -->
-    <section class="video-showcase" id="video-showcase">
-        <div class="showcase-header fade-in">
-            <h2 class="showcase-title">See AI Creativity in Action</h2>
-            <p class="showcase-subtitle">Experience the future of content creation with our AI-generated examples</p>
-        </div>
-        
-        <div class="video-slider-container fade-in">
-            <div class="video-slider" id="videoSlider">
-                <!-- Video Slide 1 -->
-                <div class="video-slide">
-                    <div class="slide-placeholder">
-                        <div class="placeholder-icon">🎬</div>
-                        <h3 class="placeholder-title">Cinematic Storytelling</h3>
-                        <p class="placeholder-description">Create epic narratives with dynamic camera movements, professional lighting, and stunning visual effects that rival Hollywood productions.</p>
-                    </div>
-                </div>
-                
-                <!-- Video Slide 2 -->
-                <div class="video-slide">
-                    <video class="slide-video" muted loop playsinline>
-                        <source src="videos/veo3_fast_veo3_12821256_rq5n_scene_1_1752212893581.mp4" type="video/mp4">
-                    </video>
-                    
-                    <div class="slide-placeholder">
-                        <div class="placeholder-icon">🎭</div>
-                        <h3 class="placeholder-title">Character Consistency</h3>
-                        <p class="placeholder-description">Maintain perfect character appearance and personality across multiple scenes with our advanced AI character analysis.</p>
-                    </div>
-                    
-                    <div class="slide-overlay">
-                        <h3 class="slide-title">Character Consistency</h3>
-                        <p class="slide-description">Perfect character appearance and personality across all your video scenes.</p>
-                    </div>
-                </div>
-                
-                <!-- Video Slide 3 -->
-                <div class="video-slide">
-                    <video class="slide-video" muted loop playsinline>
-                        <source src="videos/veo3_fast_veo3_23587173_xaix_scene_1_1752223658560.mp4" type="video/mp4">
-                    </video>
-                    
-                    <div class="slide-placeholder">
-                        <div class="placeholder-icon">🌟</div>
-                        <h3 class="placeholder-title">Artistic Vision</h3>
-                        <p class="placeholder-description">Transform abstract concepts into stunning visual narratives with unique artistic styles and breathtaking imagery.</p>
-                    </div>
-                    
-                    <div class="slide-overlay">
-                        <h3 class="slide-title">Artistic Vision</h3>
-                        <p class="slide-description">Transform concepts into stunning visual narratives with unique artistic styles.</p>
-                    </div>
-                </div>
-                
-                <!-- Video Slide 4 -->
-                <div class="video-slide">
-                    <div class="slide-placeholder">
-                        <div class="placeholder-icon">⚡</div>
-                        <h3 class="placeholder-title">Lightning Speed</h3>
-                        <p class="placeholder-description">Generate professional-quality content in minutes, not hours. Perfect for rapid prototyping and iterative creativity.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Slider Controls -->
-            <div class="slider-arrows arrow-prev" onclick="previousSlide()">‹</div>
-            <div class="slider-arrows arrow-next" onclick="nextSlide()">›</div>
-            
-            <div class="slider-controls">
-                <div class="slider-dot active" onclick="goToSlide(0)"></div>
-                <div class="slider-dot" onclick="goToSlide(1)"></div>
-                <div class="slider-dot" onclick="goToSlide(2)"></div>
-                <div class="slider-dot" onclick="goToSlide(3)"></div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works Section -->
-    <section class="how-it-works fade-in">
-        <div class="how-it-works-content">
-            <h2 class="section-title">How It Works</h2>
-            <p class="section-subtitle">From concept to creation in just three simple steps</p>
-            
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3 class="step-title">Describe Your Vision</h3>
-                    <p class="step-description">Simply describe what you want to create using natural language. Our AI understands context, style, and creative intent.</p>
-                </div>
-                
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3 class="step-title">AI Magic Happens</h3>
-                    <p class="step-description">Our advanced AI processes your request, generating professional-quality content with perfect consistency and style.</p>
-                </div>
-                
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3 class="step-title">Download & Use</h3>
-                    <p class="step-description">Get your finished content in multiple formats, ready for immediate use across all your marketing channels.</p>
-                </div>
-            </div>
-            
-            <div class="cta-buttons">
-                <a href="register.html" class="btn btn-primary btn-hero">🚀 Try It Now!</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <!-- Updated Pricing Grid -->
-<div class="pricing-grid">
-    <!-- Starter Plan -->
-    <div class="pricing-card">
-        <h3 class="plan-name">Starter</h3>
-        <div class="plan-price">€45</div>
-        <p class="plan-billing">per month</p>
-        <ul class="plan-features">
-            <li>5 AI video generations per month</li>
-            <li>3 Free AI image generations</li>
-            <li>HD AI video/audio model</li>
-            <li>Basic character analysis</li>
-            <li>HD quality (1080p)</li>
-            <li>12 languages supported</li>
-        </ul>
-        <a href="pricing.html" class="btn btn-secondary btn-hero">Choose Starter</a>
-    </div>
-
-    <!-- Pro Plan (Most Popular) -->
-    <div class="pricing-card featured">
-        <h3 class="plan-name">Pro</h3>
-        <div class="plan-price">€135</div>
-        <p class="plan-billing">per month</p>
-        <ul class="plan-features">
-            <li>15 AI video generations per month</li>
-            <li>3 Free AI image generations</li>
-            <li>Advanced character analysis</li>
-            <li>4K quality available</li>
-            <li>Priority support</li>
-            <li>Email support</li>
-            <li>12 languages supported</li>
-           
-          
-            
-            
-        </ul>
-        <a href="pricing.html" class="btn btn-primary btn-hero">Choose Pro</a>
-    </div>
-
-    <!-- Business Plan -->
-    <div class="pricing-card">
-        <h3 class="plan-name">Business</h3>
-        <div class="plan-price">€270</div>
-        <p class="plan-billing">per month</p>
-        <ul class="plan-features">
-            <li>30 AI video generations per month</li>
-            <li>3 Free AI image generations</li>
-            <li>Custom AI character</li>
-            <li>Most popular for businesses</li>
-            <li>4K quality available</li>
-            <li>Dedicated account manager</li>
-            <li>API access for integration</li>
-            <li>Priority processing queue</li>
-           
-        </ul>
-        <a href="pricing.html" class="btn btn-secondary btn-hero">Choose Business</a>
-    </div>
-</div>
-
-    <!-- Testimonials Section -->
-    <section class="testimonials fade-in">
-        <div class="testimonials-content">
-            <h2 class="section-title">What Our Creators Say</h2>
-            <p class="section-subtitle">Join thousands of satisfied creators who've transformed their workflow</p>
-            
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"MagicCutAI completely revolutionized our content creation process. We're producing 10x more content in half the time, and the quality is simply incredible."</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">SJ</div>
-                        <div class="author-info">
-                            <h4>Sarah Johnson</h4>
-                            <p>Creative Director, TechCorp</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"The character consistency in videos is mind-blowing. Our brand videos now have a professional look that would have cost us thousands with traditional production."</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">MC</div>
-                        <div class="author-info">
-                            <h4>Mike Chen</h4>
-                            <p>Marketing Manager, StartupFlow</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"As a freelance designer, MagicCutAI has been a game-changer. I can offer logo design, image creation, and video production to my clients - all from one platform."</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">ER</div>
-                        <div class="author-info">
-                            <h4>Emma Rodriguez</h4>
-                            <p>Freelance Designer</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq-section fade-in">
-        <div class="faq-content">
-            <h2 class="section-title">Frequently Asked Questions</h2>
-            <p class="section-subtitle">Everything you need to know about MagicCutAI</p>
-            
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <div class="faq-question">
-                        What makes MagicCutAI different from other AI tools?
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        MagicCutAI combines three powerful AI tools in one platform: video generation with character consistency, high-resolution image creation, and professional logo design. Our ai-powered technology ensures professional quality that rivals human-created content.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">
-                        Can I use the generated content commercially?
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        Yes! All content generated with Professional and Enterprise plans comes with full commercial usage rights. You can use the videos, images, and logos for marketing, advertising, and any business purposes.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">
-                        How long does it take to generate content?
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        Videos typically take 2-5 minutes to generate, images are ready in 30-60 seconds, and logos are created within 1-2 minutes. The exact time depends on complexity and current system load.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">
-                        What formats are the generated files available in?
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        Videos: MP4, WebM, MOV | Images: PNG, JPG, WebP, TIFF | Logos: SVG, PNG, PDF, AI, EPS. All formats are optimized for different use cases from web to print.
-                    </div>
-                </div>
-
-                <div class="faq-item">
-                    <div class="faq-question">
-                        Can I go viral with this AI content?
-                        <span class="faq-toggle">+</span>
-                    </div>
-                    <div class="faq-answer">
-                        Yes, absolutely! Many creators have gone viral using AI-generated and AI-edited content. AI tools like MagicCutAI help you create higher-quality videos faster, maintain consistency, and optimize for each platform - all of which increase your chances of viral success. While going viral ultimately depends on having engaging content and good timing, AI significantly improves your production quality and allows you to create more content, boosting your odds of that breakthrough moment.                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Final CTA Section -->
-    <section class="final-cta">
-        <div class="final-cta-content">
-            <h2>Ready to Transform Your Creative Process?</h2>
-            <p>Join 50,000+ creators who are already using AI to produce professional content at scale. Start going viral today!</p>
-            <div class="cta-buttons">
-                <a href="register.html" class="btn btn-primary btn-hero">🚀 Start Creating NOW</a>
-                <a href="#pricing" class="btn btn-secondary btn-hero">📊 View Pricing</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h3>Product</h3>
-                <ul>
-                    <li><a href="#services">AI Video Generation</a></li>
-                    <li><a href="#services">AI Image Creation</a></li>
-                    <li><a href="#services">AI Logo Design</a></li>
-                   
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Company</h3>
-                <ul>
-                    <li><a href="/about">About Us</a></li>
-                    <!-- <li><a href="/careers">Careers</a></li> -->
-                    <!-- <li><a href="/blog">Blog</a></li>
-                    <li><a href="/press">Press</a></li> -->
-                </ul>
-            </div>
-            
-            <div class="footer-section">
-                <h3>Support</h3>
-                <ul>
-                    <li><a href="/contact">Contact Us</a></li>
-                    
-            </div>
-            
-            <div class="footer-section">
-                <h3>Legal</h3>
-                <ul>
-                    <li><a href="/privacy">Privacy Policy</a></li>
-                    <li><a href="/terms">Terms of Service</a></li>
-                    <li><a href="/cookies">Cookie Policy</a></li>
-            
-                </ul>
-            </div>
-        </div>
-        
-        <div class="footer-bottom">
-            <p>&copy; 2025 MagicCutAI. All rights reserved. Empowering creativity with artificial intelligence.</p>
-        </div>
-    </footer>
-
     <script>
         // Enhanced Particle System
         function createParticles() {
             const particlesContainer = document.getElementById('heroParticles');
-            const particleCount = 60;
+            const particleCount = window.innerWidth <= 768 ? 30 : 60; // Fewer particles on mobile
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
@@ -1816,192 +662,50 @@
             }
         }
 
-        // Enhanced Video Slider
-        let currentSlide = 0;
-        const totalSlides = 4;
-        const slider = document.getElementById('videoSlider');
-        const dots = document.querySelectorAll('.slider-dot');
-
-        function initializeVideos() {
-            const allVideos = document.querySelectorAll('.slide-video');
+        // Mobile Menu Functionality
+        function initMobileMenu() {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const mobileNavMenu = document.getElementById('mobileNavMenu');
             
-            allVideos.forEach((video, index) => {
-                const slide = video.closest('.video-slide');
-                const placeholder = slide.querySelector('.slide-placeholder');
-                const overlay = slide.querySelector('.slide-overlay');
+            mobileMenuToggle.addEventListener('click', function() {
+                const isActive = mobileMenuToggle.classList.contains('active');
                 
-                video.muted = true;
-                video.playsInline = true;
-                video.loop = true;
-                
-                const source = video.querySelector('source');
-                if (source && source.src && source.src !== '') {
-                    video.addEventListener('loadeddata', () => {
-                        showVideo(placeholder, video, overlay);
-                        if (index === currentSlide) {
-                            attemptAutoplay(video, index + 1);
-                        }
-                    });
-                    
-                    video.addEventListener('canplaythrough', () => {
-                        if (index === currentSlide) {
-                            attemptAutoplay(video, index + 1);
-                        }
-                    });
-                    
-                    video.addEventListener('error', (e) => {
-                        showPlaceholder(placeholder, video, overlay);
-                    });
-                    
-                    video.addEventListener('click', () => {
-                        toggleVideoPlayback(video, index + 1);
-                    });
-                    
-                    video.load();
+                if (isActive) {
+                    closeMobileMenu();
                 } else {
-                    showPlaceholder(placeholder, video, overlay);
+                    openMobileMenu();
                 }
             });
-        }
-
-        function attemptAutoplay(video, slideNumber) {
-            video.muted = true;
-            video.currentTime = 0;
             
-            const playPromise = video.play();
-            
-            if (playPromise !== undefined) {
-                playPromise
-                    .then(() => {
-                        console.log(`✅ Video ${slideNumber} autoplay successful!`);
-                    })
-                    .catch(error => {
-                        console.warn(`⚠️ Video ${slideNumber} autoplay blocked`);
-                        addPlayButton(video);
-                    });
-            }
-        }
-
-        function toggleVideoPlayback(video, slideNumber) {
-            if (video.paused) {
-                video.play()
-                    .then(() => {
-                        removePlayButton(video);
-                    })
-                    .catch(error => {
-                        console.error(`❌ Failed to play video ${slideNumber}:`, error);
-                    });
-            } else {
-                video.pause();
-                addPlayButton(video);
-            }
-        }
-
-        function addPlayButton(video) {
-            removePlayButton(video);
-            
-            const playButton = document.createElement('div');
-            playButton.className = 'video-play-button';
-            playButton.innerHTML = '▶';
-            
-            playButton.addEventListener('click', (e) => {
-                e.stopPropagation();
-                video.click();
-            });
-            
-            video.parentElement.appendChild(playButton);
-        }
-
-        function removePlayButton(video) {
-            const existingButton = video.parentElement.querySelector('.video-play-button');
-            if (existingButton) {
-                existingButton.remove();
-            }
-        }
-
-        function showVideo(placeholder, video, overlay) {
-            placeholder.style.display = 'none';
-            video.style.display = 'block';
-            overlay.style.display = 'block';
-        }
-
-        function showPlaceholder(placeholder, video, overlay) {
-            placeholder.style.display = 'flex';
-            video.style.display = 'none';
-            overlay.style.display = 'none';
-        }
-
-        function updateSlider() {
-            const translateX = -currentSlide * 100;
-            slider.style.transform = `translateX(${translateX}%)`;
-            
-            dots.forEach((dot, index) => {
-                dot.classList.toggle('active', index === currentSlide);
-            });
-
-            const allVideos = document.querySelectorAll('.slide-video');
-            allVideos.forEach((video, index) => {
-                const source = video.querySelector('source');
-                if (source && source.src && source.src !== '') {
-                    if (index === currentSlide) {
-                        if (video.readyState >= 3) {
-                            attemptAutoplay(video, index + 1);
-                        }
-                    } else {
-                        if (!video.paused) {
-                            video.pause();
-                        }
-                        removePlayButton(video);
-                    }
+            // Close menu when clicking outside
+            mobileNavMenu.addEventListener('click', function(e) {
+                if (e.target === mobileNavMenu) {
+                    closeMobileMenu();
                 }
             });
-        }
-
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            updateSlider();
-        }
-
-        function previousSlide() {
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-            updateSlider();
-        }
-
-        function goToSlide(slideIndex) {
-            currentSlide = slideIndex;
-            updateSlider();
-        }
-
-        // Auto-play slider
-        let autoplayInterval = setInterval(nextSlide, 8000);
-
-        const sliderContainer = document.querySelector('.video-slider-container');
-        sliderContainer.addEventListener('mouseenter', () => {
-            clearInterval(autoplayInterval);
-        });
-
-        sliderContainer.addEventListener('mouseleave', () => {
-            autoplayInterval = setInterval(nextSlide, 8000);
-        });
-
-        // FAQ functionality
-        function initFAQ() {
-            const faqItems = document.querySelectorAll('.faq-item');
             
-            faqItems.forEach(item => {
-                const question = item.querySelector('.faq-question');
-                question.addEventListener('click', () => {
-                    const isActive = item.classList.contains('active');
-                    
-                    // Close all FAQ items
-                    faqItems.forEach(faq => faq.classList.remove('active'));
-                    
-                    // Open clicked item if it wasn't active
-                    if (!isActive) {
-                        item.classList.add('active');
-                    }
-                });
-            });
+            // Prevent scrolling when menu is open
+            mobileNavMenu.addEventListener('touchmove', function(e) {
+                e.preventDefault();
+            }, { passive: false });
+        }
+
+        function openMobileMenu() {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const mobileNavMenu = document.getElementById('mobileNavMenu');
+            
+            mobileMenuToggle.classList.add('active');
+            mobileNavMenu.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeMobileMenu() {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const mobileNavMenu = document.getElementById('mobileNavMenu');
+            
+            mobileMenuToggle.classList.remove('active');
+            mobileNavMenu.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
         }
 
         // Enhanced scroll animations
@@ -2043,16 +747,36 @@
             const navButtons = document.getElementById('navButtons');
             navButtons.innerHTML = `
                 <span style="color: rgba(255,255,255,0.8); margin-right: 15px; font-size: 14px;">
-                    Welkom, ${userData.firstName}!
+                    Welcome, ${userData.firstName}!
                 </span>
                 <a href="/app" class="btn btn-primary btn-small">Dashboard</a>
-                <a href="#" class="btn btn-secondary btn-small" onclick="logout()">Uitloggen</a>
+                <a href="#" class="btn btn-secondary btn-small" onclick="logout()">Logout</a>
+            `;
+            
+            // Update mobile menu for logged in users
+            const mobileNavMenu = document.getElementById('mobileNavMenu');
+            mobileNavMenu.innerHTML = `
+                <div class="mobile-nav-item">
+                    <div style="color: rgba(255,255,255,0.8); margin-bottom: 20px; font-size: 16px; text-align: center;">
+                        Welcome, ${userData.firstName}!
+                    </div>
+                </div>
+                <div class="mobile-nav-item">
+                    <a href="/app" class="btn btn-primary" onclick="closeMobileMenu()">🎯 Dashboard</a>
+                </div>
+                <div class="mobile-nav-item">
+                    <a href="#services" class="btn btn-secondary" onclick="closeMobileMenu()">🎨 Services</a>
+                </div>
+                <div class="mobile-nav-item">
+                    <a href="#" class="btn btn-secondary" onclick="logout()">Logout</a>
+                </div>
             `;
         }
 
         function logout() {
             localStorage.removeItem('token');
             localStorage.removeItem('user');
+            closeMobileMenu();
             location.reload();
         }
 
@@ -2063,10 +787,13 @@
                     e.preventDefault();
                     const target = document.querySelector(this.getAttribute('href'));
                     if (target) {
-                        target.scrollIntoView({
-                            behavior: 'smooth',
-                            block: 'start'
-                        });
+                        closeMobileMenu(); // Close mobile menu before scrolling
+                        setTimeout(() => {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }, 300);
                     }
                 });
             });
@@ -2075,16 +802,21 @@
         // Initialize everything
         document.addEventListener('DOMContentLoaded', function() {
             createParticles();
+            initMobileMenu();
             initAuthState();
             handleScrollAnimations();
             initSmoothScrolling();
-            initializeVideos();
-            initFAQ();
-            updateSlider();
         });
 
         // Event listeners
         window.addEventListener('scroll', handleNavbarScroll);
+        
+        // Handle window resize for particles
+        window.addEventListener('resize', function() {
+            const particlesContainer = document.getElementById('heroParticles');
+            particlesContainer.innerHTML = '';
+            createParticles();
+        });
     </script>
 </body>
 </html>

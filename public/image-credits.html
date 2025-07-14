@@ -78,13 +78,14 @@
             }
         }
         
+        /* Enhanced Mobile-First Navbar */
         .navbar {
-            background: rgba(0, 0, 0, 0.9);
+            background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(20px);
-            padding: 20px 40px;
+            padding: 15px 20px;
             position: sticky;
             top: 0;
-            z-index: 1000;
+            z-index: 10000;
             border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
         
@@ -94,10 +95,11 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
         }
 
         .logo {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 800;
             background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
             -webkit-background-clip: text;
@@ -105,30 +107,65 @@
             background-clip: text;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
+            position: relative;
+            z-index: 10001;
         }
 
         .logo-icon {
-            width: 40px;
-            height: 40px;
+            width: 35px;
+            height: 35px;
             background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.2rem;
+            font-size: 1rem;
             animation: logoFloat 6s ease-in-out infinite;
             box-shadow: 0 0 30px rgba(255, 0, 110, 0.4);
         }
 
         @keyframes logoFloat {
             0%, 100% { transform: translateY(0px) rotate(0deg); box-shadow: 0 0 30px rgba(255, 0, 110, 0.4); }
-            50% { transform: translateY(-5px) rotate(5deg); box-shadow: 0 0 50px rgba(131, 56, 236, 0.6); }
+            50% { transform: translateY(-3px) rotate(5deg); box-shadow: 0 0 50px rgba(131, 56, 236, 0.6); }
         }
 
+        /* Hamburger Menu Button */
+        .mobile-menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 10001;
+            background: none;
+            border: none;
+            padding: 5px;
+        }
+        
+        .hamburger-line {
+            width: 25px;
+            height: 3px;
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            margin: 3px 0;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+        
+        .mobile-menu-toggle.active .hamburger-line:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+        
+        .mobile-menu-toggle.active .hamburger-line:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .mobile-menu-toggle.active .hamburger-line:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        /* Desktop Navigation */
         .nav-links {
             display: flex;
-            gap: 30px;
+            gap: 25px;
             align-items: center;
         }
 
@@ -137,9 +174,10 @@
             text-decoration: none;
             font-weight: 500;
             transition: all 0.3s ease;
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 15px;
             position: relative;
+            font-size: 0.9rem;
         }
 
         .nav-link:hover {
@@ -153,17 +191,59 @@
             background: rgba(255, 0, 110, 0.1);
             border: 1px solid rgba(255, 0, 110, 0.3);
         }
+
+        /* Mobile Navigation Menu */
+        .mobile-nav-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 100%;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: 10000;
+            padding: 80px 40px 40px;
+        }
+        
+        .mobile-nav-menu.active {
+            right: 0;
+        }
+        
+        .mobile-nav-item {
+            opacity: 0;
+            transform: translateX(50px);
+            transition: all 0.4s ease;
+            width: 100%;
+            max-width: 280px;
+        }
+        
+        .mobile-nav-menu.active .mobile-nav-item {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .mobile-nav-menu.active .mobile-nav-item:nth-child(1) { transition-delay: 0.1s; }
+        .mobile-nav-menu.active .mobile-nav-item:nth-child(2) { transition-delay: 0.2s; }
+        .mobile-nav-menu.active .mobile-nav-item:nth-child(3) { transition-delay: 0.3s; }
+        .mobile-nav-menu.active .mobile-nav-item:nth-child(4) { transition-delay: 0.4s; }
+        .mobile-nav-menu.active .mobile-nav-item:nth-child(5) { transition-delay: 0.5s; }
         
         .nav-buttons {
             display: flex;
-            gap: 20px;
+            gap: 15px;
         }
         
         .btn {
-            padding: 12px 24px;
+            padding: 10px 20px;
             border: none;
-            border-radius: 50px;
-            font-size: 14px;
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
             text-decoration: none;
@@ -173,6 +253,7 @@
             letter-spacing: 1px;
             position: relative;
             overflow: hidden;
+            text-align: center;
         }
         
         .btn-primary {
@@ -213,12 +294,38 @@
             transform: translateY(-3px);
             border-color: rgba(255, 255, 255, 0.4);
         }
+
+        /* Mobile Navigation Buttons */
+        .mobile-nav-item .btn {
+            width: 100%;
+            padding: 16px 25px;
+            font-size: 15px;
+            margin-bottom: 5px;
+            border-radius: 25px;
+        }
+
+        .mobile-nav-item .nav-link {
+            width: 100%;
+            padding: 16px 25px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            text-align: center;
+            display: block;
+            margin-bottom: 5px;
+            font-size: 15px;
+        }
+
+        .mobile-nav-item .nav-link.active {
+            background: rgba(255, 0, 110, 0.2);
+            border-color: rgba(255, 0, 110, 0.4);
+        }
         
         .hero {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
             color: white;
-            padding: 100px 40px;
+            padding: 60px 20px;
             text-align: center;
             position: relative;
             z-index: 10;
@@ -237,9 +344,9 @@
         }
         
         .hero h1 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-size: clamp(2rem, 5vw, 4rem);
             font-weight: 900;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -262,11 +369,12 @@
         }
         
         .hero p {
-            font-size: 1.3rem;
+            font-size: clamp(1rem, 3vw, 1.3rem);
             opacity: 0.9;
             max-width: 600px;
-            margin: 0 auto 3rem;
+            margin: 0 auto 2rem;
             animation: subtitleReveal 2s ease-out 0.5s both;
+            line-height: 1.5;
         }
 
         @keyframes subtitleReveal {
@@ -288,7 +396,7 @@
             color: white;
             padding: 20px;
             border-radius: 20px;
-            margin: 30px auto;
+            margin: 25px auto;
             max-width: 600px;
             text-align: center;
             backdrop-filter: blur(15px);
@@ -312,7 +420,7 @@
             color: #ffc107;
             padding: 20px;
             border-radius: 20px;
-            margin: 30px auto;
+            margin: 25px auto;
             max-width: 600px;
             text-align: center;
             backdrop-filter: blur(15px);
@@ -320,7 +428,7 @@
         }
         
         .credits-section {
-            padding: 120px 40px;
+            padding: 80px 20px;
             max-width: 1400px;
             margin: 0 auto;
             position: relative;
@@ -329,14 +437,14 @@
         
         .section-header {
             text-align: center;
-            margin-bottom: 80px;
+            margin-bottom: 60px;
             color: white;
         }
         
         .section-header h2 {
-            font-size: 3.5rem;
+            font-size: clamp(2rem, 5vw, 3.5rem);
             font-weight: 800;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
             background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -344,24 +452,25 @@
         }
 
         .section-header p {
-            font-size: 1.3rem;
+            font-size: clamp(1rem, 3vw, 1.3rem);
             color: rgba(255, 255, 255, 0.8);
             max-width: 600px;
             margin: 0 auto;
+            line-height: 1.5;
         }
         
         .credits-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
+            grid-template-columns: 1fr;
+            gap: 30px;
+            margin-top: 50px;
         }
         
         .credit-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
-            border-radius: 30px;
-            padding: 50px 40px;
+            border-radius: 25px;
+            padding: 35px 25px;
             text-align: center;
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
             position: relative;
@@ -389,14 +498,13 @@
         }
 
         .credit-card:hover {
-            transform: translateY(-10px);
+            transform: translateY(-8px);
             border-color: rgba(255, 0, 110, 0.3);
             box-shadow: 0 40px 100px rgba(255, 0, 110, 0.2);
         }
         
         .credit-card.popular {
             border-color: rgba(255, 0, 110, 0.5);
-            transform: scale(1.05);
             background: rgba(255, 0, 110, 0.1);
         }
         
@@ -408,9 +516,9 @@
             transform: translateX(-50%);
             background: linear-gradient(135deg, #ff006e, #8338ec);
             color: white;
-            padding: 8px 24px;
-            border-radius: 50px;
-            font-size: 0.8rem;
+            padding: 6px 20px;
+            border-radius: 25px;
+            font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 1px;
@@ -418,7 +526,7 @@
         }
 
         .credit-card.popular:hover {
-            transform: translateY(-10px) scale(1.05);
+            transform: translateY(-8px);
         }
 
         .credit-card-content {
@@ -427,81 +535,81 @@
         }
         
         .package-name {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             font-weight: 700;
             color: white;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
         }
         
         .package-price {
-            font-size: 3.5rem;
+            font-size: clamp(2.5rem, 6vw, 3.5rem);
             font-weight: 900;
             background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
         
         .package-currency {
             color: rgba(255, 255, 255, 0.7);
-            margin-bottom: 15px;
-            font-size: 1.1rem;
+            margin-bottom: 12px;
+            font-size: 1rem;
         }
         
         .package-credits {
             background: linear-gradient(135deg, #ff006e, #8338ec);
             color: white;
-            padding: 12px 25px;
-            border-radius: 30px;
+            padding: 10px 20px;
+            border-radius: 25px;
             font-weight: 700;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             display: inline-block;
-            font-size: 1.1rem;
+            font-size: 1rem;
             box-shadow: 0 10px 30px rgba(255, 0, 110, 0.3);
         }
 
         .package-value {
             background: rgba(46, 204, 113, 0.2);
             color: #2ecc71;
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 0.9rem;
+            padding: 6px 14px;
+            border-radius: 15px;
+            font-size: 0.85rem;
             font-weight: 600;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             display: inline-block;
             border: 1px solid rgba(46, 204, 113, 0.3);
         }
         
         .package-features {
             list-style: none;
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             text-align: left;
         }
         
         .package-features li {
-            padding: 12px 0;
+            padding: 10px 0;
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             color: rgba(255, 255, 255, 0.9);
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
         
         .package-features li::before {
             content: '✨';
             flex-shrink: 0;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
         
         .package-cta {
             width: 100%;
-            padding: 18px;
+            padding: 16px 20px;
             background: linear-gradient(135deg, #ff006e, #8338ec);
             color: white;
             border: none;
             border-radius: 15px;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
             cursor: pointer;
             transition: all 0.4s ease;
@@ -543,12 +651,13 @@
         .status-message {
             padding: 20px;
             border-radius: 20px;
-            margin: 30px auto;
+            margin: 25px auto;
             max-width: 700px;
             text-align: center;
             font-weight: 600;
             backdrop-filter: blur(15px);
             border: 2px solid;
+            font-size: 0.9rem;
         }
         
         .status-success {
@@ -593,27 +702,31 @@
             100% { transform: rotate(360deg); }
         }
 
-        /* Responsive Design */
+        /* Mobile Responsive Design */
         @media (max-width: 768px) {
+            .mobile-menu-toggle {
+                display: flex;
+            }
+            
+            .nav-links, .nav-buttons {
+                display: none;
+            }
+            
             .navbar {
-                padding: 15px 20px;
+                padding: 12px 20px;
             }
 
             .hero {
-                padding: 80px 20px;
-            }
-
-            .hero h1 {
-                font-size: 2.5rem;
+                padding: 50px 20px;
             }
 
             .credits-section {
-                padding: 80px 20px;
+                padding: 60px 15px;
             }
 
             .credits-grid {
                 grid-template-columns: 1fr;
-                gap: 30px;
+                gap: 25px;
             }
             
             .credit-card.popular {
@@ -621,26 +734,100 @@
             }
             
             .credit-card.popular:hover {
-                transform: translateY(-10px);
+                transform: translateY(-8px);
             }
 
-            .section-header h2 {
-                font-size: 2.5rem;
+            .section-header {
+                margin-bottom: 50px;
             }
 
-            .nav-content {
-                flex-direction: column;
-                gap: 20px;
+            .credit-card {
+                padding: 30px 20px;
+            }
+
+            .package-features {
+                margin-bottom: 25px;
+            }
+
+            .package-features li {
+                padding: 8px 0;
+                font-size: 0.85rem;
+            }
+
+            .user-info, .auth-required {
+                margin: 20px auto;
+                padding: 15px;
             }
         }
 
         @media (max-width: 480px) {
-            .credit-card {
-                padding: 40px 30px;
+            .credits-section {
+                padding: 50px 10px;
             }
 
-            .package-price {
-                font-size: 3rem;
+            .credit-card {
+                padding: 25px 15px;
+            }
+
+            .package-features li {
+                gap: 10px;
+                font-size: 0.8rem;
+            }
+
+            .mobile-nav-item .btn,
+            .mobile-nav-item .nav-link {
+                padding: 14px 20px;
+                font-size: 14px;
+            }
+
+            .btn {
+                font-size: 14px;
+                padding: 10px 16px;
+            }
+        }
+        
+        /* Desktop specific */
+        @media (min-width: 769px) {
+            .mobile-menu-toggle {
+                display: none;
+            }
+            
+            .mobile-nav-menu {
+                display: none;
+            }
+            
+            .navbar {
+                padding: 20px 40px;
+            }
+
+            .hero {
+                padding: 100px 40px;
+            }
+
+            .credits-section {
+                padding: 120px 40px;
+            }
+
+            .credits-grid {
+                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+                gap: 40px;
+                margin-top: 60px;
+            }
+
+            .section-header {
+                margin-bottom: 80px;
+            }
+
+            .credit-card {
+                padding: 50px 40px;
+            }
+
+            .credit-card.popular {
+                transform: scale(1.05);
+            }
+
+            .credit-card.popular:hover {
+                transform: translateY(-10px) scale(1.05);
             }
         }
     </style>
@@ -656,20 +843,47 @@
         <p>Setting up your purchase options</p>
     </div>
 
-    <!-- Navigation -->
+    <!-- Enhanced Mobile-First Navigation -->
     <nav class="navbar">
         <div class="nav-content">
             <div class="logo">
                 <div class="logo-icon">🎨</div>
                 MagicCut AI Images
             </div>
+            
+            <!-- Desktop Navigation -->
             <div class="nav-links">
                 <a href="/image-studio" class="nav-link">Create Images</a>
                 <a href="/image-gallery" class="nav-link">🖼️ Gallery</a>
                 <a href="/image-credits" class="nav-link active">💳 Credits</a>
             </div>
+            
+            <!-- Desktop Buttons -->
             <div class="nav-buttons">
                 <a href="/image-studio" class="btn btn-secondary">Back to Studio</a>
+            </div>
+            
+            <!-- Mobile Hamburger Menu -->
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+                <div class="hamburger-line"></div>
+            </button>
+        </div>
+        
+        <!-- Mobile Navigation Menu -->
+        <div class="mobile-nav-menu" id="mobileNavMenu">
+            <div class="mobile-nav-item">
+                <a href="/image-studio" class="nav-link" onclick="closeMobileMenu()">🎨 Create Images</a>
+            </div>
+            <div class="mobile-nav-item">
+                <a href="/image-gallery" class="nav-link" onclick="closeMobileMenu()">🖼️ Gallery</a>
+            </div>
+            <div class="mobile-nav-item">
+                <a href="/image-credits" class="nav-link active" onclick="closeMobileMenu()">💳 Credits</a>
+            </div>
+            <div class="mobile-nav-item">
+                <a href="/image-studio" class="btn btn-secondary" onclick="closeMobileMenu()">Back to Studio</a>
             </div>
         </div>
     </nav>
@@ -779,10 +993,10 @@
     <script>
         let currentUser = null;
 
-        // Create floating particles
+        // Create floating particles - reduced count for mobile
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
-            const particleCount = 40;
+            const particleCount = window.innerWidth <= 768 ? 20 : 40; // Fewer particles on mobile
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
@@ -794,12 +1008,59 @@
             }
         }
 
+        // Mobile Menu Functionality
+        function initMobileMenu() {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const mobileNavMenu = document.getElementById('mobileNavMenu');
+            
+            mobileMenuToggle.addEventListener('click', function() {
+                const isActive = mobileMenuToggle.classList.contains('active');
+                
+                if (isActive) {
+                    closeMobileMenu();
+                } else {
+                    openMobileMenu();
+                }
+            });
+            
+            // Close menu when clicking outside
+            mobileNavMenu.addEventListener('click', function(e) {
+                if (e.target === mobileNavMenu) {
+                    closeMobileMenu();
+                }
+            });
+            
+            // Prevent scrolling when menu is open
+            mobileNavMenu.addEventListener('touchmove', function(e) {
+                e.preventDefault();
+            }, { passive: false });
+        }
+
+        function openMobileMenu() {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const mobileNavMenu = document.getElementById('mobileNavMenu');
+            
+            mobileMenuToggle.classList.add('active');
+            mobileNavMenu.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent background scrolling
+        }
+
+        function closeMobileMenu() {
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const mobileNavMenu = document.getElementById('mobileNavMenu');
+            
+            mobileMenuToggle.classList.remove('active');
+            mobileNavMenu.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        }
+
         // Initialize particles
         createParticles();
         
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('💳 Credits page loaded');
+            console.log('💳 Credits page loaded - Mobile Version');
+            initMobileMenu(); // Initialize mobile menu
             checkAuthStatus();
             handleUrlParams();
         });
@@ -879,229 +1140,191 @@
             }, 5000);
         }
         
-        // 🔧 FIXED: Update the JavaScript in your image-credits.html
-
-// Purchase credits function - UPDATED ENDPOINTS
-async function purchaseCredits(packageId) {
-    console.log('💳 Purchase credits clicked:', packageId);
-    
-    // Check authentication
-    const token = localStorage.getItem('imageToken') || localStorage.getItem('token');
-    if (!token) {
-        showStatus('Please log in first to purchase credits.', 'error');
-        setTimeout(() => {
-            window.location.href = '/';  // Redirect to main page
-        }, 2000);
-        return;
-    }
-    
-    // Update button state
-    const button = document.querySelector(`[data-package="${packageId}"]`);
-    const originalText = button.textContent;
-    button.classList.add('loading');
-    button.textContent = 'Processing...';
-    
-    try {
-        console.log('🔗 Creating payment session...');
-        
-        // ✅ FIXED: Use correct endpoint that matches server.js
-        const response = await fetch('/api/image-credits/purchase', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                packageId: packageId
-            })
-        });
-        
-        console.log('📡 API Response status:', response.status);
-        
-        if (!response.ok) {
-            const errorText = await response.text();
-            throw new Error(`HTTP ${response.status}: ${errorText}`);
-        }
-        
-        const data = await response.json();
-        console.log('📊 API Response data:', data);
-        
-        if (data.success) {
-            console.log('✅ Payment session created, redirecting...');
-            showStatus(`Redirecting to checkout for ${data.package.name}...`, 'success');
+        // Purchase credits function - UPDATED ENDPOINTS
+        async function purchaseCredits(packageId) {
+            console.log('💳 Purchase credits clicked:', packageId);
             
-            // Store package info for success handling
-            localStorage.setItem('pendingPurchase', packageId);
-            localStorage.setItem('pendingSessionId', data.sessionId);
-            
-            // Redirect to Stripe Checkout
-            setTimeout(() => {
-                window.location.href = data.url;
-            }, 1000);
-        } else {
-            console.error('❌ API Error:', data.error);
-            showStatus(`Error: ${data.error}`, 'error');
-        }
-    } catch (error) {
-        console.error('❌ Network error:', error);
-        showStatus(`Network error: ${error.message}`, 'error');
-    } finally {
-        // Reset button
-        button.classList.remove('loading');
-        button.textContent = originalText;
-    }
-}
-
-// Handle successful payment - UPDATED ENDPOINT
-async function handlePaymentSuccess(sessionId, packageId) {
-    console.log('🎉 Processing payment success:', { sessionId, packageId });
-    
-    showStatus('Payment successful! Verifying and adding credits...', 'success');
-    
-    try {
-        const token = localStorage.getItem('imageToken') || localStorage.getItem('token');
-        
-        // ✅ FIXED: Use correct endpoint that matches server.js
-        const response = await fetch('/api/image-credits/verify-payment', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                sessionId: sessionId,
-                packageId: packageId
-            })
-        });
-        
-        if (!response.ok) {
-            throw new Error(`HTTP ${response.status}: Verification failed`);
-        }
-        
-        const result = await response.json();
-        
-        if (result.success) {
-            console.log('✅ Credits added successfully');
-            
-            showStatus(
-                `🎉 Success! ${result.credits.justPurchased} credits added to your account. ` +
-                `You now have ${result.credits.available} credits total.`, 
-                'success'
-            );
-            
-            localStorage.removeItem('pendingPurchase');
-            localStorage.removeItem('pendingSessionId');
-            
-            // Clean URL and refresh user data
-            window.history.replaceState({}, document.title, window.location.pathname);
-            
-            // Refresh user info
-            setTimeout(() => {
-                loadUserData();
-            }, 2000);
-            
-            // Redirect to image creation after success
-            setTimeout(() => {
-                window.location.href = '/image-studio';
-            }, 4000);
-            
-        } else {
-            throw new Error(result.error || 'Failed to verify payment');
-        }
-        
-    } catch (error) {
-        console.error('❌ Payment verification failed:', error);
-        showStatus('Payment successful, but verification failed. Please contact support if credits are not added.', 'error');
-    }
-}
-
-// ✅ NEW: Load user credit status
-async function loadUserData() {
-    try {
-        const token = localStorage.getItem('imageToken') || localStorage.getItem('token');
-        
-        // Get user data including credits
-        const response = await fetch('/api/auth/me', {
-            headers: {
-                'Authorization': `Bearer ${token}`
+            // Check authentication
+            const token = localStorage.getItem('imageToken') || localStorage.getItem('token');
+            if (!token) {
+                showStatus('Please log in first to purchase credits.', 'error');
+                setTimeout(() => {
+                    window.location.href = '/';  // Redirect to main page
+                }, 2000);
+                return;
             }
+            
+            // Update button state
+            const button = document.querySelector(`[data-package="${packageId}"]`);
+            const originalText = button.textContent;
+            button.classList.add('loading');
+            button.textContent = 'Processing...';
+            
+            try {
+                console.log('🔗 Creating payment session...');
+                
+                // ✅ FIXED: Use correct endpoint that matches server.js
+                const response = await fetch('/api/image-credits/purchase', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        packageId: packageId
+                    })
+                });
+                
+                console.log('📡 API Response status:', response.status);
+                
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    throw new Error(`HTTP ${response.status}: ${errorText}`);
+                }
+                
+                const data = await response.json();
+                console.log('📊 API Response data:', data);
+                
+                if (data.success) {
+                    console.log('✅ Payment session created, redirecting...');
+                    showStatus(`Redirecting to checkout for ${data.package.name}...`, 'success');
+                    
+                    // Store package info for success handling
+                    localStorage.setItem('pendingPurchase', packageId);
+                    localStorage.setItem('pendingSessionId', data.sessionId);
+                    
+                    // Redirect to Stripe Checkout
+                    setTimeout(() => {
+                        window.location.href = data.url;
+                    }, 1000);
+                } else {
+                    console.error('❌ API Error:', data.error);
+                    showStatus(`Error: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                console.error('❌ Network error:', error);
+                showStatus(`Network error: ${error.message}`, 'error');
+            } finally {
+                // Reset button
+                button.classList.remove('loading');
+                button.textContent = originalText;
+            }
+        }
+
+        // Handle successful payment - UPDATED ENDPOINT
+        async function handlePaymentSuccess(sessionId, packageId) {
+            console.log('🎉 Processing payment success:', { sessionId, packageId });
+            
+            showStatus('Payment successful! Verifying and adding credits...', 'success');
+            
+            try {
+                const token = localStorage.getItem('imageToken') || localStorage.getItem('token');
+                
+                // ✅ FIXED: Use correct endpoint that matches server.js
+                const response = await fetch('/api/image-credits/verify-payment', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        sessionId: sessionId,
+                        packageId: packageId
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: Verification failed`);
+                }
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    console.log('✅ Credits added successfully');
+                    
+                    showStatus(
+                        `🎉 Success! ${result.credits.justPurchased} credits added to your account. ` +
+                        `You now have ${result.credits.available} credits total.`, 
+                        'success'
+                    );
+                    
+                    localStorage.removeItem('pendingPurchase');
+                    localStorage.removeItem('pendingSessionId');
+                    
+                    // Clean URL and refresh user data
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                    
+                    // Refresh user info
+                    setTimeout(() => {
+                        loadUserData();
+                    }, 2000);
+                    
+                    // Redirect to image creation after success
+                    setTimeout(() => {
+                        window.location.href = '/image-studio';
+                    }, 4000);
+                    
+                } else {
+                    throw new Error(result.error || 'Failed to verify payment');
+                }
+                
+            } catch (error) {
+                console.error('❌ Payment verification failed:', error);
+                showStatus('Payment successful, but verification failed. Please contact support if credits are not added.', 'error');
+            }
+        }
+
+        // Handle URL parameters with enhanced error handling
+        function handleUrlParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            // Handle success
+            if (urlParams.get('success') === 'true') {
+                console.log('🎉 Payment success detected');
+                const sessionId = urlParams.get('session_id');
+                const packageId = urlParams.get('package') || localStorage.getItem('pendingPurchase');
+                
+                if (sessionId && packageId) {
+                    handlePaymentSuccess(sessionId, packageId);
+                } else {
+                    showStatus('Payment successful! Your credits have been added to your account.', 'success');
+                    setTimeout(() => {
+                        window.location.href = '/image-credits';
+                    }, 3000);
+                }
+            }
+            
+            // Handle cancellation
+            if (urlParams.get('canceled') === 'true') {
+                console.log('⚠️ Payment canceled');
+                showStatus('Payment was canceled. You can try again anytime.', 'error');
+                localStorage.removeItem('pendingPurchase');
+                localStorage.removeItem('pendingSessionId');
+                
+                // Clean URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+            
+            // Handle errors
+            const error = urlParams.get('error');
+            if (error) {
+                console.log('❌ Payment error detected:', error);
+                showStatus(`Payment error: ${decodeURIComponent(error)}`, 'error');
+                
+                // Clean URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        }
+
+        // Make functions globally available
+        window.closeMobileMenu = closeMobileMenu;
+
+        // Handle window resize for particles
+        window.addEventListener('resize', function() {
+            const particlesContainer = document.getElementById('particles');
+            particlesContainer.innerHTML = '';
+            createParticles();
         });
-        
-        if (!response.ok) {
-            throw new Error('Failed to load user data');
-        }
-        
-        const userData = await response.json();
-        
-        if (userData.success && userData.user) {
-            currentUser = userData.user;
-            showUserInfo();
-            console.log('✅ User data loaded:', currentUser.email);
-            console.log('💳 Credits:', currentUser.credits);
-        } else {
-            throw new Error('Invalid user data');
-        }
-        
-        document.getElementById('loadingScreen').style.display = 'none';
-        
-    } catch (error) {
-        console.error('❌ Error loading user data:', error);
-        showAuthRequired();
-        document.getElementById('loadingScreen').style.display = 'none';
-    }
-}
-
-// ✅ NEW: Enhanced show user info
-function showUserInfo() {
-    document.getElementById('authRequired').style.display = 'none';
-    document.getElementById('userInfo').style.display = 'block';
-    
-    document.getElementById('userName').textContent = `${currentUser.firstName} ${currentUser.lastName}`;
-    document.getElementById('currentCredits').textContent = currentUser.credits?.available || 0;
-    document.getElementById('totalImages').textContent = currentUser.images?.totalImages || 0;
-}
-
-// ✅ NEW: Handle URL parameters with enhanced error handling
-function handleUrlParams() {
-    const urlParams = new URLSearchParams(window.location.search);
-    
-    // Handle success
-    if (urlParams.get('success') === 'true') {
-        console.log('🎉 Payment success detected');
-        const sessionId = urlParams.get('session_id');
-        const packageId = urlParams.get('package') || localStorage.getItem('pendingPurchase');
-        
-        if (sessionId && packageId) {
-            handlePaymentSuccess(sessionId, packageId);
-        } else {
-            showStatus('Payment successful! Your credits have been added to your account.', 'success');
-            setTimeout(() => {
-                window.location.href = '/image-credits';
-            }, 3000);
-        }
-    }
-    
-    // Handle cancellation
-    if (urlParams.get('canceled') === 'true') {
-        console.log('⚠️ Payment canceled');
-        showStatus('Payment was canceled. You can try again anytime.', 'error');
-        localStorage.removeItem('pendingPurchase');
-        localStorage.removeItem('pendingSessionId');
-        
-        // Clean URL
-        window.history.replaceState({}, document.title, window.location.pathname);
-    }
-    
-    // Handle errors
-    const error = urlParams.get('error');
-    if (error) {
-        console.log('❌ Payment error detected:', error);
-        showStatus(`Payment error: ${decodeURIComponent(error)}`, 'error');
-        
-        // Clean URL
-        window.history.replaceState({}, document.title, window.location.pathname);
-    }
-}
     </script>
 </body>
 </html>
