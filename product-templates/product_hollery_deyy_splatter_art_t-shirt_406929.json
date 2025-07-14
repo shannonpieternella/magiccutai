@@ -1,0 +1,58 @@
+{
+  "id": "product_hollery_deyy_splatter_art_t-shirt_406929",
+  "template": {
+    "product": {
+      "name": "Hollery Deyy Splatter Art T-Shirt",
+      "category": "fashion",
+      "visualRefinement": {
+        "physicalCharacteristics": {
+          "exactSizeAndDimensions": "This T-shirt features a standard relaxed fit with dimensions suitable for adult wearers. The length from the shoulder to the hem is approximately 28 inches, with a chest width of about 22 inches, providing a comfortable drape over the body.",
+          "colorScheme": "The primary color of the T-shirt is a deep matte black, serving as a backdrop for vibrant splatters of blue, red, yellow, and white paint. These splatters are randomly placed, creating a unique pattern on each shirt.",
+          "materialComposition": "Made from a high-quality, soft cotton blend, this T-shirt offers both comfort and durability. The fabric is lightweight yet substantial, ideal for both casual wear and artistic statement pieces.",
+          "shapeAndForm": "The T-shirt has a classic round neckline and short sleeves. The overall shape is boxy with a slight taper towards the hem to fit naturally on the torso, promoting a casual yet stylish appearance.",
+          "brandingElements": "The front of the T-shirt prominently displays the phrase 'HOLLERY DEYY.' in bold, slightly distressed white typography centered just below the collar."
+        },
+        "visualDetails": {
+          "surfaceFinish": "The surface of the T-shirt has a soft, smooth texture typical of high-quality cotton. The paint splatters add a slight raised texture to the touch.",
+          "distinctiveFeatures": "The most distinctive features of this T-shirt are the bright, multicolored paint splatters and the bold 'HOLLERY DEYY.' text. Each splatter is uniquely shaped, ensuring no two shirts are exactly alike.",
+          "packagingElements": "Product only, no packaging",
+          "lightingInteraction": "The matte finish of the black fabric minimizes reflections, while the glossy paint splatters catch and reflect light, enhancing their visibility and color vibrancy under various lighting conditions."
+        },
+        "contextualInformation": {
+          "useCase": "Ideal for casual outings, artistic events, or as a statement piece in a trendy, casual wardrobe. Suitable for all seasons.",
+          "targetAudience": "Young adults and teenagers who appreciate urban fashion and statement clothing.",
+          "keySellingPoints": "Unique design with each piece having a one-of-a-kind paint splatter pattern, comfortable fabric, versatile styling options, and bold branding that appeals to a fashion-forward demographic."
+        }
+      },
+      "veo3Consistency": {
+        "productPlacement": "Ensure the T-shirt is fully visible with the front facing outward. The text and splatters should be clearly visible in each scene.",
+        "lightingRequirements": "Soft, diffuse lighting to reduce glare on the paint splatters and ensure the black fabric appears true to color without washing out the details.",
+        "cameraAngles": "Frontal view to highlight the text and splatter pattern, a close-up on the splatter details, and a three-quarter view to showcase the fit and form.",
+        "interactionGuidelines": "Characters should wear the T-shirt in a relaxed manner, possibly pairing it with casual, stylish bottoms to emphasize the T-shirt’s urban appeal."
+      }
+    },
+    "sceneOptimization": {
+      "bestPresentationAngles": [
+        "frontal",
+        "close-up on splatters",
+        "three-quarter"
+      ],
+      "recommendedEnvironments": [
+        "urban settings",
+        "art galleries",
+        "casual social gatherings"
+      ],
+      "demonstrationSuggestions": [
+        "model walking in an urban environment",
+        "close-up shots while the model interacts with art",
+        "casual conversation scenes in social settings"
+      ]
+    }
+  },
+  "metadata": {
+    "source": "images/68706656d1ad06b163eaea66_1752232385792.jpg",
+    "sourceType": "image",
+    "createdAt": "2025-07-11T11:13:26.929Z",
+    "analysisMethod": "openai"
+  }
+}

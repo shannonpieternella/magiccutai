@@ -1,0 +1,66 @@
+{
+  "id": "elias_rhythmo_411470",
+  "template": {
+    "character": {
+      "name": "Elias Rhythmo",
+      "visualRefinement": {
+        "facialFeatures": {
+          "exactEyeColorAndShape": "The eyes are a rich, deep brown, almost ebony, with a slight almond shape, moderately hooded eyelids, and full, dark lashes that frame them beautifully.",
+          "distinctNoseStructure": "The nose features a straight bridge of medium width, flaring slightly to well-proportioned nostrils, and a rounded, subtly prominent tip.",
+          "lipFullnessAndShape": "His lips are moderately full with a well-defined cupid's bow, the corners turn slightly upward, showcasing a warm, inviting natural pink hue with a smooth texture.",
+          "subtleWrinklesOrLines": "There are minimal lines, mainly a few subtle laugh lines around the mouth and a smooth forehead, indicating youthful skin.",
+          "cheekboneProminence": "Cheekbones are distinctly high and well-defined, casting soft shadows under the cheeks, enhancing his facial structure.",
+          "jawlineDefinition": "The jawline is sharp and well-defined, angling neatly down from the ear to a firm chin, giving his face a strong, determined look."
+        },
+        "hair": {
+          "preciseColor": "His hair is a glossy jet black, uniformly colored without any visible highlights or variations, closely cropped to his head, showing a clean and neat appearance.",
+          "exactStyleAndCut": "The hairstyle is a close buzz cut, evenly trimmed around the head, approximately a quarter inch in length, offering a tidy and low-maintenance look.",
+          "texture": "The hair texture appears very fine and tightly coiled, indicative of an African descent, showing a healthy sheen and uniformity throughout.",
+          "flyawaysOrSpecificStrands": "Due to the close crop of the buzz cut, there are no flyaways or loose strands; the hair is immaculately groomed."
+        },
+        "skin": {
+          "skinTone": "The skin tone is a rich, deep bronze with warm undertones, smooth and even across visible areas, reflecting a healthy, radiant complexion.",
+          "presenceOfFrecklesMolesScars": "There are no visible freckles, moles, or scars on the exposed areas of his face and neck, indicating clear skin.",
+          "skinTexture": "The skin texture is notably smooth and matte, with very fine pores that are barely visible, giving a well-cared-for appearance."
+        },
+        "buildAndPosture": {
+          "exactBodyType": "He has a muscular build, with broad shoulders and a visibly toned chest, indicative of regular physical activity and strength training.",
+          "typicalPosture": "His posture is upright and confident, with shoulders back and a slight forward lean, suggesting a dynamic and energetic personality."
+        },
+        "clothingAndAccessories": {
+          "specificGarmentTypesAndFit": "He wears a vibrant red-orange button-up shirt, tailored to fit snugly around his muscular torso, with sleeves rolled up to the elbows, revealing his forearms.",
+          "fabricTextures": "The shirt is made of a lightweight, breathable cotton blend, exhibiting a slight sheen under sunlight, and drapes well over his physique.",
+          "specificDetails": "The shirt features pearlescent buttons, double stitching along the seams, and a sharp, stiff collar, adding a touch of elegance to a casual outfit.",
+          "jewelry": "He wears a simple, dark leather bracelet on his left wrist, understated yet stylish.",
+          "eyeglassesStyle": "None visible"
+        },
+        "demeanorAndExpressions": {
+          "recurringMicroExpressions": "His expression is focused and thoughtful, with a slight furrowing of his brow and a gentle parting of lips, reflecting a contemplative and artistic nature.",
+          "feelOfTheirPresence": "Elias exudes a calm, approachable aura, combined with an underlying strength and confidence, making him seem both friendly and inspiring."
+        }
+      },
+      "voiceProfileSelection": {
+        "selectedVoice": "Creative/Artistic",
+        "voiceDescription": "A smooth, melodious baritone that flows effortlessly, reflecting his artistic soul and resonating with a warm, inviting timbre.",
+        "selectionReasoning": "His artistic demeanor, combined with the gentle expressions and confident posture, aligns perfectly with a voice that is both soothing and expressive."
+      },
+      "category": "creative"
+    },
+    "veo3Consistency": {
+      "wardrobe": "Maintain vibrant, well-fitted shirts in various colors, always with rolled-up sleeves to emphasize his muscular build and casual, artistic style.",
+      "physicalTraits": "Consistent portrayal of his deep bronze skin tone, muscular build, and neatly groomed hair to maintain character integrity across scenes.",
+      "mannerisms": "Frequent thoughtful expressions, gentle hand gestures while speaking or playing the guitar, and a confident, upright posture.",
+      "environmentSuggestions": [
+        "beachside cafe",
+        "art studio",
+        "urban rooftop"
+      ]
+    },
+    "cinematicStyle": "A vibrant, dynamic cinematographic style with plenty of natural light to enhance his skin tone and the vivid colors of his wardrobe, using close-ups to capture expressions and wide shots to include body language."
+  },
+  "metadata": {
+    "sourceImage": "images/68706656d1ad06b163eaea66_1752278383809.jpg",
+    "createdAt": "2025-07-12T00:00:11.481Z",
+    "analysisMethod": "openai"
+  }
+}

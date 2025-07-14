@@ -1,0 +1,58 @@
+{
+  "id": "product_hollery_deyy_splatter_art_t-shirt_100242",
+  "template": {
+    "product": {
+      "name": "Hollery Deyy Splatter Art T-Shirt",
+      "category": "fashion",
+      "visualRefinement": {
+        "physicalCharacteristics": {
+          "exactSizeAndDimensions": "This T-shirt is a standard men's medium with a chest width of approximately 20 inches, a body length of 28 inches, and sleeve length of 8 inches. The neckline diameter is roughly 7 inches, providing a comfortable fit.",
+          "colorScheme": "The primary color of the T-shirt is a deep matte black, interspersed with vibrant splashes of red, blue, yellow, and white. These splatters are asymmetrically distributed, adding a unique artistic flair to each piece.",
+          "materialComposition": "Made from a high-quality, soft cotton blend, this T-shirt offers both comfort and durability. The fabric has a slight stretch, enhancing the fit and allowing for ease of movement.",
+          "shapeAndForm": "The T-shirt features a classic crew neck and short sleeves with a straight hem, providing a casual, relaxed fit. The body of the shirt is rectangular with a slight taper near the waist to contour slightly to the body.",
+          "brandingElements": "The front of the T-shirt prominently displays the phrase 'HOLLERY DEYY.' in bold, slightly distressed white typography centered just below the collar."
+        },
+        "visualDetails": {
+          "surfaceFinish": "The fabric has a smooth, soft texture with a matte finish. The paint splatters add a slightly raised, textured feel to the touch on the splattered areas.",
+          "distinctiveFeatures": "Distinctive features include the bold, artistic paint splatters in bright, primary colors and the prominent, stylized branding on the front. Each splatter pattern is unique, making each shirt subtly one-of-a-kind.",
+          "packagingElements": "Product only, no packaging",
+          "lightingInteraction": "The matte black fabric minimizes reflections, while the colorful splatters catch the light, creating vibrant highlights that stand out against the dark background."
+        },
+        "contextualInformation": {
+          "useCase": "Ideal for casual wear, this T-shirt can be worn at social gatherings, art events, or during casual outings where a touch of unique artistic expression is appreciated.",
+          "targetAudience": "Geared towards young adults and fashion-forward individuals who appreciate a blend of street style and art.",
+          "keySellingPoints": "The key selling points of this T-shirt are its unique, eye-catching design, high-quality material, and versatile wearability. It appeals to those looking to express individuality through fashion."
+        }
+      },
+      "veo3Consistency": {
+        "productPlacement": "Ensure the T-shirt is displayed fully spread out, with clear visibility of the front design and color splatters. Avoid folding or partial views that obscure the branding or design elements.",
+        "lightingRequirements": "Soft, diffuse lighting to enhance the vivid colors of the paint splatters while maintaining the rich depth of the black fabric. Avoid harsh lighting that could create unwanted reflections.",
+        "cameraAngles": "Frontal view to highlight the design and branding, a close-up on the splatter details, and a slightly angled view to show the fit and form of the T-shirt.",
+        "interactionGuidelines": "Models should wear the T-shirt smoothly without any accessories that cover the design. Movements should be natural to showcase the fabric's quality and fit."
+      }
+    },
+    "sceneOptimization": {
+      "bestPresentationAngles": [
+        "frontal",
+        "45-degree angle",
+        "close-up on splatter details"
+      ],
+      "recommendedEnvironments": [
+        "urban outdoor settings",
+        "art galleries",
+        "casual indoor spaces"
+      ],
+      "demonstrationSuggestions": [
+        "model walking in an urban setting",
+        "casual posing at an art event",
+        "interaction in a group, highlighting the T-shirt"
+      ]
+    }
+  },
+  "metadata": {
+    "source": "images/68706656d1ad06b163eaea66_1752233078639.jpg",
+    "sourceType": "image",
+    "createdAt": "2025-07-11T11:25:00.243Z",
+    "analysisMethod": "openai"
+  }
+}

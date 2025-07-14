@@ -1,0 +1,66 @@
+{
+  "id": "chef_julian_348319",
+  "template": {
+    "character": {
+      "name": "Chef Julian",
+      "visualRefinement": {
+        "facialFeatures": {
+          "exactEyeColorAndShape": "Chef Julian's eyes are a deep, rich brown, almost resembling dark chocolate, with a slightly almond shape, complemented by a subtle hooded eyelid. His eyelashes are moderately long and black, enhancing the warmth and depth of his gaze.",
+          "distinctNoseStructure": "His nose features a straight bridge with a moderate width, flaring slightly at the nostrils which are well-defined but not overly prominent. The tip is rounded, adding a friendly aspect to his profile.",
+          "lipFullnessAndShape": "Julian's lips are of medium fullness with a well-defined cupid's bow and slightly rounded corners, presenting a natural rosy hue with a smooth, matte texture.",
+          "subtleWrinklesOrLines": "There are minimal wrinkles present, with only faint smile lines around his mouth and a few barely noticeable crow's feet, suggesting a face more often given to smiling.",
+          "cheekboneProminence": "His cheekbones are moderately high, giving his face a structured yet approachable look. The shadows under his cheekbones subtly enhance their definition without appearing harsh.",
+          "jawlineDefinition": "He has a strong, angular jawline that balances well with his facial proportions, giving him a look of determination and resilience."
+        },
+        "hair": {
+          "preciseColor": "Chef Julian's hair is a rich black with subtle brown undertones that become more visible under direct light. His roots are a consistent black, showing no signs of graying or color treatment.",
+          "exactStyleAndCut": "His hair is styled in medium-length dreadlocks, each approximately 10 inches long, neatly twisted and well-maintained, suggesting regular care. The part is slightly off-center, lending a casual yet styled look.",
+          "texture": "The dreadlocks are of a medium thickness, showing a good volume and density. Each lock has a smooth, slightly shiny finish indicating healthy hair.",
+          "flyawaysOrSpecificStrands": "There are a few shorter strands at the front, likely new growth, that add a natural and relaxed feel to his otherwise neat hairstyle."
+        },
+        "skin": {
+          "skinTone": "Chef Julian's skin tone is a rich espresso with warm undertones, providing a smooth, even base that radiates a healthy glow.",
+          "presenceOfFrecklesMolesScars": "There are a few small, barely noticeable moles on his right cheek, but otherwise, his skin is clear of any prominent freckles or scars.",
+          "skinTexture": "His skin appears smooth with a semi-matte finish, showing very fine pores and a uniform texture that suggests good skincare habits."
+        },
+        "buildAndPosture": {
+          "exactBodyType": "Julian has a mesomorphic build, indicating a balanced body type with well-developed muscles, broad shoulders, and a narrow waist, suggesting regular physical activity and strength.",
+          "typicalPosture": "He stands with a confident, upright posture, shoulders back and head held high, exuding a sense of pride and professionalism."
+        },
+        "clothingAndAccessories": {
+          "specificGarmentTypesAndFit": "He wears a stylish gray apron over a casual white t-shirt. The apron is fitted with a leather strap around the neck and a spacious front pocket, tailored to combine functionality with a modern aesthetic.",
+          "fabricTextures": "The apron is made of a heavy canvas material, providing durability and a slight sheen, while the t-shirt is of a lighter cotton blend, soft to the touch with a slight stretch.",
+          "specificDetails": "The apron features double stitching along the edges, brass rivets securing the leather straps, and a clean, crisp front pocket ideal for holding cooking tools.",
+          "jewelry": "None visible",
+          "eyeglassesStyle": "None visible"
+        },
+        "demeanorAndExpressions": {
+          "recurringMicroExpressions": "Julian often shows a gentle smile, with eyes slightly crinkling at the corners, reflecting a warm, inviting personality.",
+          "feelOfTheirPresence": "His demeanor is calm and collected, exuding a sense of warmth and approachability. His confident stance and friendly expressions suggest a person who is both professional and personable."
+        }
+      },
+      "voiceProfileSelection": {
+        "selectedVoice": "Friendly/Approachable",
+        "voiceDescription": "A warm, clear voice with a soothing timbre and a slight rasp that adds character, making his speech engaging and easy to listen to.",
+        "selectionReasoning": "His friendly and approachable demeanor, combined with his professional setting, suggests a voice that is both inviting and authoritative, suitable for a chef who needs to command attention yet remain personable."
+      },
+      "category": "creative"
+    },
+    "veo3Consistency": {
+      "wardrobe": "Chef Julian's wardrobe should consistently feature professional yet stylish chef attire, such as well-fitted aprons and clean, simple shirts.",
+      "physicalTraits": "Maintain his well-groomed dreadlocks, strong jawline, and warm brown eyes to ensure character consistency across scenes.",
+      "mannerisms": "Include gestures like wiping hands on an apron, checking the consistency of recipes, and a confident, welcoming smile.",
+      "environmentSuggestions": [
+        "modern kitchen",
+        "cooking class",
+        "gourmet restaurant"
+      ]
+    },
+    "cinematicStyle": "A vibrant and clean cinematic style with high color saturation to enhance the visual appeal of food and a shallow depth of field to keep the focus on Chef Julian and his culinary creations."
+  },
+  "metadata": {
+    "sourceImage": "images/boeklancering1-1.jpg",
+    "createdAt": "2025-07-10T02:42:28.321Z",
+    "analysisMethod": "openai"
+  }
+}

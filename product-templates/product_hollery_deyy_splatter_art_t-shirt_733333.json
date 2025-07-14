@@ -1,0 +1,58 @@
+{
+  "id": "product_hollery_deyy_splatter_art_t-shirt_733333",
+  "template": {
+    "product": {
+      "name": "Hollery Deyy Splatter Art T-Shirt",
+      "category": "fashion",
+      "visualRefinement": {
+        "physicalCharacteristics": {
+          "exactSizeAndDimensions": "This T-shirt features a standard relaxed fit, typical of casual wear, measuring approximately 28 inches in length and 20 inches in width for a size medium. The sleeves are short, extending about 8 inches from the shoulder seam.",
+          "colorScheme": "The primary color of the T-shirt is a deep matte black, serving as a backdrop for vibrant splatters of blue, red, yellow, and white paint. These splatters are randomly placed and vary in size, creating a unique pattern on each shirt.",
+          "materialComposition": "Made from a high-quality, soft cotton blend, this T-shirt offers both comfort and durability. The fabric is lightweight yet substantial, ideal for both everyday wear and artistic statement pieces.",
+          "shapeAndForm": "The T-shirt has a classic round neckline and a straight-cut torso, providing a comfortable, unisex fit. The hemline is straight, and the overall silhouette is boxy, giving it a contemporary urban appeal.",
+          "brandingElements": "The front of the T-shirt prominently features the phrase 'HOLLERY DEYY.' in bold, slightly raised white letters, positioned centrally just below the collar."
+        },
+        "visualDetails": {
+          "surfaceFinish": "The fabric has a smooth, soft texture with a slight sheen under direct light, contrasting with the matte finish of the paint splatters.",
+          "distinctiveFeatures": "The most distinctive features are the bright, multicolored paint splatters that appear to be hand-applied, giving each shirt a one-of-a-kind artistic flair. The bold white text branding adds a modern graphic element.",
+          "packagingElements": "Product only, no packaging",
+          "lightingInteraction": "The black fabric absorbs light, while the paint splatters and white text reflect light, creating a striking visual contrast that varies with lighting conditions."
+        },
+        "contextualInformation": {
+          "useCase": "Ideal for casual outings, artistic events, or as a statement piece in a fashion-forward wardrobe, this T-shirt pairs well with both jeans and skirts.",
+          "targetAudience": "Fashion-conscious individuals, particularly those interested in streetwear or artistic apparel.",
+          "keySellingPoints": "Unique design with each piece having a one-of-a-kind pattern, high-quality material ensuring comfort and durability, and bold branding that appeals to modern fashion trends."
+        }
+      },
+      "veo3Consistency": {
+        "productPlacement": "Ensure the T-shirt is fully visible, laid flat or worn by a model, with all text and splatter details clearly visible.",
+        "lightingRequirements": "Soft, diffuse lighting to enhance the texture of the fabric and the vibrancy of the paint splatters without creating harsh shadows.",
+        "cameraAngles": "Frontal view to capture the text and overall splatter pattern, a close-up on the splatter details, and a side angle to show the fit and sleeve length.",
+        "interactionGuidelines": "Models should interact with the T-shirt gently to avoid obscuring the design; movements should highlight the fluidity of the fabric and the vibrancy of the paint."
+      }
+    },
+    "sceneOptimization": {
+      "bestPresentationAngles": [
+        "frontal",
+        "close-up on paint splatters",
+        "45-degree angle"
+      ],
+      "recommendedEnvironments": [
+        "urban outdoor settings",
+        "art galleries",
+        "minimalist studios"
+      ],
+      "demonstrationSuggestions": [
+        "pairing with high-waisted jeans",
+        "layering under a denim jacket",
+        "styled with casual sneakers"
+      ]
+    }
+  },
+  "metadata": {
+    "source": "images/68747aedf8cb1255bf9d9784_1752467716556.jpg",
+    "sourceType": "image",
+    "createdAt": "2025-07-14T04:35:33.335Z",
+    "analysisMethod": "openai"
+  }
+}

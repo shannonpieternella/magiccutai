@@ -1,0 +1,58 @@
+{
+  "id": "product_e'xchange_unlimited_eau_de_parfum_836866",
+  "template": {
+    "product": {
+      "name": "E'Xchange Unlimited Eau de Parfum",
+      "category": "beauty",
+      "visualRefinement": {
+        "physicalCharacteristics": {
+          "exactSizeAndDimensions": "The perfume bottle measures approximately 10 cm in height, 12 cm in width, and 3 cm in depth, providing a compact yet substantial presence.",
+          "colorScheme": "The perfume liquid is a rich golden yellow, suggesting a luxurious and warm scent. The bottle is clear, showcasing the liquid, with a black cap and white text.",
+          "materialComposition": "Made primarily of high-quality glass with a smooth, glossy finish that enhances the visibility of the golden perfume. The cap is crafted from a matte black plastic.",
+          "shapeAndForm": "Rectangular with rounded edges and a flat base, allowing stable placement. The bottle has a thick glass border that tapers slightly towards the top.",
+          "brandingElements": "Features the 'E'Xchange' logo prominently in stylized white text on the front lower half, with 'Unlimited Eau de Parfum' beneath it."
+        },
+        "visualDetails": {
+          "surfaceFinish": "The glass is polished to a high gloss, reflecting light vividly, which accentuates the clarity and color of the perfume inside.",
+          "distinctiveFeatures": "The perfume bottle's distinctive thick glass border and the stark contrast between the golden yellow perfume and the matte black cap make it unique.",
+          "packagingElements": "Product only, no packaging is visible in the image provided.",
+          "lightingInteraction": "The clear glass interacts dynamically with light, creating bright highlights and deep shadows that outline the bottle's form."
+        },
+        "contextualInformation": {
+          "useCase": "Typically used for personal fragrance application, suitable for both day and evening wear due to its luxurious scent profile.",
+          "targetAudience": "Aimed at individuals who appreciate sophisticated, high-end fragrances.",
+          "keySellingPoints": "The perfume offers a luxurious scent encased in a stylishly designed bottle, ideal for consumers seeking elegance and quality in their fragrance choice."
+        }
+      },
+      "veo3Consistency": {
+        "productPlacement": "Place the product on a reflective surface to enhance the visibility of its clear glass and liquid color. Ensure the logo faces the camera.",
+        "lightingRequirements": "Soft, diffuse lighting to reduce glare on the glass while highlighting the golden color of the perfume. Backlight can enhance the silhouette.",
+        "cameraAngles": "Frontal angle to capture the logo and text clearly, a 45-degree angle to emphasize the bottle's depth and cap, and a top-down view to focus on the cap.",
+        "interactionGuidelines": "Characters should handle the bottle gently, preferably picking it up by the base and avoiding fingerprints on the glass to maintain clarity."
+      }
+    },
+    "sceneOptimization": {
+      "bestPresentationAngles": [
+        "frontal",
+        "45-degree",
+        "top-down"
+      ],
+      "recommendedEnvironments": [
+        "elegant dressing room",
+        "luxurious bathroom",
+        "high-end retail store"
+      ],
+      "demonstrationSuggestions": [
+        "applying the perfume to wrists",
+        "displaying the bottle on a vanity",
+        "placing the bottle back into a personal bag or drawer after use"
+      ]
+    }
+  },
+  "metadata": {
+    "source": "images/68706656d1ad06b163eaea66_1752291821539.jpg",
+    "sourceType": "image",
+    "createdAt": "2025-07-12T03:43:56.867Z",
+    "analysisMethod": "openai"
+  }
+}

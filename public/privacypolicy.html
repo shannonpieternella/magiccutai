@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - MagicCutAI</title>
+    <meta name="description" content="Privacy Policy for MagicCutAI - Learn how we protect and handle your personal information.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #000;
+            color: white;
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 20px 40px;
+            z-index: 10000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.4);
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .main-content {
+            padding-top: 120px;
+            min-height: 100vh;
+        }
+        
+        .hero-section {
+            padding: 80px 40px 40px;
+            text-align: center;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0b2e 25%, #16213e 75%, #0f3460 100%);
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .content-section {
+            padding: 60px 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .last-updated {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 40px 0 20px 0;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 20px;
+        }
+        
+        .highlight-box {
+            background: rgba(255, 0, 110, 0.1);
+            border: 1px solid rgba(255, 0, 110, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+        
+        .highlight-box h3 {
+            color: #ff006e;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        ul {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .contact-info {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 40px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer {
+            background: #000;
+            padding: 60px 40px 30px;
+            color: rgba(255, 255, 255, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .content-section {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="/" class="logo">
+                <div class="logo-icon">🎬</div>
+                MagicCutAI
+            </a>
+            <div class="nav-buttons">
+                <a href="/" class="btn btn-secondary">Home</a>
+                <a href="/contact" class="btn btn-secondary">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="hero-section">
+            <h1 class="hero-title">Privacy Policy</h1>
+            <p class="hero-subtitle">Your privacy is important to us. Learn how we collect, use, and protect your information.</p>
+        </section>
+
+        <section class="content-section">
+            <div class="last-updated">
+                <strong>Last Updated: January 15, 2025</strong>
+            </div>
+
+            <h2 class="section-title">1. Introduction</h2>
+            <p class="section-text">
+                Welcome to MagicCutAI ("we," "our," or "us"), operated by Upsell Business Agency. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website and use our AI-powered content creation services.
+            </p>
+            <p class="section-text">
+                By using our services, you agree to the collection and use of information in accordance with this policy. If you do not agree with our policies and practices, please do not use our services.
+            </p>
+
+            <h2 class="section-title">2. Information We Collect</h2>
+            
+            <h3 style="color: #8338ec; margin: 30px 0 15px 0; font-size: 1.3rem;">Personal Information</h3>
+            <p class="section-text">We may collect the following personal information:</p>
+            <ul>
+                <li>Name and contact information (email address, phone number)</li>
+                <li>Account credentials and profile information</li>
+                <li>Payment and billing information</li>
+                <li>Company information (if applicable)</li>
+                <li>Communication preferences</li>
+            </ul>
+
+            <h3 style="color: #8338ec; margin: 30px 0 15px 0; font-size: 1.3rem;">Usage Information</h3>
+            <p class="section-text">We automatically collect information about how you use our services:</p>
+            <ul>
+                <li>Content creation history and generated materials</li>
+                <li>Platform usage statistics and analytics</li>
+                <li>Device information and IP addresses</li>
+                <li>Browser type and operating system</li>
+                <li>Pages visited and time spent on our platform</li>
+            </ul>
+
+            <h3 style="color: #8338ec; margin: 30px 0 15px 0; font-size: 1.3rem;">Content Data</h3>
+            <p class="section-text">Information related to your content creation:</p>
+            <ul>
+                <li>Text prompts and descriptions you provide</li>
+                <li>Generated videos, images, and logos</li>
+                <li>Project settings and preferences</li>
+                <li>Feedback and ratings on generated content</li>
+            </ul>
+
+            <h2 class="section-title">3. How We Use Your Information</h2>
+            <p class="section-text">We use the collected information for the following purposes:</p>
+            <ul>
+                <li><strong>Service Provision:</strong> To provide, maintain, and improve our AI content creation services</li>
+                <li><strong>Account Management:</strong> To create and manage your account and subscriptions</li>
+                <li><strong>Payment Processing:</strong> To process payments and manage billing</li>
+                <li><strong>Communication:</strong> To send important updates, support responses, and promotional materials</li>
+                <li><strong>AI Improvement:</strong> To enhance our AI models and service quality (anonymized data only)</li>
+                <li><strong>Security:</strong> To protect against fraud, abuse, and security threats</li>
+                <li><strong>Legal Compliance:</strong> To comply with applicable laws and regulations</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h3>Important Note About AI Training</h3>
+                <p>We may use anonymized and aggregated data to improve our AI models. We never use your personal content or information to train AI models that would benefit competitors or compromise your privacy.</p>
+            </div>
+
+            <h2 class="section-title">4. Information Sharing and Disclosure</h2>
+            <p class="section-text">We do not sell, trade, or rent your personal information to third parties. We may share information in the following circumstances:</p>
+            <ul>
+                <li><strong>Service Providers:</strong> With trusted third-party providers who help us operate our services (payment processors, cloud storage, analytics)</li>
+                <li><strong>Legal Requirements:</strong> When required by law, legal process, or government request</li>
+                <li><strong>Business Transfers:</strong> In connection with mergers, acquisitions, or sale of assets</li>
+                <li><strong>Safety and Rights:</strong> To protect our rights, property, or safety, or that of our users</li>
+                <li><strong>Consent:</strong> With your explicit consent for other purposes</li>
+            </ul>
+
+            <h2 class="section-title">5. Data Security</h2>
+            <p class="section-text">
+                We implement industry-standard security measures to protect your information:
+            </p>
+            <ul>
+                <li>Encryption of data in transit and at rest</li>
+                <li>Regular security audits and vulnerability assessments</li>
+                <li>Access controls and authentication protocols</li>
+                <li>Secure cloud infrastructure with leading providers</li>
+                <li>Regular security training for our staff</li>
+            </ul>
+            <p class="section-text">
+                However, no method of transmission over the internet or electronic storage is 100% secure. While we strive to protect your information, we cannot guarantee absolute security.
+            </p>
+
+            <h2 class="section-title">6. Data Retention</h2>
+            <p class="section-text">
+                We retain your information for as long as necessary to provide our services and comply with legal obligations:
+            </p>
+            <ul>
+                <li><strong>Account Information:</strong> Retained while your account is active and for a reasonable period after closure</li>
+                <li><strong>Generated Content:</strong> Stored according to your subscription plan and user preferences</li>
+                <li><strong>Usage Data:</strong> Typically retained for up to 3 years for analytics and service improvement</li>
+                <li><strong>Financial Records:</strong> Retained for tax and legal compliance (typically 7 years)</li>
+            </ul>
+
+            <h2 class="section-title">7. Your Rights and Choices</h2>
+            <p class="section-text">Depending on your location, you may have the following rights:</p>
+            <ul>
+                <li><strong>Access:</strong> Request access to your personal information</li>
+                <li><strong>Correction:</strong> Request correction of inaccurate information</li>
+                <li><strong>Deletion:</strong> Request deletion of your personal information</li>
+                <li><strong>Portability:</strong> Request a copy of your data in a portable format</li>
+                <li><strong>Restriction:</strong> Request limitation of processing in certain circumstances</li>
+                <li><strong>Objection:</strong> Object to processing based on legitimate interests</li>
+                <li><strong>Withdrawal:</strong> Withdraw consent where processing is based on consent</li>
+            </ul>
+
+            <p class="section-text">
+                To exercise these rights, please contact us using the information provided below.
+            </p>
+
+            <h2 class="section-title">8. Cookies and Tracking Technologies</h2>
+            <p class="section-text">
+                We use cookies and similar technologies to enhance your experience:
+            </p>
+            <ul>
+                <li><strong>Essential Cookies:</strong> Required for basic platform functionality</li>
+                <li><strong>Analytics Cookies:</strong> Help us understand how you use our services</li>
+                <li><strong>Preference Cookies:</strong> Remember your settings and preferences</li>
+                <li><strong>Marketing Cookies:</strong> Used for personalized advertising (with consent)</li>
+            </ul>
+            <p class="section-text">
+                You can control cookie settings through your browser preferences. Please note that disabling certain cookies may affect platform functionality.
+            </p>
+
+            <h2 class="section-title">9. International Data Transfers</h2>
+            <p class="section-text">
+                Your information may be transferred to and processed in countries other than your own. We ensure appropriate safeguards are in place for international transfers, including:
+            </p>
+            <ul>
+                <li>Standard contractual clauses approved by the European Commission</li>
+                <li>Adequacy decisions by relevant data protection authorities</li>
+                <li>Other legally recognized transfer mechanisms</li>
+            </ul>
+
+            <h2 class="section-title">10. Children's Privacy</h2>
+            <p class="section-text">
+                Our services are not intended for individuals under the age of 18. We do not knowingly collect personal information from children. If you believe we have collected information from a child, please contact us immediately so we can delete such information.
+            </p>
+
+            <h2 class="section-title">11. Third-Party Services</h2>
+            <p class="section-text">
+                Our platform may integrate with third-party services (payment processors, cloud storage, analytics). These services have their own privacy policies, and we encourage you to review them. We are not responsible for the privacy practices of third-party services.
+            </p>
+
+            <h2 class="section-title">12. Changes to This Privacy Policy</h2>
+            <p class="section-text">
+                We may update this Privacy Policy from time to time to reflect changes in our practices or applicable laws. We will notify you of material changes by:
+            </p>
+            <ul>
+                <li>Email notification to registered users</li>
+                <li>Prominent notice on our website</li>
+                <li>In-app notifications for significant changes</li>
+            </ul>
+            <p class="section-text">
+                Your continued use of our services after such changes constitutes acceptance of the updated policy.
+            </p>
+
+            <h2 class="section-title">13. Contact Information</h2>
+            <div class="contact-info">
+                <p class="section-text">
+                    If you have any questions about this Privacy Policy or our data practices, please contact us:
+                </p>
+                <p class="section-text">
+                    <strong>Email:</strong> privacy@magiccut.ai<br>
+                    <strong>Support:</strong> support@magiccut.ai<br>
+                    <strong>Company:</strong> Upsell Business Agency<br>
+                    <strong>Location:</strong> Netherlands
+                </p>
+                <p class="section-text">
+                    <strong>Data Protection Officer:</strong> dpo@magiccut.ai
+                </p>
+            </div>
+
+            <div class="highlight-box">
+                <h3>GDPR Compliance</h3>
+                <p>For users in the European Union, we comply with the General Data Protection Regulation (GDPR). You have specific rights under GDPR, and we are committed to honoring these rights and protecting your personal data according to the highest standards.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 MagicCutAI, a division of Upsell Business Agency. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

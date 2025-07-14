@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - MagicCutAI</title>
+    <meta name="description" content="Terms of Service for MagicCutAI - Legal terms and conditions for using our AI-powered content creation platform.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #000;
+            color: white;
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 20px 40px;
+            z-index: 10000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.4);
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .main-content {
+            padding-top: 120px;
+            min-height: 100vh;
+        }
+        
+        .hero-section {
+            padding: 80px 40px 40px;
+            text-align: center;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0b2e 25%, #16213e 75%, #0f3460 100%);
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .content-section {
+            padding: 60px 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .last-updated {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 40px 0 20px 0;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 20px;
+        }
+        
+        .highlight-box {
+            background: rgba(255, 0, 110, 0.1);
+            border: 1px solid rgba(255, 0, 110, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+        
+        .highlight-box h3 {
+            color: #ff006e;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .warning-box {
+            background: rgba(255, 165, 0, 0.1);
+            border: 1px solid rgba(255, 165, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+        
+        .warning-box h3 {
+            color: #ffa500;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        ul {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .contact-info {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 40px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer {
+            background: #000;
+            padding: 60px 40px 30px;
+            color: rgba(255, 255, 255, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .content-section {
+                padding: 40px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="/" class="logo">
+                <div class="logo-icon">🎬</div>
+                MagicCutAI
+            </a>
+            <div class="nav-buttons">
+                <a href="/" class="btn btn-secondary">Home</a>
+                <a href="/contact" class="btn btn-secondary">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="hero-section">
+            <h1 class="hero-title">Terms of Service</h1>
+            <p class="hero-subtitle">Legal terms and conditions for using MagicCutAI's AI-powered content creation platform</p>
+        </section>
+
+        <section class="content-section">
+            <div class="last-updated">
+                <strong>Last Updated: January 15, 2025</strong>
+            </div>
+
+            <h2 class="section-title">1. Acceptance of Terms</h2>
+            <p class="section-text">
+                By accessing or using MagicCutAI ("the Service"), operated by Upsell Business Agency ("Company," "we," "our," or "us"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to these Terms, you may not access or use the Service.
+            </p>
+            <p class="section-text">
+                These Terms constitute a legally binding agreement between you and the Company. We may modify these Terms at any time, and such modifications will be effective immediately upon posting.
+            </p>
+
+            <h2 class="section-title">2. Description of Service</h2>
+            <p class="section-text">
+                MagicCutAI is an AI-powered content creation platform that provides:
+            </p>
+            <ul>
+                <li>AI Video Generation with character consistency and professional cinematography</li>
+                <li>AI Image Creation with high-resolution outputs up to 4K quality</li>
+                <li>AI Logo Design with vector-based outputs and brand guidelines</li>
+                <li>Associated tools, features, and functionalities</li>
+            </ul>
+            <p class="section-text">
+                The Service utilizes VEO3 technology and other advanced AI models to generate content based on user inputs and preferences.
+            </p>
+
+            <h2 class="section-title">3. Account Registration and Security</h2>
+            <p class="section-text">
+                To use certain features of the Service, you must register for an account. You agree to:
+            </p>
+            <ul>
+                <li>Provide accurate, current, and complete information</li>
+                <li>Maintain and update your account information</li>
+                <li>Keep your account credentials confidential</li>
+                <li>Be responsible for all activities under your account</li>
+                <li>Notify us immediately of unauthorized use</li>
+            </ul>
+            <p class="section-text">
+                You must be at least 18 years old to create an account. We reserve the right to suspend or terminate accounts that violate these Terms.
+            </p>
+
+            <h2 class="section-title">4. Subscription Plans and Billing</h2>
+            
+            <h3 style="color: #8338ec; margin: 30px 0 15px 0; font-size: 1.3rem;">Available Plans</h3>
+            <ul>
+                <li><strong>Starter Plan:</strong> €45/month - 5 AI video generations, HD quality, basic features</li>
+                <li><strong>Pro Plan:</strong> €135/month - 15 AI video generations, 4K quality, advanced features</li>
+                <li><strong>Business Plan:</strong> €270/month - 30 AI video generations, custom features, priority support</li>
+            </ul>
+
+            <h3 style="color: #8338ec; margin: 30px 0 15px 0; font-size: 1.3rem;">Billing Terms</h3>
+            <ul>
+                <li>Subscriptions automatically renew unless cancelled</li>
+                <li>Payments are processed in advance on a monthly basis</li>
+                <li>All fees are non-refundable except as required by law</li>
+                <li>Price changes will be communicated 30 days in advance</li>
+                <li>Failed payments may result in service suspension</li>
+            </ul>
+
+            <div class="warning-box">
+                <h3>Important Billing Information</h3>
+                <p>Monthly usage limits reset at the beginning of each billing cycle. Unused generations do not roll over to the next billing period. Cancellations take effect at the end of the current billing cycle.</p>
+            </div>
+
+            <h2 class="section-title">5. Acceptable Use Policy</h2>
+            <p class="section-text">You agree NOT to use the Service to:</p>
+            <ul>
+                <li>Create content that violates any laws or regulations</li>
+                <li>Generate harmful, abusive, threatening, or discriminatory content</li>
+                <li>Create content depicting minors in inappropriate contexts</li>
+                <li>Impersonate others or create misleading content without permission</li>
+                <li>Generate content that infringes on intellectual property rights</li>
+                <li>Create spam, malware, or other malicious content</li>
+                <li>Attempt to reverse engineer or exploit our AI models</li>
+                <li>Use the Service for illegal or unauthorized purposes</li>
+                <li>Generate content for adult/explicit purposes</li>
+                <li>Create deepfakes or non-consensual content</li>
+            </ul>
+
+            <h2 class="section-title">6. Intellectual Property Rights</h2>
+            
+            <h3 style="color: #8338ec; margin: 30px 0 15px 0; font-size: 1.3rem;">Your Content Rights</h3>
+            <p class="section-text">
+                Subject to compliance with these Terms and your subscription plan:
+            </p>
+            <ul>
+                <li>You retain ownership of text prompts and inputs you provide</li>
+                <li>You receive commercial usage rights for content generated with Professional and Enterprise plans</li>
+                <li>Free tier users receive personal use rights only</li>
+                <li>You are responsible for ensuring your inputs don't infringe third-party rights</li>
+            </ul>
+
+            <h3 style="color: #8338ec; margin: 30px 0 15px 0; font-size: 1.3rem;">Our Rights</h3>
+            <p class="section-text">
+                We retain all rights to:
+            </p>
+            <ul>
+                <li>The Service platform, software, and underlying technology</li>
+                <li>AI models, algorithms, and training methodologies</li>
+                <li>Trademarks, logos, and brand materials</li>
+                <li>Anonymized usage data for service improvement</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h3>Commercial Usage Rights</h3>
+                <p>Professional and Enterprise plan subscribers receive full commercial usage rights for generated content, including the right to use, modify, distribute, and monetize the content for business purposes. Free and Starter plan users are limited to personal, non-commercial use.</p>
+            </div>
+
+            <h2 class="section-title">7. Content and Data Policy</h2>
+            <p class="section-text">
+                Regarding content you create and data you provide:
+            </p>
+            <ul>
+                <li>We may use anonymized data to improve our AI models</li>
+                <li>We do not claim ownership of your generated content</li>
+                <li>You grant us a license to process your inputs to provide the Service</li>
+                <li>We may remove content that violates these Terms</li>
+                <li>Backup and storage are subject to your subscription plan</li>
+            </ul>
+
+            <h2 class="section-title">8. Privacy and Data Protection</h2>
+            <p class="section-text">
+                Your privacy is important to us. Our collection, use, and protection of your personal information is governed by our Privacy Policy, which is incorporated into these Terms by reference. By using the Service, you consent to our Privacy Policy.
+            </p>
+
+            <h2 class="section-title">9. Disclaimers and Limitations</h2>
+            
+            <h3 style="color: #8338ec; margin: 30px 0 15px 0; font-size: 1.3rem;">Service Availability</h3>
+            <p class="section-text">
+                The Service is provided "as is" and "as available." We do not guarantee:
+            </p>
+            <ul>
+                <li>Continuous, uninterrupted, or error-free operation</li>
+                <li>Specific quality or accuracy of generated content</li>
+                <li>Compatibility with all devices or software</li>
+                <li>That the Service will meet your specific requirements</li>
+            </ul>
+
+            <h3 style="color: #8338ec; margin: 30px 0 15px 0; font-size: 1.3rem;">Content Disclaimer</h3>
+            <p class="section-text">
+                AI-generated content may:
+            </p>
+            <ul>
+                <li>Contain inaccuracies or inconsistencies</li>
+                <li>Require human review and editing</li>
+                <li>Not be suitable for all purposes</li>
+                <li>Vary in quality based on input complexity</li>
+            </ul>
+
+            <div class="warning-box">
+                <h3>Limitation of Liability</h3>
+                <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, WE SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF PROFITS, DATA, USE, OR GOODWILL, ARISING FROM YOUR USE OF THE SERVICE.</p>
+            </div>
+
+            <h2 class="section-title">10. Indemnification</h2>
+            <p class="section-text">
+                You agree to indemnify, defend, and hold harmless the Company and its affiliates from any claims, damages, losses, or expenses arising from:
+            </p>
+            <ul>
+                <li>Your use of the Service</li>
+                <li>Your violation of these Terms</li>
+                <li>Your infringement of third-party rights</li>
+                <li>Content you create using the Service</li>
+            </ul>
+
+            <h2 class="section-title">11. Termination</h2>
+            <p class="section-text">
+                Either party may terminate this agreement:
+            </p>
+            <ul>
+                <li><strong>You:</strong> By cancelling your subscription or deleting your account</li>
+                <li><strong>We:</strong> For violation of Terms, illegal activity, or business reasons</li>
+            </ul>
+            <p class="section-text">
+                Upon termination:
+            </p>
+            <ul>
+                <li>Your access to the Service will cease</li>
+                <li>You may download your content within 30 days</li>
+                <li>We may delete your account and associated data</li>
+                <li>Applicable provisions of these Terms will survive</li>
+            </ul>
+
+            <h2 class="section-title">12. Force Majeure</h2>
+            <p class="section-text">
+                We shall not be liable for any failure or delay in performance due to circumstances beyond our reasonable control, including but not limited to acts of God, war, terrorism, pandemics, government actions, natural disasters, or technical failures of third-party services.
+            </p>
+
+            <h2 class="section-title">13. Governing Law and Dispute Resolution</h2>
+            <p class="section-text">
+                These Terms are governed by the laws of the Netherlands. Any disputes arising from these Terms or the Service shall be resolved through:
+            </p>
+            <ul>
+                <li>Good faith negotiation between the parties</li>
+                <li>Binding arbitration if negotiation fails</li>
+                <li>Courts of competent jurisdiction in the Netherlands as a last resort</li>
+            </ul>
+
+            <h2 class="section-title">14. Severability</h2>
+            <p class="section-text">
+                If any provision of these Terms is found to be invalid or unenforceable, the remaining provisions will continue in full force and effect. The invalid provision will be modified to the minimum extent necessary to make it valid and enforceable.
+            </p>
+
+            <h2 class="section-title">15. Changes to Terms</h2>
+            <p class="section-text">
+                We reserve the right to modify these Terms at any time. Material changes will be communicated through:
+            </p>
+            <ul>
+                <li>Email notification to registered users</li>
+                <li>Prominent website notice</li>
+                <li>In-app notifications</li>
+            </ul>
+            <p class="section-text">
+                Your continued use of the Service after such changes constitutes acceptance of the modified Terms.
+            </p>
+
+            <h2 class="section-title">16. Contact Information</h2>
+            <div class="contact-info">
+                <p class="section-text">
+                    For questions about these Terms of Service, please contact us:
+                </p>
+                <p class="section-text">
+                    <strong>Email:</strong> legal@magiccut.ai<br>
+                    <strong>Support:</strong> support@magiccut.ai<br>
+                    <strong>Company:</strong> Upsell Business Agency<br>
+                    <strong>Location:</strong> Netherlands
+                </p>
+            </div>
+
+            <div class="highlight-box">
+                <h3>Acknowledgment</h3>
+                <p>By using MagicCutAI, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service. These Terms constitute the entire agreement between you and Upsell Business Agency regarding your use of the Service.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 MagicCutAI, a division of Upsell Business Agency. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

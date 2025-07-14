@@ -1,0 +1,66 @@
+{
+  "id": "eleanor_grace_080634",
+  "template": {
+    "character": {
+      "name": "Eleanor Grace",
+      "visualRefinement": {
+        "facialFeatures": {
+          "exactEyeColorAndShape": "Her eyes are a warm hazel, predominantly green with a ring of brown near the pupil, shaped slightly almond with a gentle droop at the outer corners, framed by moderately thick, grey lashes.",
+          "distinctNoseStructure": "Her nose is rounded with a soft, wide bridge and full nostrils, complementing her cheerful expression; the tip is slightly bulbous, adding character to her profile.",
+          "lipFullnessAndShape": "Her lips are moderately full with a well-defined cupid's bow and slightly upturned corners, exhibiting a natural rosy hue and a smooth texture, indicative of good health and vitality.",
+          "subtleWrinklesOrLines": "Laugh lines prominently frame her mouth, with crow's feet radiating from the outer corners of her eyes, and a few soft forehead lines, all highlighting years of joyful expressions.",
+          "cheekboneProminence": "Her cheekbones are moderately high, creating subtle shadows under her eyes, while the softness of her cheeks gives her a friendly and approachable look.",
+          "jawlineDefinition": "Her jawline is softly rounded, enhancing her maternal and nurturing appearance, with a slight fullness that balances her facial proportions elegantly."
+        },
+        "hair": {
+          "preciseColor": "Her hair is a rich salt-and-pepper, predominantly silver with streaks of deep charcoal, more pronounced at the temples and blending beautifully towards the crown.",
+          "exactStyleAndCut": "Her hair is cut in a layered bob that reaches just below her ears, styled with a gentle inward curl at the ends, providing a voluminous and lively appearance.",
+          "texture": "Her hair texture is fine but dense, giving it a plush look with a natural shine that suggests healthy, well-maintained hair.",
+          "flyawaysOrSpecificStrands": "A few wispy strands softly frame her face, adding a touch of casualness to her otherwise neat hairstyle."
+        },
+        "skin": {
+          "skinTone": "Her skin tone is a light olive with warm undertones, smooth and radiant, suggesting meticulous care and perhaps a routine that includes hydration and sun protection.",
+          "presenceOfFrecklesMolesScars": "A small, light brown mole sits gracefully above her right eyebrow, adding uniqueness to her facial features; otherwise, her skin is largely clear.",
+          "skinTexture": "Her skin appears soft and supple with minimal visible pores, exhibiting a slightly dewy finish that complements her age and enhances her warm glow."
+        },
+        "buildAndPosture": {
+          "exactBodyType": "She possesses a robust build with broad shoulders and a balanced torso-to-leg ratio, suggesting a lifetime of activity and strength.",
+          "typicalPosture": "Her posture is upright with a slight forward lean, indicative of an engaging and active personality, ready to interact warmly with others."
+        },
+        "clothingAndAccessories": {
+          "specificGarmentTypesAndFit": "She wears a floral patterned blouse with a relaxed fit, featuring a rounded neckline and short sleeves, suitable for both casual and semi-formal settings.",
+          "fabricTextures": "The blouse is made of a lightweight, breathable fabric, likely cotton or a cotton blend, with a soft texture and slight elasticity for comfort.",
+          "specificDetails": "The blouse showcases a detailed floral print in muted tones of grey and white, with discreet stitching and a clean, well-maintained appearance.",
+          "jewelry": "Simple silver hoop earrings complement her hairstyle and facial features, adding a touch of elegance without overpowering.",
+          "eyeglassesStyle": "She wears thin, oval-framed glasses with a slight tint, enhancing her scholarly yet approachable look."
+        },
+        "demeanorAndExpressions": {
+          "recurringMicroExpressions": "Her face frequently lights up with a genuine smile, accompanied by slightly raised eyebrows and a twinkle in her eyes, reflecting a kind and open-hearted nature.",
+          "feelOfTheirPresence": "Eleanor's presence is comforting and joyful, radiating warmth and wisdom; her demeanor suggests she is both a good listener and a storyteller, making her highly approachable and respected."
+        }
+      },
+      "voiceProfileSelection": {
+        "selectedVoice": "Healthcare/Caring",
+        "voiceDescription": "Her voice is likely soft and melodious, with a soothing timbre and a gentle cadence, reflecting her caring and nurturing personality.",
+        "selectionReasoning": "This voice profile fits Eleanor based on her visual warmth and maternal features, aligning with a persona that exudes care and empathy."
+      },
+      "category": "healthcare"
+    },
+    "veo3Consistency": {
+      "wardrobe": "Maintain a selection of floral and soft-textured blouses for Eleanor, ensuring they are always in muted, soothing colors to reflect her gentle nature.",
+      "physicalTraits": "Consistent portrayal of her warm hazel eyes, silver hair, and radiant smile must be maintained across scenes to preserve character identity.",
+      "mannerisms": "Include gestures like a comforting hand touch, nods of understanding, and her characteristic joyful laugh to maintain her engaging demeanor.",
+      "environmentSuggestions": [
+        "community center",
+        "garden",
+        "home setting"
+      ]
+    },
+    "cinematicStyle": "A soft-focus, warm lighting cinematic style would suit Eleanor, enhancing her approachable and nurturing characteristics, with close-ups to capture her expressive facial features."
+  },
+  "metadata": {
+    "sourceImage": "images/64821196_s.jpg",
+    "createdAt": "2025-07-10T03:28:00.638Z",
+    "analysisMethod": "openai"
+  }
+}

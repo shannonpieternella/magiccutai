@@ -1,0 +1,58 @@
+{
+  "id": "product_aqua_serenity_ceramic_mug_798559",
+  "template": {
+    "product": {
+      "name": "Aqua Serenity Ceramic Mug",
+      "category": "home",
+      "visualRefinement": {
+        "physicalCharacteristics": {
+          "exactSizeAndDimensions": "This ceramic mug stands approximately 4 inches tall, with a diameter of 3.5 inches at the rim, tapering slightly to 2.5 inches at the base. The handle extends 1.5 inches from the body, providing a comfortable grip.",
+          "colorScheme": "The mug is coated in a soothing aqua blue with a glossy finish. The interior is a stark white, creating a pleasing contrast. The color is consistent, with no variations or gradients.",
+          "materialComposition": "Made from high-quality ceramic, the mug has a smooth, glossy surface that feels solid and durable in hand. The material is thick, ensuring good insulation for hot beverages.",
+          "shapeAndForm": "The mug has a cylindrical shape with a slightly tapered base and a smoothly curved handle. Its form is simple yet elegant, making it visually appealing from all angles.",
+          "brandingElements": "None visible"
+        },
+        "visualDetails": {
+          "surfaceFinish": "The surface of the mug is uniformly glossy, reflecting light softly. This finish enhances the vibrancy of the aqua color and provides a smooth tactile experience.",
+          "distinctiveFeatures": "The distinctive aqua color sets this mug apart. Additionally, the contrast between the aqua exterior and the white interior is visually striking, making it easily recognizable.",
+          "packagingElements": "Product only, no packaging",
+          "lightingInteraction": "The glossy finish interacts with light by producing soft reflections and subtle highlights, which accentuate its curved form and color depth."
+        },
+        "contextualInformation": {
+          "useCase": "Ideal for serving hot beverages such as coffee, tea, or hot chocolate. Suitable for use in homes, offices, or cafes.",
+          "targetAudience": "Designed for adults who appreciate minimalist and functional kitchenware.",
+          "keySellingPoints": "The mug's robust ceramic build ensures durability and heat retention. The elegant color and design make it a stylish addition to any table setting."
+        }
+      },
+      "veo3Consistency": {
+        "productPlacement": "The mug should be placed on a neutral-colored surface to emphasize its color. It should be positioned with the handle slightly to the right for consistency.",
+        "lightingRequirements": "Soft, diffused lighting is recommended to enhance the glossy finish and avoid harsh shadows or highlights that could distort the perceived color.",
+        "cameraAngles": "Frontal view to capture the color and design, a top-down angle to show the interior contrast, and a side view to highlight the handle's curve.",
+        "interactionGuidelines": "Characters should handle the mug by its handle, possibly bringing it to their lips to mimic drinking, to demonstrate its primary function."
+      }
+    },
+    "sceneOptimization": {
+      "bestPresentationAngles": [
+        "frontal",
+        "45-degree angle",
+        "top-down"
+      ],
+      "recommendedEnvironments": [
+        "kitchen setting with natural light",
+        "cozy cafe table",
+        "modern office kitchenette"
+      ],
+      "demonstrationSuggestions": [
+        "pouring coffee into the mug",
+        "holding the mug while in a relaxed seated position",
+        "placing the mug on a table after a satisfying sip"
+      ]
+    }
+  },
+  "metadata": {
+    "source": "product-images/2070df9e4cd8ccfbdba3d4a8e5bd02ae815a4056_600_600_fill.jpg",
+    "sourceType": "image",
+    "createdAt": "2025-07-08T04:09:58.560Z",
+    "analysisMethod": "openai"
+  }
+}

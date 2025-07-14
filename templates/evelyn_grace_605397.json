@@ -1,0 +1,66 @@
+{
+  "id": "evelyn_grace_605397",
+  "template": {
+    "character": {
+      "name": "Evelyn Grace",
+      "visualRefinement": {
+        "facialFeatures": {
+          "exactEyeColorAndShape": "Her eyes are a vibrant hazel, predominantly green with bursts of golden brown near the pupils, shaped in a slightly almond form with well-defined, naturally arched eyebrows and long, dark lashes enhancing their captivating allure.",
+          "distinctNoseStructure": "Evelyn's nose is elegantly proportioned with a straight bridge, subtly flared nostrils, and a rounded tip that complements her symmetrical face, providing a graceful profile.",
+          "lipFullnessAndShape": "Her lips are medium in fullness with a well-defined cupid's bow and slightly upturned corners, presenting a natural rosy hue and a smooth, matte texture.",
+          "subtleWrinklesOrLines": "Her face shows minimal signs of aging, with only faint smile lines around her mouth, enhancing her warm expressions without detracting from her youthful appearance.",
+          "cheekboneProminence": "High and well-defined cheekbones cast subtle shadows under her eyes, accentuating her facial structure and giving her a sophisticated and regal appearance.",
+          "jawlineDefinition": "Evelyn possesses a strong yet feminine jawline that is slightly rounded at the chin, creating a harmonious balance with her overall facial features."
+        },
+        "hair": {
+          "preciseColor": "Her hair boasts a rich copper tone with shades of deep auburn and subtle golden highlights that catch the light, creating a vibrant, dimensional appearance.",
+          "exactStyleAndCut": "Styled in soft, flowing waves that reach just below her shoulders, her hair features subtle layers that add volume and movement, with a center part that frames her face symmetrically.",
+          "texture": "Her hair texture is naturally wavy, exhibiting a healthy sheen and thickness that suggests regular care and attention to maintaining its lustrous quality.",
+          "flyawaysOrSpecificStrands": "A few wispy strands softly frame her face, adding a touch of effortless elegance to her overall hairstyle."
+        },
+        "skin": {
+          "skinTone": "Evelyn's skin tone is a warm beige with peachy undertones, giving her a radiant, sun-kissed appearance that looks smooth and even.",
+          "presenceOfFrecklesMolesScars": "Her skin is clear with a few barely noticeable freckles across the bridge of her nose, adding a natural charm to her features.",
+          "skinTexture": "Her skin appears velvety and matte, with a fine texture and barely visible pores, indicative of meticulous care and possibly professional skincare treatments."
+        },
+        "buildAndPosture": {
+          "exactBodyType": "Evelyn has a slender, well-proportioned build with a balanced shoulder to hip ratio, indicating a healthy physique possibly maintained through regular exercise.",
+          "typicalPosture": "She exhibits a confident posture with shoulders back, a slight tilt of the head, and a beaming smile, suggesting a friendly and approachable demeanor."
+        },
+        "clothingAndAccessories": {
+          "specificGarmentTypesAndFit": "She wears a high-neck, long-sleeved silk blouse in a soft ivory color, which drapes elegantly over her frame, suggesting both sophistication and comfort.",
+          "fabricTextures": "The blouse is made from a high-quality silk blend, evident in its smooth texture and subtle sheen that complements her radiant skin tone.",
+          "specificDetails": "The blouse features delicate gathers at the neck and cuffs, adding a touch of refined detail that enhances its elegant design.",
+          "jewelry": "None visible",
+          "eyeglassesStyle": "None visible"
+        },
+        "demeanorAndExpressions": {
+          "recurringMicroExpressions": "Evelyn's facial expressions frequently include a warm, inviting smile and twinkling eyes that convey sincerity and enthusiasm.",
+          "feelOfTheirPresence": "Her presence exudes a blend of warmth, confidence, and professionalism, making her approachable yet respected, ideal for roles that require both friendliness and authority."
+        }
+      },
+      "voiceProfileSelection": {
+        "selectedVoice": "Professional/Business",
+        "voiceDescription": "Her voice is likely clear, articulate, with a warm timbre, suitable for conveying information with authority yet maintaining a friendly tone.",
+        "selectionReasoning": "Given her professional attire and confident demeanor, a voice that balances authority with approachability would complement her visual presentation perfectly."
+      },
+      "category": "business"
+    },
+    "veo3Consistency": {
+      "wardrobe": "Maintain a selection of high-quality, professional attire in neutral tones to ensure consistency with her sophisticated style.",
+      "physicalTraits": "Her vibrant hair color, well-maintained skin, and distinctive facial features should remain consistent across scenes to maintain character identity.",
+      "mannerisms": "Include consistent gestures such as a confident posture, warm smiles, and direct eye contact to reinforce her approachable yet authoritative character.",
+      "environmentSuggestions": [
+        "modern office",
+        "corporate meeting room",
+        "high-end retail environment"
+      ]
+    },
+    "cinematicStyle": "A clean, polished cinematic style with soft lighting to enhance her natural features and elegant wardrobe, suitable for high-end commercial or corporate settings."
+  },
+  "metadata": {
+    "sourceImage": "images/68706656d1ad06b163eaea66_1752304579516.jpg",
+    "createdAt": "2025-07-12T07:16:45.403Z",
+    "analysisMethod": "openai"
+  }
+}

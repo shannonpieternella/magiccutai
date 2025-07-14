@@ -1,0 +1,58 @@
+{
+  "id": "product_caterside_luxury_rimless_sunglasses_410225",
+  "template": {
+    "product": {
+      "name": "Caterside Luxury Rimless Sunglasses",
+      "category": "fashion",
+      "visualRefinement": {
+        "physicalCharacteristics": {
+          "exactSizeAndDimensions": "The sunglasses feature a lens width of approximately 60mm, a lens height of 50mm, and a temple length of 140mm. The bridge width is about 18mm, providing a comfortable fit for a variety of face shapes.",
+          "colorScheme": "The frame exhibits a polished gold-tone finish with intricate detailing on the hinges. The lenses are transparent with a slight reflective sheen under direct light, enhancing their luxurious appeal.",
+          "materialComposition": "Constructed from high-quality metal alloys for the frame, with a detailed braided temple design in gold. The lenses are made of premium optical-grade polycarbonate, offering clarity and durability.",
+          "shapeAndForm": "These sunglasses are rimless with a unique geometric lens shape, slightly angular with soft edges, providing a modern yet timeless aesthetic. The temples are slender with a decorative braiding.",
+          "brandingElements": "The brand 'CATERSIDE' is prominently displayed on the black packaging box in gold lettering, aligned centrally. No visible branding on the sunglasses themselves."
+        },
+        "visualDetails": {
+          "surfaceFinish": "The metal components of the sunglasses have a glossy finish, reflecting light elegantly. The braided temple adds a textured contrast to the smooth lenses.",
+          "distinctiveFeatures": "The distinctive braided design on the temples is unique, featuring a rope-like texture in gold that catches the light. The rimless design and geometric lens shape set these sunglasses apart.",
+          "packagingElements": "The sunglasses are presented on a matte black box with a velvet-like texture inside to protect and display the product. The box features the brand logo in a reflective gold finish.",
+          "lightingInteraction": "The glossy gold finish of the frame interacts dynamically with light, creating highlights and subtle reflections that emphasize its contours and craftsmanship."
+        },
+        "contextualInformation": {
+          "useCase": "Ideal for high-fashion events, outdoor social gatherings, or as a statement accessory in professional or casual settings. Perfect for those seeking a blend of luxury and modern style.",
+          "targetAudience": "Fashion-conscious individuals, both men and women, aged 25 to 45 who appreciate luxury and style.",
+          "keySellingPoints": "These sunglasses offer a unique blend of luxury and modern design with their rimless, geometric lenses and distinctive braided temples. The high-quality materials ensure durability and comfort."
+        }
+      },
+      "veo3Consistency": {
+        "productPlacement": "Ensure the sunglasses are always displayed against a high-contrast background to highlight the rimless design and reflective properties of the lenses and frame.",
+        "lightingRequirements": "Soft, diffused lighting to enhance the reflective qualities of the metal and avoid harsh shadows, with a spotlight to accentuate the unique braided temple design.",
+        "cameraAngles": "Frontal view to capture the overall design, a close-up on the temple to highlight the braiding detail, and a side angle to showcase the rimless feature.",
+        "interactionGuidelines": "Characters should handle the sunglasses by the temples, carefully avoiding contact with the lenses. Emphasize the elegance and lightness of the sunglasses during interactions."
+      }
+    },
+    "sceneOptimization": {
+      "bestPresentationAngles": [
+        "frontal",
+        "45-degree angle",
+        "side view"
+      ],
+      "recommendedEnvironments": [
+        "luxury retail settings",
+        "outdoor sunny environments",
+        "elegant indoor spaces"
+      ],
+      "demonstrationSuggestions": [
+        "demonstrating the lightness and comfort during wear",
+        "showcasing the sunglasses with various fashionable outfits",
+        "highlighting the unique temple design in close-up shots"
+      ]
+    }
+  },
+  "metadata": {
+    "source": "images/S46917b57a8c644b1b605cdf016e503c2C.jpg_640x640q90.webp",
+    "sourceType": "image",
+    "createdAt": "2025-07-10T04:06:50.226Z",
+    "analysisMethod": "openai"
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "id": "product_precision_hex_key_set_461203",
+  "template": {
+    "product": {
+      "name": "Precision Hex Key Set",
+      "category": "automotive",
+      "visualRefinement": {
+        "physicalCharacteristics": {
+          "exactSizeAndDimensions": "This hex key set includes multiple keys ranging from approximately 40mm to 110mm in length, with varying widths from 2mm to 10mm, each progressively larger than the next.",
+          "colorScheme": "The keys themselves are a polished silver, made of high-grade steel with a mirror-like finish, while the holder is a vibrant, matte yellow with embossed labeling in a deeper yellow hue.",
+          "materialComposition": "The keys are crafted from chrome vanadium steel, known for its strength, durability, and resistance to abrasion and corrosion. The holder is made from a tough, flexible plastic with a non-slip texture.",
+          "shapeAndForm": "Each key is a straight, elongated hexagon in cross-section, tapering slightly at the ends with a rounded tip for ease of entry into screw heads. The holder is rectangular with contoured slots for each key.",
+          "brandingElements": "The holder prominently features the brand name and logo in a raised, bold typeface along with the size of each key clearly embossed next to its respective slot."
+        },
+        "visualDetails": {
+          "surfaceFinish": "The keys have a glossy, metallic finish that reflects light sharply, contrasting with the holder's matte, slightly textured surface.",
+          "distinctiveFeatures": "The set includes uniquely sized keys, each marked with its size on the holder, which is designed for easy access and identification. The bright yellow holder is distinctive and easily recognizable.",
+          "packagingElements": "Product only, no packaging",
+          "lightingInteraction": "The metallic keys reflect light intensely, creating bright highlights and defined shadows, while the matte holder diffuses light softly."
+        },
+        "contextualInformation": {
+          "useCase": "Ideal for automotive repair, machinery maintenance, and DIY projects involving hexagonal screw profiles.",
+          "targetAudience": "Automotive technicians, machinery maintenance professionals, and DIY enthusiasts.",
+          "keySellingPoints": "Made from high-strength chrome vanadium steel, includes a range of sizes from 2mm to 10mm, each key is clearly marked, and the holder provides excellent organization and easy access."
+        }
+      },
+      "veo3Consistency": {
+        "productPlacement": "Place the hex key set prominently in the foreground of scenes, with the holder open so that all keys and their sizes are visible.",
+        "lightingRequirements": "Use bright, direct lighting to enhance the metallic finish of the keys and create contrast with the matte holder.",
+        "cameraAngles": "Overhead shots to display all keys, close-ups on individual keys being selected, side angles to highlight the embossed size markings.",
+        "interactionGuidelines": "Characters should handle the keys delicately, using the tip to align with screws, and occasionally refer to the size markings for accuracy."
+      }
+    },
+    "sceneOptimization": {
+      "bestPresentationAngles": [
+        "overhead",
+        "close-up on holder",
+        "side angle showing size markings"
+      ],
+      "recommendedEnvironments": [
+        "workshop",
+        "garage",
+        "on-site repair scenario"
+      ],
+      "demonstrationSuggestions": [
+        "demonstrating key selection from the holder",
+        "using a key on a vehicle or machinery",
+        "showing the storage of keys back into the holder"
+      ]
+    }
+  },
+  "metadata": {
+    "source": "images/68706656d1ad06b163eaea66_1752278438330.jpeg",
+    "sourceType": "image",
+    "createdAt": "2025-07-12T00:01:01.203Z",
+    "analysisMethod": "openai"
+  }
+}

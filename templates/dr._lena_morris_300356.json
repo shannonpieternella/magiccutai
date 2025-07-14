@@ -1,0 +1,66 @@
+{
+  "id": "dr._lena_morris_300356",
+  "template": {
+    "character": {
+      "name": "Dr. Lena Morris",
+      "visualRefinement": {
+        "facialFeatures": {
+          "exactEyeColorAndShape": "Her eyes are a rich hazel, predominantly green with a burst of brown near the pupils, shaped in a slightly almond form with well-defined, naturally arched eyebrows and long, curled, black eyelashes.",
+          "distinctNoseStructure": "The nose is elegantly structured with a narrow bridge, medium-sized nostrils that are evenly flared, and a rounded tip that complements her soft facial features.",
+          "lipFullnessAndShape": "Her lips are full with a well-defined cupid's bow, the corners turn upwards slightly, giving her a gentle, inviting smile. The natural color is a soft pink with a smooth, hydrated texture.",
+          "subtleWrinklesOrLines": "There are minimal lines, only faint smile lines around her mouth which become more pronounced when she smiles, adding warmth to her expression.",
+          "cheekboneProminence": "Her cheekbones are moderately high, casting subtle shadows under her eyes, well-defined without being sharp, contributing to her friendly and approachable appearance.",
+          "jawlineDefinition": "She has a rounded jawline that is soft and well-proportioned to her face, enhancing her feminine features without appearing too angular."
+        },
+        "hair": {
+          "preciseColor": "Her hair is a vibrant shade of dark brown with subtle natural highlights that reflect a warm chestnut color under lighting. The roots are consistently dark, indicating natural color without dye.",
+          "exactStyleAndCut": "Her hair is styled in a neat bun at the back of her head, with a few loose strands softly framing her face. The bun is tight and well-secured, suggesting a practical and professional styling choice.",
+          "texture": "The visible texture of her hair appears smooth and well-maintained, indicating regular care. It seems thick and dense, with a healthy sheen that suggests good health and grooming habits.",
+          "flyawaysOrSpecificStrands": "A few wispy strands escape from her bun, softly framing her face and adding a gentle, relaxed touch to her otherwise formal hairstyle."
+        },
+        "skin": {
+          "skinTone": "Her skin tone is a rich caramel with warm undertones, appearing smooth and even. The complexion is radiant, suggesting a healthy and well-cared-for skin.",
+          "presenceOfFrecklesMolesScars": "There are no visible freckles, moles, or scars on her face, which is clear and maintains a uniform texture and coloration.",
+          "skinTexture": "Her skin texture is smooth with a semi-matte finish, showing very fine pores and a consistent quality across her visible skin."
+        },
+        "buildAndPosture": {
+          "exactBodyType": "She has a medium build with balanced proportions. Her shoulders are aligned with her hips, suggesting a symmetrical and well-maintained physique.",
+          "typicalPosture": "Her posture is upright and professional; she leans slightly forward when engaging with her patient, indicating attentiveness and a caring nature."
+        },
+        "clothingAndAccessories": {
+          "specificGarmentTypesAndFit": "She wears a crisp white lab coat that fits her comfortably, tailored to align with her professional role. The coat is knee-length with long sleeves and a well-maintained, clean appearance.",
+          "fabricTextures": "The fabric of her lab coat is a thick, high-quality cotton blend, smooth to the touch with a slight sheen, indicating a well-chosen garment for medical professionals.",
+          "specificDetails": "The lab coat features standard lapels, a neatly embroidered name tag on the left chest, and large, practical pockets.",
+          "jewelry": "She wears small, simple gold stud earrings and a thin gold bracelet on her left wrist, adding a touch of personal style without being overly conspicuous.",
+          "eyeglassesStyle": "None visible"
+        },
+        "demeanorAndExpressions": {
+          "recurringMicroExpressions": "Her expressions are warm and inviting, with frequent smiles and attentive eye contact that convey empathy and professionalism.",
+          "feelOfTheirPresence": "Dr. Morris exudes a calm and caring demeanor, her presence is reassuring and professional, making her approachable and trusted by her patients."
+        }
+      },
+      "voiceProfileSelection": {
+        "selectedVoice": "Healthcare/Caring",
+        "voiceDescription": "Her voice is likely soft and soothing, with a clear, articulate manner of speaking that reflects her caring and professional demeanor.",
+        "selectionReasoning": "Given her role and the gentle, attentive way she interacts with patients, a caring and soft voice would enhance her ability to make patients feel at ease."
+      },
+      "category": "healthcare"
+    },
+    "veo3Consistency": {
+      "wardrobe": "Her wardrobe should consistently include professional, clean, and well-fitted medical attire, primarily lab coats or scrubs that reflect her healthcare role.",
+      "physicalTraits": "Maintain her medium build, smooth skin, and neatly styled hair to ensure character consistency across scenes.",
+      "mannerisms": "Include gentle gestures, attentive listening poses, and a warm, reassuring smile to align with her caring nature.",
+      "environmentSuggestions": [
+        "modern medical office",
+        "hospital room",
+        "healthcare conference"
+      ]
+    },
+    "cinematicStyle": "Opt for a clean, bright cinematic style with soft lighting to complement her caring nature and professional environment."
+  },
+  "metadata": {
+    "sourceImage": "images/Opera Snapshot_2025-07-05_032607_storage.googleapis.com.jpg",
+    "createdAt": "2025-07-10T02:08:20.359Z",
+    "analysisMethod": "openai"
+  }
+}

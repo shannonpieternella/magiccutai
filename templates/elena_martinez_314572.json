@@ -1,0 +1,66 @@
+{
+  "id": "elena_martinez_314572",
+  "template": {
+    "character": {
+      "name": "Elena Martinez",
+      "visualRefinement": {
+        "facialFeatures": {
+          "exactEyeColorAndShape": "Elena's eyes are a captivating hazel, blending green and brown hues with subtle golden specks around the iris, shaped in a slightly almond form with well-defined, naturally arched eyebrows and long, dark eyelashes enhancing their expressive appearance.",
+          "distinctNoseStructure": "Her nose features a gentle, rounded tip with a slightly wide bridge that complements her facial symmetry. The nostrils are moderately flared, adding a distinct character to her profile.",
+          "lipFullnessAndShape": "Elena possesses medium-full lips with a well-defined cupid's bow and slightly upturned corners, giving her a friendly yet thoughtful expression. The lips have a natural rosy tint with a smooth, hydrated texture.",
+          "subtleWrinklesOrLines": "Her face shows minimal lines, with only faint smile lines around her mouth that become more pronounced when she smiles, adding warmth to her expressions.",
+          "cheekboneProminence": "Her cheekbones are moderately high and well-defined, casting subtle shadows under her eyes, which enhances her facial structure and adds to her photogenic qualities.",
+          "jawlineDefinition": "Elena has a soft yet defined jawline that creates a balanced, oval facial shape, contributing to her overall graceful and approachable appearance."
+        },
+        "hair": {
+          "preciseColor": "Her hair is a rich, dark brown with subtle natural highlights that catch the light, enhancing the deep waves flowing down from the neatly braided roots to the curled ends, providing a dynamic and textured look.",
+          "exactStyleAndCut": "Elena's hair is styled in tight braids starting from the front and transitioning into loose, bouncy curls that reach just past her shoulders, showcasing a playful yet organized hairstyle with each curl distinctly formed.",
+          "texture": "The texture of her hair is thick and voluminous, with curls that are well-defined and springy, indicating healthy and well-maintained hair with a natural sheen.",
+          "flyawaysOrSpecificStrands": "There are minimal flyaways, mostly near the scalp, which add a natural and relaxed feel to her otherwise structured hairstyle."
+        },
+        "skin": {
+          "skinTone": "Elena's skin tone is a warm beige with golden undertones that give her complexion a radiant, sun-kissed look. Her skin appears smooth and even, with a slight dewy finish that suggests healthy hydration.",
+          "presenceOfFrecklesMolesScars": "She has a small, barely noticeable mole just above her right eyebrow and another on her left cheek, adding uniqueness to her facial features.",
+          "skinTexture": "Her skin texture is predominantly smooth with fine pores that are barely visible, contributing to her polished and youthful appearance."
+        },
+        "buildAndPosture": {
+          "exactBodyType": "Elena has a slender build with balanced proportions, indicating a healthy physique. Her shoulders are gently rounded, aligning neatly with her hips, creating a harmonious silhouette.",
+          "typicalPosture": "Her posture is upright and confident, with a slight tilt of her head that conveys curiosity and engagement, enhancing her approachable demeanor."
+        },
+        "clothingAndAccessories": {
+          "specificGarmentTypesAndFit": "Elena is wearing a high-neck, long-sleeve teal sweater that fits snugly, accentuating her slender figure. The fabric appears soft and thick, suitable for a casual yet stylish look.",
+          "fabricTextures": "The sweater's fabric is a fine knit, likely a cotton blend, with a smooth texture and elastic properties that allow for comfortable movement.",
+          "specificDetails": "The sweater has a ribbed collar and cuffs, adding a subtle textural contrast to the otherwise smooth garment. There are no visible logos or embellishments, keeping the style clean and understated.",
+          "jewelry": "She wears a simple gold chain necklace with a small, round pendant and matching gold hoop earrings, complementing her elegant yet understated style.",
+          "eyeglassesStyle": "None visible"
+        },
+        "demeanorAndExpressions": {
+          "recurringMicroExpressions": "Elena frequently shows a slight smile, with her eyes lightly crinkling in a way that suggests genuineness and warmth. Her expressions shift subtly, reflecting a thoughtful and attentive personality.",
+          "feelOfTheirPresence": "Elena exudes a calm and collected energy, with a presence that is both inviting and reassuring. Her poised yet friendly demeanor makes her approachable, suggesting a person who is both professional and caring."
+        }
+      },
+      "voiceProfileSelection": {
+        "selectedVoice": "Professional/Business",
+        "voiceDescription": "Elena's voice is clear, articulate, and moderately pitched, with a warm timbre that conveys confidence and reliability, making her an ideal voice for professional and business settings.",
+        "selectionReasoning": "Her composed and polished appearance, combined with her confident posture and expressive eyes, aligns perfectly with a voice that is both authoritative and inviting, suitable for a professional or business context."
+      },
+      "category": "business"
+    },
+    "veo3Consistency": {
+      "wardrobe": "For scene consistency, Elena's wardrobe should maintain a palette of deep, rich colors and simple, elegant cuts that reflect her professional demeanor.",
+      "physicalTraits": "Key features to maintain include her well-defined cheekbones, structured hairstyle, and warm skin tone.",
+      "mannerisms": "Elena's subtle smiles and attentive eye contact should be consistent across scenes to maintain her character's warmth and professionalism.",
+      "environmentSuggestions": [
+        "modern office",
+        "business conference",
+        "corporate training room"
+      ]
+    },
+    "cinematicStyle": "The cinematic style should be clean and sharp, with a focus on natural lighting to enhance Elena's features and the professional setting. Camera angles should be straightforward to emphasize clarity and directness in communication."
+  },
+  "metadata": {
+    "sourceImage": "images/68706656d1ad06b163eaea66_1752279288326.jpeg",
+    "createdAt": "2025-07-12T00:15:14.577Z",
+    "analysisMethod": "openai"
+  }
+}

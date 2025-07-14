@@ -1,0 +1,66 @@
+{
+  "id": "james_dalton_071438",
+  "template": {
+    "character": {
+      "name": "James Dalton",
+      "visualRefinement": {
+        "facialFeatures": {
+          "exactEyeColorAndShape": "James' eyes are a captivating hazel, blending green and brown hues with subtle golden flecks near the iris, shaped in a slightly almond form with well-defined, moderately hooded eyelids, complemented by medium-length, dark brown lashes.",
+          "distinctNoseStructure": "His nose features a straight profile with a medium bridge width, subtly flared nostrils, and a rounded tip, giving a balanced and proportionate appearance to his face.",
+          "lipFullnessAndShape": "James possesses medium-full lips with a well-defined cupid's bow and slightly downturned corners, presenting a natural rosy hue and a smooth, unchapped texture.",
+          "subtleWrinklesOrLines": "Light smile lines are visible around his mouth, adding character to his face without detracting from his youthful appearance.",
+          "cheekboneProminence": "His cheekbones are distinctly high and well-defined, casting subtle shadows under his eyes, which enhances his facial structure and gives him a rugged yet refined look.",
+          "jawlineDefinition": "James has a strong, angular jawline that is well-defined, measuring about 110 degrees at the angle, which balances with his cheekbones and gives his face a masculine contour."
+        },
+        "hair": {
+          "preciseColor": "His hair is a rich chestnut brown with natural highlights that catch the light, showing shades of lighter brown and subtle auburn, especially towards the tips, giving a vibrant, textured look.",
+          "exactStyleAndCut": "James sports a medium-length, layered cut that falls naturally with a slight wave, styled to sweep back from his face, creating a casual yet sophisticated appearance with a parting slightly to the left.",
+          "texture": "The texture of his hair is moderately coarse, which allows for natural volume and a slight wave, contributing to a look that is both effortless and styled, with a healthy sheen.",
+          "flyawaysOrSpecificStrands": "A few flyaways are noticeable near the parting, adding to the relaxed and natural styling of his hair."
+        },
+        "skin": {
+          "skinTone": "James' skin tone is a light olive with neutral undertones, providing a warm yet balanced complexion that complements his overall earthy aesthetic.",
+          "presenceOfFrecklesMolesScars": "A small, light brown mole is noticeable just above his right eyebrow, adding uniqueness to his facial features.",
+          "skinTexture": "His skin appears smooth with a semi-matte finish, showing very fine pores and a consistent texture that suggests good skincare and health."
+        },
+        "buildAndPosture": {
+          "exactBodyType": "James has a mesomorphic build, evident from his broad shoulders and visibly toned arms, suggesting regular physical activity and a balanced physique.",
+          "typicalPosture": "He stands with a relaxed yet confident posture, shoulders slightly back, and head held level, projecting assurance and approachability."
+        },
+        "clothingAndAccessories": {
+          "specificGarmentTypesAndFit": "He wears a plain, light gray, short-sleeved t-shirt that fits snugly, accentuating his muscular build, tucked casually into light blue denim jeans.",
+          "fabricTextures": "The t-shirt is made of a soft, fine cotton blend, giving it a slight stretch and a comfortable fit, while the jeans are a standard denim with a visible weave and sturdy texture.",
+          "specificDetails": "The t-shirt features a simple crew neckline with fine stitching and no visible wear, while the jeans show subtle fading on the thighs and natural crease lines.",
+          "jewelry": "None visible",
+          "eyeglassesStyle": "None visible"
+        },
+        "demeanorAndExpressions": {
+          "recurringMicroExpressions": "James often shows a subtle, thoughtful expression with a slight furrow in his brow and a gentle parting of lips, reflecting a contemplative and serene demeanor.",
+          "feelOfTheirPresence": "His overall presence exudes a calm confidence and a down-to-earth charm, making him seem approachable yet intriguing, with a steady, composed energy."
+        }
+      },
+      "voiceProfileSelection": {
+        "selectedVoice": "Professional/Business",
+        "voiceDescription": "James' voice is expected to be clear, articulate, with a mid-range pitch, carrying a calm authority and a warm, inviting tone, suitable for professional settings.",
+        "selectionReasoning": "His clean-cut appearance and confident posture suggest a voice that is both commanding and accessible, fitting a professional or business-oriented character."
+      },
+      "category": "business"
+    },
+    "veo3Consistency": {
+      "wardrobe": "Maintain a selection of well-fitted, neutral-colored casual and business casual wear, ensuring consistency in his approachable yet professional appearance.",
+      "physicalTraits": "Consistent portrayal of his distinct facial features, hair style and color, and strong build should be maintained across scenes.",
+      "mannerisms": "Include subtle gestures like adjusting his t-shirt, a thoughtful touch to his chin, and maintaining direct, engaging eye contact.",
+      "environmentSuggestions": [
+        "modern office",
+        "urban coffee shop",
+        "contemporary home office"
+      ]
+    },
+    "cinematicStyle": "A naturalistic style with soft, warm lighting to enhance his approachable demeanor and earth tones, with steady camera work to reflect his stable and confident nature."
+  },
+  "metadata": {
+    "sourceImage": "images/68706656d1ad06b163eaea66_1752233043711.webp",
+    "createdAt": "2025-07-11T11:24:31.453Z",
+    "analysisMethod": "openai"
+  }
+}

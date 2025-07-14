@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing - MagicCutAI</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0b2e 25%, #16213e 75%, #0f3460 100%);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Background Effects */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 0, 110, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(131, 56, 236, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(58, 134, 255, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+            animation: backgroundShift 20s ease-in-out infinite;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            border-radius: 50%;
+            animation: particleFloat 8s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        @keyframes particleFloat {
+            0%, 100% { 
+                transform: translateY(100vh) translateX(0px) rotate(0deg) scale(0); 
+                opacity: 0; 
+            }
+            10% { 
+                opacity: 1; 
+                transform: translateY(90vh) translateX(20px) rotate(45deg) scale(1); 
+            }
+            90% { 
+                opacity: 1; 
+                transform: translateY(-10vh) translateX(-20px) rotate(315deg) scale(1); 
+            }
+        }
+        
+        .navbar {
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            padding: 20px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            animation: logoFloat 6s ease-in-out infinite;
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.4);
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); box-shadow: 0 0 30px rgba(255, 0, 110, 0.4); }
+            50% { transform: translateY(-5px) rotate(5deg); box-shadow: 0 0 50px rgba(131, 56, 236, 0.6); }
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            color: white;
+            box-shadow: 0 8px 25px rgba(255, 0, 110, 0.4);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .btn-primary:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 0, 110, 0.6);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+        
+        .hero {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            color: white;
+            padding: 100px 40px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.1), rgba(131, 56, 236, 0.1));
+            z-index: -1;
+        }
+        
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 900;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+            animation: titleReveal 2s ease-out;
+        }
+
+        @keyframes titleReveal {
+            0% { 
+                opacity: 0; 
+                transform: translateY(50px) scale(0.8); 
+                filter: blur(10px);
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+                filter: blur(0px);
+            }
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            animation: subtitleReveal 2s ease-out 0.5s both;
+        }
+
+        @keyframes subtitleReveal {
+            0% { 
+                opacity: 0; 
+                transform: translateY(30px); 
+                filter: blur(5px);
+            }
+            100% { 
+                opacity: 0.9; 
+                transform: translateY(0); 
+                filter: blur(0px);
+            }
+        }
+        
+        .user-info {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+            margin: 30px auto;
+            max-width: 600px;
+            text-align: center;
+            backdrop-filter: blur(15px);
+            animation: ctaReveal 2s ease-out 1s both;
+        }
+
+        @keyframes ctaReveal {
+            0% { 
+                opacity: 0; 
+                transform: translateY(20px) scale(0.9); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            }
+        }
+        
+        .auth-required {
+            background: rgba(255, 193, 7, 0.1);
+            border: 2px solid rgba(255, 193, 7, 0.3);
+            color: #ffc107;
+            padding: 20px;
+            border-radius: 20px;
+            margin: 30px auto;
+            max-width: 600px;
+            text-align: center;
+            backdrop-filter: blur(15px);
+            animation: ctaReveal 2s ease-out 1s both;
+        }
+        
+        .pricing-section {
+            padding: 120px 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+            color: white;
+        }
+        
+        .section-header h2 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-header p {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+        
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 50px 40px;
+            text-align: center;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+            position: relative;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            color: white;
+            overflow: hidden;
+        }
+
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.05), rgba(131, 56, 236, 0.05));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+        }
+
+        .pricing-card:hover::before {
+            opacity: 1;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 0, 110, 0.3);
+            box-shadow: 0 40px 100px rgba(255, 0, 110, 0.2);
+        }
+        
+        .pricing-card.popular {
+            border-color: rgba(255, 0, 110, 0.5);
+            transform: scale(1.05);
+            background: rgba(255, 0, 110, 0.1);
+        }
+        
+        .pricing-card.popular::after {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            color: white;
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 5;
+        }
+
+        .pricing-card.popular:hover {
+            transform: translateY(-10px) scale(1.05);
+        }
+
+        .pricing-card-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .plan-name {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 15px;
+        }
+        
+        .plan-price {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        .plan-period {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+        
+        .plan-videos {
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            display: inline-block;
+            font-size: 1.1rem;
+            box-shadow: 0 10px 30px rgba(255, 0, 110, 0.3);
+        }
+        
+        .plan-features {
+            list-style: none;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+        
+        .plan-features li {
+            padding: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+        }
+        
+        .plan-features li::before {
+            content: '✨';
+            flex-shrink: 0;
+            font-size: 1.2rem;
+        }
+        
+        .plan-cta {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(255, 0, 110, 0.4);
+        }
+
+        .plan-cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .plan-cta:hover::before {
+            left: 100%;
+        }
+        
+        .plan-cta:hover:not(.loading) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255, 0, 110, 0.6);
+        }
+        
+        .plan-cta.loading {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .debug-section {
+            margin: 60px auto;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            max-width: 1000px;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            color: white;
+        }
+
+        .debug-section h3 {
+            color: #ff006e;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .debug-section p {
+            margin-bottom: 25px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .debug-button {
+            margin: 8px;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .debug-button:hover {
+            background: rgba(255, 0, 110, 0.2);
+            border-color: rgba(255, 0, 110, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        #debugInfo {
+            margin-top: 25px;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            text-align: left;
+            white-space: pre-wrap;
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .status-message {
+            padding: 20px;
+            border-radius: 20px;
+            margin: 30px auto;
+            max-width: 700px;
+            text-align: center;
+            font-weight: 600;
+            backdrop-filter: blur(15px);
+            border: 2px solid;
+        }
+        
+        .status-success {
+            background: rgba(46, 204, 113, 0.1);
+            border-color: rgba(46, 204, 113, 0.3);
+            color: #2ecc71;
+        }
+        
+        .status-error {
+            background: rgba(255, 107, 107, 0.1);
+            border-color: rgba(255, 107, 107, 0.3);
+            color: #ff6b6b;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .hero {
+                padding: 80px 20px;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .pricing-section {
+                padding: 80px 20px;
+            }
+
+            .pricing-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .pricing-card.popular {
+                transform: none;
+            }
+            
+            .pricing-card.popular:hover {
+                transform: translateY(-10px);
+            }
+
+            .debug-section {
+                margin: 40px 20px;
+                padding: 30px 20px;
+            }
+
+            .section-header h2 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .pricing-card {
+                padding: 40px 30px;
+            }
+
+            .plan-price {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">
+                <div class="logo-icon">🎬</div>
+                MagicCutAI
+            </div>
+            <div class="nav-buttons">
+                <a href="index.html" class="btn btn-secondary">Home</a>
+                <a href="#" class="btn btn-primary" onclick="checkAppAccess()">Dashboard</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Choose Your Creative Plan</h1>
+        <p>Start creating professional AI videos, images, and logos today. Upgrade or downgrade anytime with our flexible pricing.</p>
+        
+        <div id="userInfo" class="user-info" style="display: none;">
+            <p><strong>Welcome back, <span id="userName"></span>!</strong></p>
+            <p>Current plan: <strong id="currentPlan">N/A</strong> | Videos: <span id="videosUsed">0</span>/<span id="videoLimit">0</span></p>
+        </div>
+        
+        <div id="authRequired" class="auth-required" style="display: none;">
+            <p><strong>Please log in to choose a subscription plan.</strong></p>
+            <div style="margin-top: 20px;">
+                <a href="login.html" class="btn btn-primary" style="margin: 8px;">Login</a>
+                <a href="register.html" class="btn btn-secondary" style="margin: 8px;">Register</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Status Messages -->
+    <div id="statusMessage" style="display: none;"></div>
+
+    <!-- Pricing Section -->
+    <section class="pricing-section">
+        <div class="section-header">
+            <h2>Simple, Transparent Pricing</h2>
+            <p>Choose the plan that fits your creative needs and scale as you grow</p>
+        </div>
+        
+        <div class="pricing-grid">
+            <!-- Starter Plan -->
+            <div class="pricing-card">
+                <div class="pricing-card-content">
+                    <div class="plan-name">Starter</div>
+                    <div class="plan-price">€45</div>
+                    <div class="plan-period">per month</div>
+                    <div class="plan-videos">5 Videos per Month</div>
+                    <ul class="plan-features">
+                        <li>5 AI video generations per month</li>
+                        <li>3 Free AI image generations</li>
+                        <li>Basic character analysis</li>
+                        <li>Standard templates</li>
+                        <li>HD quality (1080p)</li>
+                        <li>Email support</li>
+                        <li>12 languages supported</li>
+                        <li>Cancel anytime</li>
+                    </ul>
+                    <button class="plan-cta" onclick="subscribeToPlan('starter', 45, 5)" data-plan="starter">
+                        Start Starter Plan
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Pro Plan (Most Popular) -->
+            <div class="pricing-card popular">
+                <div class="pricing-card-content">
+                    <div class="plan-name">Pro</div>
+                    <div class="plan-price">€135</div>
+                    <div class="plan-period">per month</div>
+                    <div class="plan-videos">15 Videos per Month</div>
+                    <ul class="plan-features">
+                        <li>15 AI video generations per month</li>
+                        <li>3 Free AI image generations</li>
+                        <li>Advanced character analysis</li>
+                        <li>Premium templates</li>
+                        <li>4K quality available</li>
+                        <li>Priority support</l>
+                        <li>Analytics dashboard</li>
+                        <li>Cancel anytime</li>
+                    </ul>
+                    <button class="plan-cta" onclick="subscribeToPlan('pro', 135, 15)" data-plan="pro">
+                        Start Pro Plan
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Business Plan -->
+            <div class="pricing-card">
+                <div class="pricing-card-content">
+                    <div class="plan-name">Business</div>
+                    <div class="plan-price">€270</div>
+                    <div class="plan-period">per month</div>
+                    <div class="plan-videos">30 Videos per Month</div>
+                    <ul class="plan-features">
+                        <li>30 AI video generations per month</li>
+                        <li>3 Free AI image generations</li>
+                        <li>Custom AI character training</li>
+                        <li>Custom templates & branding</li>
+                        <li>4K quality available</li>
+                        <li>Dedicated account manager</li>
+                        <li>Team collaboration tools</li>
+                        <li>Priority processing queue</li>
+                      
+
+                    </ul>
+                    <button class="plan-cta" onclick="subscribeToPlan('business', 270, 30)" data-plan="business">
+                        Start Business Plan
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Debug Section (Development Only) -->
+    <!-- <div class="debug-section">
+        <h3>🔧 Debug Tools (Development)</h3>
+        <p>Test subscription updates without real payments</p>
+        
+        <button class="debug-button" onclick="testStripeConnection()">Test Stripe Connection</button>
+        <button class="debug-button" onclick="checkCurrentSubscription()">Check Current Subscription</button>
+        <button class="debug-button" onclick="forceUpdatePlan('starter')">Update to Starter</button>
+        <button class="debug-button" onclick="forceUpdatePlan('pro')">Update to Pro</button>
+        <button class="debug-button" onclick="forceUpdatePlan('business')">Update to Business</button>
+        <button class="debug-button" onclick="cancelCurrentSubscription()">Cancel Current Subscription</button>
+        
+        <div id="debugInfo">Click a button to see debug information...</div>
+    </div> -->
+
+    <script>
+        let currentUser = null;
+
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 40;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 6 + 8) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Initialize particles
+        createParticles();
+        
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🔍 Pricing page loaded');
+            checkAuthStatus();
+            handleUrlParams();
+        });
+        
+        // Check if user is logged in
+        function checkAuthStatus() {
+            const token = localStorage.getItem('token');
+            const userData = localStorage.getItem('user');
+            
+            if (token && userData) {
+                try {
+                    currentUser = JSON.parse(userData);
+                    showUserInfo();
+                    console.log('✅ User logged in:', currentUser.email);
+                } catch (error) {
+                    console.error('❌ Error parsing user data:', error);
+                    showAuthRequired();
+                }
+            } else {
+                console.log('⚠️ User not logged in');
+                showAuthRequired();
+            }
+        }
+
+        // Check app access
+        function checkAppAccess() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            if (currentUser && currentUser.hasActiveSubscription) {
+                window.location.href = 'app.html';
+            } else {
+                showStatus('Please choose a subscription plan to access the app.', 'error');
+            }
+        }
+        
+        // Show user info
+        function showUserInfo() {
+            document.getElementById('authRequired').style.display = 'none';
+            document.getElementById('userInfo').style.display = 'block';
+            
+            document.getElementById('userName').textContent = currentUser.firstName || 'User';
+            
+            // FIXED: Better plan display logic
+            const currentPlan = currentUser.subscription?.plan || 'free';
+            let displayPlan = '';
+            
+            if (currentPlan === 'free' || !currentPlan || currentPlan === 'No plan') {
+                displayPlan = 'Getting Started';
+            } else {
+                displayPlan = currentPlan.toUpperCase();
+            }
+            
+            document.getElementById('currentPlan').textContent = displayPlan;
+            document.getElementById('videosUsed').textContent = currentUser.usage?.videosGenerated || 0;
+            document.getElementById('videoLimit').textContent = currentUser.usage?.monthlyLimit || 0;
+        }
+        
+        // Show auth required
+        function showAuthRequired() {
+            document.getElementById('userInfo').style.display = 'none';
+            document.getElementById('authRequired').style.display = 'block';
+        }
+        
+        // Show status message
+        function showStatus(message, type = 'success') {
+            const statusDiv = document.getElementById('statusMessage');
+            statusDiv.className = `status-message status-${type}`;
+            statusDiv.textContent = message;
+            statusDiv.style.display = 'block';
+            
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                statusDiv.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Subscribe to plan with smart upgrade handling
+        async function subscribeToPlan(planName, price, videoLimit) {
+            console.log('🎯 Subscribe to plan clicked:', { planName, price, videoLimit });
+            
+            // Check authentication
+            const token = localStorage.getItem('token');
+            if (!token) {
+                showStatus('Please log in first to choose a subscription plan.', 'error');
+                setTimeout(() => {
+                    window.location.href = 'login.html';
+                }, 2000);
+                return;
+            }
+            
+            if (!currentUser) {
+                showStatus('User data not found. Please login again.', 'error');
+                return;
+            }
+            
+            // Check if user already has a subscription (and it's different from the selected plan)
+            const currentPlan = currentUser.subscription?.plan || 'free';
+            
+            if (currentPlan !== 'free' && currentPlan !== planName) {
+                // User wants to upgrade/change plan
+                const confirmUpgrade = confirm(
+                    `You currently have a ${currentPlan.toUpperCase()} plan. ` +
+                    `Do you want to upgrade to ${planName.toUpperCase()}? ` +
+                    `Your current subscription will be automatically cancelled.`
+                );
+                
+                if (!confirmUpgrade) {
+                    return;
+                }
+                
+                // Use smart upgrade
+                await handleSmartUpgrade(planName, price, videoLimit);
+                return;
+            }
+            
+            if (currentPlan === planName) {
+                showStatus(`You already have a ${planName.toUpperCase()} plan.`, 'error');
+                return;
+            }
+            
+            // Store selected plan
+            localStorage.setItem('selectedPlan', planName);
+            
+            // Update button state
+            const button = document.querySelector(`[data-plan="${planName}"]`);
+            const originalText = button.textContent;
+            button.classList.add('loading');
+            button.textContent = 'Processing...';
+            
+            try {
+                console.log('🔗 Calling create-payment-link API...');
+                
+                // Call API to get payment link
+                const response = await fetch('/api/stripe/create-payment-link', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        plan: planName,
+                        price: price,
+                        videoLimit: videoLimit,
+                        userId: currentUser.id
+                    })
+                });
+                
+                console.log('📡 API Response status:', response.status);
+                
+                const data = await response.json();
+                console.log('📊 API Response data:', data);
+                
+                if (data.success) {
+                    console.log('✅ Payment link created, redirecting...');
+                    showStatus(`Redirecting to ${planName} plan checkout...`, 'success');
+                    
+                    // Redirect to payment URL
+                    setTimeout(() => {
+                        window.location.href = data.paymentUrl;
+                    }, 1000);
+                } else if (data.error === 'EXISTING_SUBSCRIPTION') {
+                    // Handle existing subscription error
+                    const upgradeConfirm = confirm(
+                        `${data.message}\n\nDo you want to cancel your current ${data.currentPlan} subscription and upgrade to ${data.newPlan}?`
+                    );
+                    
+                    if (upgradeConfirm) {
+                        await handleSmartUpgrade(planName, price, videoLimit);
+                    }
+                } else {
+                    console.error('❌ API Error:', data.error);
+                    showStatus(`Error: ${data.error}`, 'error');
+                    localStorage.removeItem('selectedPlan');
+                }
+            } catch (error) {
+                console.error('❌ Network error:', error);
+                showStatus('Network error. Please try again.', 'error');
+                localStorage.removeItem('selectedPlan');
+            } finally {
+                // Reset button
+                button.classList.remove('loading');
+                button.textContent = originalText;
+            }
+        }
+        
+        // Handle smart upgrade (cancel old + redirect to new)
+        async function handleSmartUpgrade(planName, price, videoLimit) {
+            console.log('🔄 Handling smart upgrade to:', planName);
+            
+            const token = localStorage.getItem('token');
+            showStatus('Cancelling current subscription and preparing upgrade...', 'success');
+            
+            try {
+                const response = await fetch('/api/stripe/smart-upgrade', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ plan: planName })
+                });
+                
+                const data = await response.json();
+                console.log('🔄 Smart upgrade response:', data);
+                
+                if (data.success) {
+                    showStatus('Current subscription cancelled. Redirecting to new plan...', 'success');
+                    localStorage.setItem('selectedPlan', planName);
+                    
+                    // Redirect to new payment
+                    setTimeout(() => {
+                        window.location.href = data.paymentUrl;
+                    }, 2000);
+                } else {
+                    showStatus(`Upgrade failed: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                console.error('❌ Smart upgrade error:', error);
+                showStatus('Upgrade failed. Please try again.', 'error');
+            }
+        }
+        
+        // Handle URL parameters (success/cancel from payment)
+        function handleUrlParams() {
+            const urlParams = new URLSearchParams(window.location.search);
+            
+            if (urlParams.get('success') === 'true') {
+                console.log('🎉 Payment success detected');
+                const sessionId = urlParams.get('session_id');
+                const plan = urlParams.get('plan') || localStorage.getItem('selectedPlan');
+                
+                if (plan) {
+                    handlePaymentSuccess(plan, sessionId);
+                } else {
+                    showStatus('Payment successful! Please refresh to see updates.', 'success');
+                }
+            }
+            
+            if (urlParams.get('canceled') === 'true') {
+                console.log('⚠️ Payment canceled');
+                showStatus('Payment was canceled. You can try again anytime.', 'error');
+                localStorage.removeItem('selectedPlan');
+                
+                // Clean URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        }
+        
+        // Handle successful payment
+        async function handlePaymentSuccess(plan, sessionId) {
+            console.log('🎉 Processing payment success:', { plan, sessionId });
+            
+            showStatus('Payment successful! Updating your account...', 'success');
+            
+            try {
+                await updateSubscriptionAfterPayment(plan);
+                localStorage.removeItem('selectedPlan');
+                
+                // Clean URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+                
+                // Redirect to app after success
+                setTimeout(() => {
+                    window.location.href = 'app.html';
+                }, 3000);
+                
+            } catch (error) {
+                console.error('❌ Post-payment update failed:', error);
+                showStatus('Payment successful, but account update failed. Please contact support.', 'error');
+            }
+        }
+        
+        // Update subscription after payment
+        async function updateSubscriptionAfterPayment(plan) {
+            const token = localStorage.getItem('token');
+            
+            console.log('🔄 Updating subscription after payment:', plan);
+            
+            const response = await fetch('/api/stripe/manual-update-subscription', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ plan })
+            });
+            
+            const data = await response.json();
+            
+            if (data.success) {
+                console.log('✅ Subscription updated successfully');
+                
+                // Update local user data
+                if (currentUser) {
+                    currentUser.subscription.plan = plan;
+                    currentUser.usage.monthlyLimit = data.plan.videoLimit;
+                    currentUser.usage.videosGenerated = 0;
+                    localStorage.setItem('user', JSON.stringify(currentUser));
+                }
+                
+                showStatus(`Account successfully upgraded to ${plan.toUpperCase()} plan!`, 'success');
+                showUserInfo(); // Refresh display
+                
+            } else {
+                throw new Error(data.error || 'Failed to update subscription');
+            }
+        }
+        
+        // Debug functions
+        async function testStripeConnection() {
+            try {
+                const response = await fetch('/api/stripe/test');
+                const data = await response.json();
+                updateDebugInfo('Stripe Connection Test:\n' + JSON.stringify(data, null, 2));
+            } catch (error) {
+                updateDebugInfo('Stripe Connection Error:\n' + error.message);
+            }
+        }
+        
+        async function checkCurrentSubscription() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                updateDebugInfo('Error: Not logged in');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/stripe/subscription-status', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+                updateDebugInfo('Current Subscription:\n' + JSON.stringify(data, null, 2));
+            } catch (error) {
+                updateDebugInfo('Subscription Check Error:\n' + error.message);
+            }
+        }
+        
+        async function forceUpdatePlan(plan) {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                updateDebugInfo('Error: Not logged in');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/stripe/manual-update-subscription', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({ plan })
+                });
+                
+                const data = await response.json();
+                updateDebugInfo(`Force Update to ${plan}:\n` + JSON.stringify(data, null, 2));
+                
+                if (data.success) {
+                    showStatus(`Successfully updated to ${plan} plan!`, 'success');
+                    setTimeout(() => location.reload(), 1000);
+                }
+            } catch (error) {
+                updateDebugInfo(`Force Update Error:\n${error.message}`);
+            }
+        }
+        
+        async function cancelCurrentSubscription() {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                updateDebugInfo('Error: Not logged in');
+                return;
+            }
+            
+            if (!currentUser || currentUser.subscription?.plan === 'free') {
+                updateDebugInfo('Error: No active subscription to cancel');
+                return;
+            }
+            
+            const confirmCancel = confirm(
+                `Are you sure you want to cancel your ${currentUser.subscription.plan.toUpperCase()} subscription? ` +
+                `You will be downgraded to the free plan immediately.`
+            );
+            
+            if (!confirmCancel) {
+                return;
+            }
+            
+            try {
+                showStatus('Cancelling subscription...', 'success');
+                
+                const response = await fetch('/api/stripe/cancel-subscription', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                const data = await response.json();
+                updateDebugInfo(`Cancel Subscription:\n${JSON.stringify(data, null, 2)}`);
+                
+                if (data.success) {
+                    showStatus('Subscription cancelled successfully!', 'success');
+                    
+                    // Update local user data
+                    currentUser.subscription.plan = 'free';
+                    currentUser.subscription.status = 'inactive';
+                    currentUser.usage.monthlyLimit = 3;
+                    localStorage.setItem('user', JSON.stringify(currentUser));
+                    
+                    setTimeout(() => location.reload(), 2000);
+                } else {
+                    showStatus(`Cancellation failed: ${data.error}`, 'error');
+                }
+            } catch (error) {
+                updateDebugInfo(`Cancel Subscription Error:\n${error.message}`);
+                showStatus('Cancellation failed. Please try again.', 'error');
+            }
+        }
+        
+        function updateDebugInfo(text) {
+            const debugDiv = document.getElementById('debugInfo');
+            debugDiv.textContent = text;
+            console.log('🔧 Debug:', text);
+        }
+
+        // Make functions globally available
+        window.subscribeToPlan = subscribeToPlan;
+        window.testStripeConnection = testStripeConnection;
+        window.checkCurrentSubscription = checkCurrentSubscription;
+        window.forceUpdatePlan = forceUpdatePlan;
+        window.cancelCurrentSubscription = cancelCurrentSubscription;
+        window.checkAppAccess = checkAppAccess;
+    </script>
+</body>
+</html>

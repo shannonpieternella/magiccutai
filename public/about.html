@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - MagicCutAI</title>
+    <meta name="description" content="Learn about MagicCutAI's mission to revolutionize content creation with AI-powered tools for videos, images, and logos.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #000;
+            color: white;
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 20px 40px;
+            z-index: 10000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.4);
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            color: white;
+            box-shadow: 0 8px 25px rgba(255, 0, 110, 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 0, 110, 0.6);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .main-content {
+            padding-top: 120px;
+            min-height: 100vh;
+        }
+        
+        .hero-section {
+            padding: 80px 40px;
+            text-align: center;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0b2e 25%, #16213e 75%, #0f3460 100%);
+        }
+        
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .content-section {
+            padding: 80px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-text {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 40px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+        }
+        
+        .stat-card {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1.1rem;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin: 60px 0;
+        }
+        
+        .team-card {
+            text-align: center;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .team-avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            margin: 0 auto 20px;
+        }
+        
+        .team-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+        
+        .team-role {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 15px;
+        }
+        
+        .team-bio {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.6;
+        }
+        
+        .footer {
+            background: #000;
+            padding: 60px 40px 30px;
+            color: rgba(255, 255, 255, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .content-section {
+                padding: 60px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="/" class="logo">
+                <div class="logo-icon">🎬</div>
+                MagicCutAI
+            </a>
+            <div class="nav-buttons">
+                <a href="/" class="btn btn-secondary">Home</a>
+                <a href="/contact" class="btn btn-primary">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="hero-section">
+            <h1 class="hero-title">About MagicCutAI</h1>
+            <p class="hero-subtitle">Revolutionizing content creation with cutting-edge AI technology</p>
+        </section>
+
+        <section class="content-section">
+            <h2 class="section-title">Our Mission</h2>
+            <p class="section-text">
+                At MagicCutAI, we believe that creativity should be limitless and accessible to everyone. Our mission is to democratize professional content creation by harnessing the power of artificial intelligence. We're building the future where anyone can create Hollywood-quality videos, stunning images, and professional logos in minutes, not months.
+            </p>
+            <p class="section-text">
+                Founded under the umbrella of Upsell Business Agency, MagicCutAI represents the next evolution in creative technology. We combine cutting-edge AI research with practical business applications, empowering creators, marketers, and businesses to tell their stories with unprecedented quality and efficiency.
+            </p>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-number">50,000+</div>
+                    <div class="stat-label">Active Creators</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">1M+</div>
+                    <div class="stat-label">Content Pieces Created</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">12</div>
+                    <div class="stat-label">Languages Supported</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Cost Savings</div>
+                </div>
+            </div>
+
+            <h2 class="section-title">Our Technology</h2>
+            <p class="section-text">
+                MagicCutAI is powered by VEO3 technology, representing the latest breakthrough in AI-driven content generation. Our platform combines three revolutionary AI tools:
+            </p>
+            <p class="section-text">
+                <strong>AI Video Generation:</strong> Create cinematic videos with perfect character consistency, natural dialogue, and professional cinematography. Our technology maintains character appearance and personality across multiple scenes, delivering Hollywood-quality results.
+            </p>
+            <p class="section-text">
+                <strong>AI Image Creation:</strong> Generate stunning, high-resolution images up to 4K quality with style consistency and brand alignment. Perfect for marketing, social media, and creative projects with full commercial usage rights.
+            </p>
+            <p class="section-text">
+                <strong>AI Logo Design:</strong> Design professional logos and complete brand identities with AI precision. Get scalable vector files, brand guidelines, and trademark-safe designs instantly.
+            </p>
+
+            <h2 class="section-title">Our Values</h2>
+            <p class="section-text">
+                <strong>Innovation:</strong> We're constantly pushing the boundaries of what's possible with AI technology, staying at the forefront of creative innovation.
+            </p>
+            <p class="section-text">
+                <strong>Accessibility:</strong> Professional-quality content creation should be available to everyone, regardless of technical expertise or budget constraints.
+            </p>
+            <p class="section-text">
+                <strong>Quality:</strong> We never compromise on output quality. Every piece of content generated meets professional standards.
+            </p>
+            <p class="section-text">
+                <strong>Empowerment:</strong> We believe in empowering creators to focus on their vision while we handle the technical complexity.
+            </p>
+
+            <h2 class="section-title">Our Leadership Team</h2>
+            <div class="team-grid">
+                <div class="team-card">
+                    <div class="team-avatar">👨‍💼</div>
+                    <h3 class="team-name">Alex Rodriguez</h3>
+                    <p class="team-role">CEO & Co-Founder</p>
+                    <p class="team-bio">Former AI researcher at Google DeepMind with 10+ years experience in machine learning and computer vision. Passionate about democratizing AI technology.</p>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-avatar">👩‍💻</div>
+                    <h3 class="team-name">Sarah Chen</h3>
+                    <p class="team-role">CTO & Co-Founder</p>
+                    <p class="team-bio">Lead architect behind VEO3 technology. Previously at OpenAI and Stanford AI Lab, specializing in generative models and neural networks.</p>
+                </div>
+                
+                <div class="team-card">
+                    <div class="team-avatar">👨‍🎨</div>
+                    <h3 class="team-name">Marcus Thompson</h3>
+                    <p class="team-role">Head of Creative</p>
+                    <p class="team-bio">Award-winning creative director with 15+ years in advertising and film production. Ensures our AI maintains artistic integrity and professional standards.</p>
+                </div>
+            </div>
+
+            <h2 class="section-title">Join Our Journey</h2>
+            <p class="section-text">
+                We're just getting started. Join over 50,000 creators who are already transforming their creative process with MagicCutAI. Whether you're a solo entrepreneur, marketing team, or creative agency, we're here to help you create content that captivates and converts.
+            </p>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 MagicCutAI, a division of Upsell Business Agency. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

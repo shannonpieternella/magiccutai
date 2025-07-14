@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookie Policy - MagicCutAI</title>
+    <meta name="description" content="Cookie Policy for MagicCutAI - Learn about how we use cookies and tracking technologies on our platform.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #000;
+            color: white;
+        }
+        
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 20px 40px;
+            z-index: 10000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.4);
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.4s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-3px);
+        }
+        
+        .main-content {
+            padding-top: 120px;
+            min-height: 100vh;
+        }
+        
+        .hero-section {
+            padding: 80px 40px 40px;
+            text-align: center;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0b2e 25%, #16213e 75%, #0f3460 100%);
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .content-section {
+            padding: 60px 40px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        
+        .last-updated {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 40px 0 20px 0;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .section-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 20px;
+        }
+        
+        .cookie-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .cookie-table th,
+        .cookie-table td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .cookie-table th {
+            background: rgba(255, 0, 110, 0.1);
+            font-weight: 600;
+            color: #ff006e;
+        }
+        
+        .cookie-table tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .cookie-table td {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .highlight-box {
+            background: rgba(255, 0, 110, 0.1);
+            border: 1px solid rgba(255, 0, 110, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+        
+        .highlight-box h3 {
+            color: #ff006e;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        .info-box {
+            background: rgba(58, 134, 255, 0.1);
+            border: 1px solid rgba(58, 134, 255, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+        }
+        
+        .info-box h3 {
+            color: #3a86ff;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+        
+        ul {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+        
+        .contact-info {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px;
+            border-radius: 20px;
+            margin: 40px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer {
+            background: #000;
+            padding: 60px 40px 30px;
+            color: rgba(255, 255, 255, 0.8);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 1.5rem;
+            }
+            
+            .content-section {
+                padding: 40px 20px;
+            }
+            
+            .cookie-table {
+                font-size: 0.9rem;
+            }
+            
+            .cookie-table th,
+            .cookie-table td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-content">
+            <a href="/" class="logo">
+                <div class="logo-icon">🎬</div>
+                MagicCutAI
+            </a>
+            <div class="nav-buttons">
+                <a href="/" class="btn btn-secondary">Home</a>
+                <a href="/contact" class="btn btn-secondary">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <section class="hero-section">
+            <h1 class="hero-title">Cookie Policy</h1>
+            <p class="hero-subtitle">Learn about how we use cookies and tracking technologies to enhance your experience</p>
+        </section>
+
+        <section class="content-section">
+            <div class="last-updated">
+                <strong>Last Updated: January 15, 2025</strong>
+            </div>
+
+            <h2 class="section-title">1. What Are Cookies?</h2>
+            <p class="section-text">
+                Cookies are small text files that are placed on your device (computer, smartphone, tablet) when you visit our website. They are widely used to make websites work more efficiently and provide information to website owners about user behavior and preferences.
+            </p>
+            <p class="section-text">
+                This Cookie Policy explains how MagicCutAI ("we," "our," or "us"), operated by Upsell Business Agency, uses cookies and similar tracking technologies on our website and services.
+            </p>
+
+            <h2 class="section-title">2. Types of Cookies We Use</h2>
+            
+            <table class="cookie-table">
+                <thead>
+                    <tr>
+                        <th>Cookie Type</th>
+                        <th>Purpose</th>
+                        <th>Duration</th>
+                        <th>Consent Required</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Essential Cookies</strong></td>
+                        <td>Required for basic website functionality, authentication, and security</td>
+                        <td>Session/Persistent</td>
+                        <td>No (Strictly necessary)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Performance Cookies</strong></td>
+                        <td>Collect information about how you use our website to improve performance</td>
+                        <td>Up to 2 years</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Functional Cookies</strong></td>
+                        <td>Remember your preferences and settings to personalize your experience</td>
+                        <td>Up to 1 year</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Analytics Cookies</strong></td>
+                        <td>Help us understand user behavior and improve our services</td>
+                        <td>Up to 2 years</td>
+                        <td>Yes</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Marketing Cookies</strong></td>
+                        <td>Used to deliver personalized advertisements and track campaign effectiveness</td>
+                        <td>Up to 1 year</td>
+                        <td>Yes</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 class="section-title">3. Essential Cookies</h2>
+            <p class="section-text">
+                These cookies are necessary for our website to function properly and cannot be disabled. They include:
+            </p>
+            <ul>
+                <li><strong>Authentication cookies:</strong> Keep you logged in to your account</li>
+                <li><strong>Security cookies:</strong> Protect against cross-site request forgery and other security threats</li>
+                <li><strong>Load balancing cookies:</strong> Ensure optimal website performance</li>
+                <li><strong>Session cookies:</strong> Maintain your session state during your visit</li>
+                <li><strong>Cookie consent cookies:</strong> Remember your cookie preferences</li>
+            </ul>
+
+            <h2 class="section-title">4. Performance and Analytics Cookies</h2>
+            <p class="section-text">
+                We use these cookies to understand how visitors interact with our website:
+            </p>
+            <ul>
+                <li><strong>Google Analytics:</strong> Tracks website usage, page views, and user behavior</li>
+                <li><strong>Hotjar:</strong> Records user sessions to improve user experience</li>
+                <li><strong>Performance monitoring:</strong> Monitors website speed and functionality</li>
+                <li><strong>Error tracking:</strong> Helps us identify and fix technical issues</li>
+            </ul>
+
+            <div class="info-box">
+                <h3>Analytics Data</h3>
+                <p>All analytics data is collected in aggregate form and does not personally identify individual users. We use this data to improve our AI services, optimize performance, and enhance user experience.</p>
+            </div>
+
+            <h2 class="section-title">5. Functional Cookies</h2>
+            <p class="section-text">
+                These cookies enhance your experience by remembering your preferences:
+            </p>
+            <ul>
+                <li><strong>Language preferences:</strong> Remember your selected language</li>
+                <li><strong>Theme settings:</strong> Save your dark/light mode preference</li>
+                <li><strong>User interface preferences:</strong> Remember your layout and display settings</li>
+                <li><strong>Recently used features:</strong> Quick access to frequently used tools</li>
+                <li><strong>Saved projects:</strong> Local storage of your work-in-progress content</li>
+            </ul>
+
+            <h2 class="section-title">6. Marketing and Advertising Cookies</h2>
+            <p class="section-text">
+                With your consent, we use marketing cookies to:
+            </p>
+            <ul>
+                <li>Show you relevant advertisements on other websites</li>
+                <li>Measure the effectiveness of our marketing campaigns</li>
+                <li>Prevent you from seeing the same ad repeatedly</li>
+                <li>Provide personalized content recommendations</li>
+                <li>Track conversions and attribute them to specific campaigns</li>
+            </ul>
+
+            <h3 style="color: #8338ec; margin: 30px 0 15px 0; font-size: 1.3rem;">Third-Party Advertising Partners</h3>
+            <ul>
+                <li><strong>Google Ads:</strong> For search and display advertising</li>
+                <li><strong>Facebook Pixel:</strong> For social media advertising</li>
+                <li><strong>LinkedIn Insight Tag:</strong> For professional network advertising</li>
+                <li><strong>Twitter Pixel:</strong> For social media marketing</li>
+            </ul>
+
+            <h2 class="section-title">7. Cookie Management and Consent</h2>
+            <p class="section-text">
+                You have several options for managing cookies:
+            </p>
+
+            <h3 style="color: #8338ec; margin: 30px 0 15px 0; font-size: 1.3rem;">Our Cookie Banner</h3>
+            <p class="section-text">
+                When you first visit our website, you'll see a cookie banner where you can:
+            </p>
+            <ul>
+                <li>Accept all cookies</li>
+                <li>Reject non-essential cookies</li>
+                <li>Customize your cookie preferences</li>
+                <li>Learn more about our cookie usage</li>
+            </ul>
+
+            <h3 style="color: #8338ec; margin: 30px 0 15px 0; font-size: 1.3rem;">Browser Settings</h3>
+            <p class="section-text">
+                You can control cookies through your browser settings:
+            </p>
+            <ul>
+                <li><strong>Chrome:</strong> Settings > Privacy and Security > Cookies</li>
+                <li><strong>Firefox:</strong> Settings > Privacy & Security > Cookies and Site Data</li>
+                <li><strong>Safari:</strong> Preferences > Privacy > Cookies and Website Data</li>
+                <li><strong>Edge:</strong> Settings > Cookies and Site Permissions</li>
+            </ul>
+
+            <div class="highlight-box">
+                <h3>Important Note</h3>
+                <p>Disabling certain cookies may affect the functionality of our website and services. Essential cookies cannot be disabled as they are necessary for basic website operation and security.</p>
+            </div>
+
+            <h2 class="section-title">8. Third-Party Cookies</h2>
+            <p class="section-text">
+                Some cookies on our website are set by third-party services:
+            </p>
+
+            <table class="cookie-table">
+                <thead>
+                    <tr>
+                        <th>Service</th>
+                        <th>Purpose</th>
+                        <th>Privacy Policy</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Google Analytics</td>
+                        <td>Website analytics and performance tracking</td>
+                        <td><a href="https://policies.google.com/privacy" style="color: #ff006e;">Google Privacy Policy</a></td>
+                    </tr>
+                    <tr>
+                        <td>Stripe</td>
+                        <td>Payment processing and billing</td>
+                        <td><a href="https://stripe.com/privacy" style="color: #ff006e;">Stripe Privacy Policy</a></td>
+                    </tr>
+                    <tr>
+                        <td>Intercom</td>
+                        <td>Customer support and live chat</td>
+                        <td><a href="https://www.intercom.com/legal/privacy" style="color: #ff006e;">Intercom Privacy Policy</a></td>
+                    </tr>
+                    <tr>
+                        <td>YouTube</td>
+                        <td>Video content embedding</td>
+                        <td><a href="https://policies.google.com/privacy" style="color: #ff006e;">YouTube Privacy Policy</a></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h2 class="section-title">9. Local Storage and Similar Technologies</h2>
+            <p class="section-text">
+                In addition to cookies, we may use other storage technologies:
+            </p>
+            <ul>
+                <li><strong>Local Storage:</strong> For saving large amounts of data locally (user preferences, project data)</li>
+                <li><strong>Session Storage:</strong> For temporary data that expires when you close your browser</li>
+                <li><strong>Web Beacons:</strong> Small transparent images that help us track email opens and website usage</li>
+                <li><strong>Pixels:</strong> For conversion tracking and retargeting</li>
+            </ul>
+
+            <h2 class="section-title">10. Data Processing and Security</h2>
+            <p class="section-text">
+                Cookie data is processed in accordance with our Privacy Policy and applicable data protection laws:
+            </p>
+            <ul>
+                <li>Data is encrypted during transmission and storage</li>
+                <li>Access is restricted to authorized personnel only</li>
+                <li>Regular security audits and updates are performed</li>
+                <li>Data retention periods are strictly enforced</li>
+                <li>Third-party processors are carefully vetted</li>
+            </ul>
+
+            <h2 class="section-title">11. International Data Transfers</h2>
+            <p class="section-text">
+                Some of our third-party service providers may process cookie data outside the European Economic Area (EEA). We ensure adequate protection through:
+            </p>
+            <ul>
+                <li>Standard Contractual Clauses (SCCs)</li>
+                <li>Adequacy decisions by the European Commission</li>
+                <li>Other approved transfer mechanisms</li>
+            </ul>
+
+            <h2 class="section-title">12. Updates to This Cookie Policy</h2>
+            <p class="section-text">
+                We may update this Cookie Policy periodically to reflect changes in our practices or applicable laws. Updates will be communicated through:
+            </p>
+            <ul>
+                <li>Website notification banners</li>
+                <li>Email notifications for significant changes</li>
+                <li>Updated "Last Modified" date on this page</li>
+            </ul>
+
+            <div class="info-box">
+                <h3>Cookie Preferences Center</h3>
+                <p>You can update your cookie preferences at any time by visiting our Cookie Preferences Center in your account settings or by clicking the cookie settings link in our website footer.</p>
+            </div>
+
+            <h2 class="section-title">13. Contact Us About Cookies</h2>
+            <div class="contact-info">
+                <p class="section-text">
+                    If you have questions about our use of cookies or this Cookie Policy, please contact us:
+                </p>
+                <p class="section-text">
+                    <strong>Email:</strong> privacy@magiccut.ai<br>
+                    <strong>Support:</strong> support@magiccut.ai<br>
+                    <strong>Company:</strong> Upsell Business Agency<br>
+                    <strong>Location:</strong> Netherlands
+                </p>
+                <p class="section-text">
+                    <strong>Data Protection Officer:</strong> dpo@magiccut.ai
+                </p>
+            </div>
+
+            <h2 class="section-title">14. Useful Resources</h2>
+            <p class="section-text">
+                For more information about cookies and privacy:
+            </p>
+            <ul>
+                <li><strong>All About Cookies:</strong> <a href="https://www.allaboutcookies.org" style="color: #ff006e;">www.allaboutcookies.org</a></li>
+                <li><strong>Your Online Choices:</strong> <a href="https://www.youronlinechoices.com" style="color: #ff006e;">www.youronlinechoices.com</a></li>
+                <li><strong>ICO Cookie Guidance:</strong> <a href="https://ico.org.uk/for-organisations/guide-to-pecr/cookies/" style="color: #ff006e;">ICO Cookies Guide</a></li>
+                <li><strong>GDPR Info:</strong> <a href="https://gdpr.eu" style="color: #ff006e;">www.gdpr.eu</a></li>
+            </ul>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2025 MagicCutAI, a division of Upsell Business Agency. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,58 @@
+{
+  "id": "product_quadrasphere_modern_pendant_light_036645",
+  "template": {
+    "product": {
+      "name": "QuadraSphere Modern Pendant Light",
+      "category": "home",
+      "visualRefinement": {
+        "physicalCharacteristics": {
+          "exactSizeAndDimensions": "This pendant light features a circular ceiling mount of 30 cm in diameter with four hanging lights, each suspended at varied lengths ranging from 30 to 50 cm. Each spherical light has a diameter of 15 cm.",
+          "colorScheme": "The primary color scheme includes a matte black ceiling mount and fixtures, with transparent, smoky gray glass spheres. The interior visible bulbs have a warm, amber glow.",
+          "materialComposition": "Constructed from high-quality materials, the ceiling mount and fixtures are made of durable metal with a matte black finish. The spheres are crafted from smoky gray tinted glass with a smooth, glossy surface.",
+          "shapeAndForm": "The light features a minimalist design with a round, flat ceiling mount from which four metal rods suspend spherical glass shades. The spheres are perfectly round, creating a balanced visual symmetry.",
+          "brandingElements": "None visible"
+        },
+        "visualDetails": {
+          "surfaceFinish": "The metal components have a matte black finish that absorbs light, while the glass spheres have a glossy finish that reflects and refracts light.",
+          "distinctiveFeatures": "The distinctive features include the smoky gray glass spheres, the varied suspension lengths of the spheres, and the visible filament-style bulbs inside each sphere.",
+          "packagingElements": "Product only, no packaging",
+          "lightingInteraction": "The smoky glass interacts with light by creating a soft, diffused glow around the bulbs, which enhances the warm amber light emitted by the filament bulbs."
+        },
+        "contextualInformation": {
+          "useCase": "Ideal for modern living rooms, dining areas, or minimalist interiors, this pendant light provides both functional illumination and a decorative, contemporary aesthetic.",
+          "targetAudience": "Designed for homeowners, interior designers, and decor enthusiasts with a taste for modern, minimalist designs.",
+          "keySellingPoints": "Key selling points include the elegant and contemporary design, the high-quality materials used, the energy-efficient LED compatible bulbs, and the ease of installation and adjustable hanging lengths."
+        }
+      },
+      "veo3Consistency": {
+        "productPlacement": "Ensure the light is always displayed against a neutral background to emphasize its modern design. The light should hang at a consistent height in all scenes.",
+        "lightingRequirements": "Soft, diffused lighting is necessary to highlight the smoky glass texture and the warm glow of the bulbs. Avoid direct, harsh lighting to prevent glare.",
+        "cameraAngles": "Frontal and angled views are preferred to showcase the varying lengths of the spheres and the overall symmetry of the design.",
+        "interactionGuidelines": "Characters should interact with the light by adjusting the length or switching it on and off, demonstrating its functionality and ease of use."
+      }
+    },
+    "sceneOptimization": {
+      "bestPresentationAngles": [
+        "frontal view",
+        "45-degree angle",
+        "top-down view"
+      ],
+      "recommendedEnvironments": [
+        "modern living room",
+        "contemporary office space",
+        "minimalist dining area"
+      ],
+      "demonstrationSuggestions": [
+        "demonstrating the light adjustment",
+        "showing the light being turned on and off",
+        "highlighting the installation process"
+      ]
+    }
+  },
+  "metadata": {
+    "source": "images/68706656d1ad06b163eaea66_1752294020489.png",
+    "sourceType": "image",
+    "createdAt": "2025-07-12T04:20:36.645Z",
+    "analysisMethod": "openai"
+  }
+}

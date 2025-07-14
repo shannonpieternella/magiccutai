@@ -1,0 +1,58 @@
+{
+  "id": "product_elegant_teal_turtleneck_sweater_265052",
+  "template": {
+    "product": {
+      "name": "Elegant Teal Turtleneck Sweater",
+      "category": "fashion",
+      "visualRefinement": {
+        "physicalCharacteristics": {
+          "exactSizeAndDimensions": "This sweater is designed to fit snugly on a medium-sized adult female, with a length extending just below the waist, and sleeves reaching slightly past the wrists.",
+          "colorScheme": "The primary color is a deep teal, consistent throughout with no variations or patterns. The color has a matte finish, enhancing its elegant and understated appearance.",
+          "materialComposition": "Made from a high-quality, soft wool blend that provides warmth and comfort. The fabric has a slight stretch, allowing it to maintain its shape and provide a fitted silhouette.",
+          "shapeAndForm": "The sweater features a classic turtleneck design with a slim fit. The neckline is high and folds over, and the overall form accentuates the body's natural curves.",
+          "brandingElements": "No visible branding, logos, or graphics are present on the sweater, maintaining a clean and sophisticated look."
+        },
+        "visualDetails": {
+          "surfaceFinish": "The surface of the sweater is smooth with a subtle ribbed texture that runs vertically, providing a refined visual and tactile quality.",
+          "distinctiveFeatures": "Distinctive features include the ribbed cuffs and turtleneck collar, which are tightly knit to provide a snug fit and prevent stretching over time.",
+          "packagingElements": "Product only, no packaging",
+          "lightingInteraction": "The fabric's matte finish minimizes reflections, allowing for consistent color representation under various lighting conditions."
+        },
+        "contextualInformation": {
+          "useCase": "Ideal for business casual environments or casual outings during cooler weather. Can be paired with jeans or formal trousers.",
+          "targetAudience": "Aimed at young to middle-aged professional women seeking comfort and style.",
+          "keySellingPoints": "The sweater's key selling points include its versatile color, comfortable fit, and high-quality material that does not pill or lose shape with wear."
+        }
+      },
+      "veo3Consistency": {
+        "productPlacement": "The sweater should be displayed on a mannequin or model with a neutral background to emphasize its color and texture.",
+        "lightingRequirements": "Soft, diffused lighting should be used to avoid harsh shadows and highlight the sweater's natural color and texture.",
+        "cameraAngles": "Frontal, 45-degree, and side angles should be used to showcase the sweater's fit and detailing.",
+        "interactionGuidelines": "Models should interact with the sweater by adjusting the collar or sleeves, demonstrating its flexibility and comfort."
+      }
+    },
+    "sceneOptimization": {
+      "bestPresentationAngles": [
+        "frontal view",
+        "45-degree angle",
+        "side view"
+      ],
+      "recommendedEnvironments": [
+        "indoor with soft lighting",
+        "outdoor on overcast day",
+        "professional setting"
+      ],
+      "demonstrationSuggestions": [
+        "pairing with casual jeans",
+        "layering under a jacket",
+        "styling with formal trousers"
+      ]
+    }
+  },
+  "metadata": {
+    "source": "images/68706656d1ad06b163eaea66_1752279248207.jpeg",
+    "sourceType": "image",
+    "createdAt": "2025-07-12T00:14:25.052Z",
+    "analysisMethod": "openai"
+  }
+}

@@ -1,0 +1,2791 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MagicCutAI - Create Professional Videos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0b2e 25%, #16213e 75%, #0f3460 100%);
+            min-height: 100vh;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Navigation Links */
+.nav-links {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    padding: 10px 20px;
+    border-radius: 15px;
+    position: relative;
+}
+
+.nav-link:hover {
+    color: white;
+    background: rgba(255, 255, 255, 0.1);
+    transform: translateY(-2px);
+}
+
+.nav-link.active {
+    color: #ff006e;
+    background: rgba(255, 0, 110, 0.1);
+    border: 1px solid rgba(255, 0, 110, 0.3);
+}
+
+        /* Background Effects */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(255, 0, 110, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(131, 56, 236, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(58, 134, 255, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+            animation: backgroundShift 20s ease-in-out infinite;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            border-radius: 50%;
+            animation: particleFloat 8s ease-in-out infinite;
+            opacity: 0;
+        }
+
+        @keyframes particleFloat {
+            0%, 100% { 
+                transform: translateY(100vh) translateX(0px) rotate(0deg) scale(0); 
+                opacity: 0; 
+            }
+            10% { 
+                opacity: 1; 
+                transform: translateY(90vh) translateX(20px) rotate(45deg) scale(1); 
+            }
+            90% { 
+                opacity: 1; 
+                transform: translateY(-10vh) translateX(-20px) rotate(315deg) scale(1); 
+            }
+        }
+        
+        .navbar {
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            padding: 20px 40px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .nav-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            animation: logoFloat 6s ease-in-out infinite;
+            box-shadow: 0 0 30px rgba(255, 0, 110, 0.4);
+        }
+
+        @keyframes logoFloat {
+            0%, 100% { transform: translateY(0px) rotate(0deg); box-shadow: 0 0 30px rgba(255, 0, 110, 0.4); }
+            50% { transform: translateY(-5px) rotate(5deg); box-shadow: 0 0 50px rgba(131, 56, 236, 0.6); }
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .user-details {
+            text-align: right;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            color: white;
+            font-size: 1.1rem;
+        }
+        
+        .user-plan {
+            font-size: 0.9rem;
+            color: #ff006e;
+            font-weight: 500;
+        }
+        
+        .nav-buttons {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+        
+        .btn-danger {
+            background: rgba(255, 107, 107, 0.1);
+            color: #ff6b6b;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+        }
+        
+        .btn-danger:hover {
+            background: rgba(255, 107, 107, 0.2);
+            transform: translateY(-2px);
+            border-color: rgba(255, 107, 107, 0.5);
+        }
+        
+        .btn-warning {
+            background: rgba(255, 193, 7, 0.1);
+            color: #ffc107;
+            border: 1px solid rgba(255, 193, 7, 0.3);
+            font-size: 12px;
+            padding: 8px 15px;
+        }
+        
+        .btn-warning:hover {
+            background: rgba(255, 193, 7, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .dashboard-header {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 50px;
+            margin-bottom: 40px;
+            color: white;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            animation: fadeInDown 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.05), rgba(131, 56, 236, 0.05));
+            z-index: -1;
+        }
+        
+        .dashboard-title {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .dashboard-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .usage-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 40px;
+            margin-bottom: 40px;
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .usage-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.05), rgba(131, 56, 236, 0.05));
+            z-index: -1;
+        }
+        
+        .usage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .usage-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .upgrade-btn {
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 25px rgba(255, 0, 110, 0.4);
+        }
+        
+        .upgrade-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 0, 110, 0.6);
+        }
+        
+        .usage-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .usage-stat {
+            text-align: center;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .usage-number {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .usage-label {
+            font-size: 1rem;
+            opacity: 0.8;
+            margin-top: 5px;
+        }
+        
+        .usage-bar {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            height: 12px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        
+        .usage-fill {
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            height: 100%;
+            border-radius: 15px;
+            transition: width 0.3s ease;
+        }
+        
+        .debug-info {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.8);
+            max-height: 250px;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .debug-toggle {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .debug-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 40px;
+            margin-bottom: 40px;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.6s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: left 0.5s;
+        }
+        
+        .glass-card:hover::before {
+            left: 100%;
+        }
+        
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 0, 110, 0.3);
+        }
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+        
+        .section-icon {
+            font-size: 2.2rem;
+            margin-right: 15px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 10px 30px rgba(255, 0, 110, 0.3);
+        }
+        
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+        }
+        
+        .optional-toggle {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 20px 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .optional-toggle:hover {
+            background: rgba(255, 255, 255, 0.15);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            margin-right: 20px;
+            cursor: pointer;
+        }
+        
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255, 255, 255, 0.2);
+            transition: 0.4s;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 22px;
+            width: 22px;
+            left: 4px;
+            bottom: 3px;
+            background: white;
+            transition: 0.4s;
+            border-radius: 50%;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        input:checked + .slider {
+            background: linear-gradient(45deg, #ff006e, #8338ec);
+            box-shadow: 0 0 20px rgba(255, 0, 110, 0.5);
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(30px);
+        }
+        
+        .toggle-label {
+            color: white;
+            font-weight: 600;
+            font-size: 1.1rem;
+            user-select: none;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .toggle-label:hover {
+            color: #ff006e;
+        }
+        
+        .upload-area {
+            border: 3px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            padding: 50px 30px;
+            text-align: center;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .upload-area:hover {
+            border-color: rgba(255, 0, 110, 0.6);
+            background: rgba(255, 0, 110, 0.1);
+            transform: scale(1.02);
+        }
+        
+        .upload-area.dragover {
+            border-color: #ff006e;
+            background: rgba(255, 0, 110, 0.2);
+        }
+        
+        .upload-area input[type="file"] {
+            display: none;
+        }
+        
+        .upload-btn {
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            color: white;
+            padding: 18px 35px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            margin: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(255, 0, 110, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .upload-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 0, 110, 0.6);
+        }
+        
+        .form-group {
+            margin-bottom: 30px;
+        }
+        
+        .form-label {
+            display: block;
+            color: white;
+            font-weight: 600;
+            margin-bottom: 12px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .form-input, .form-select, .form-textarea {
+            width: 100%;
+            padding: 18px 25px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input::placeholder, .form-textarea::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .form-input:focus, .form-select:focus, .form-textarea:focus {
+            outline: none;
+            border-color: #ff006e;
+            box-shadow: 0 0 20px rgba(255, 0, 110, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .scenes-container {
+            margin-top: 40px;
+        }
+        
+        .scenes-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .scene-count {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 8px 20px;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .scene-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 35px;
+            margin-bottom: 25px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            position: relative;
+            animation: slideInRight 0.5s ease-out;
+            transition: all 0.3s ease;
+        }
+
+        .scene-card:hover {
+            border-color: rgba(255, 0, 110, 0.3);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .scene-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .scene-number {
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            color: white;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 25px rgba(255, 0, 110, 0.3);
+        }
+        
+        .scene-delete {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.3);
+        }
+        
+        .scene-delete:hover {
+            transform: scale(1.1);
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.5);
+        }
+        
+        .add-scene-btn {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            padding: 18px 35px;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            width: 100%;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 8px 25px rgba(46, 204, 113, 0.3);
+        }
+        
+        .add-scene-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(46, 204, 113, 0.5);
+        }
+        
+        .add-scene-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .generate-btn {
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            color: white;
+            padding: 25px 50px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 700;
+            width: 100%;
+            margin-top: 40px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(255, 0, 110, 0.4);
+        }
+        
+        .generate-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .generate-btn:hover::before {
+            left: 100%;
+        }
+        
+        .generate-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 50px rgba(255, 0, 110, 0.6);
+        }
+        
+        .generate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .upload-result {
+            background: rgba(46, 204, 113, 0.1);
+            border: 2px solid rgba(46, 204, 113, 0.3);
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 20px;
+            backdrop-filter: blur(10px);
+            animation: slideInUp 0.5s ease-out;
+        }
+        
+        .upload-result h4 {
+            color: #2ecc71;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .upload-result p {
+            color: rgba(255, 255, 255, 0.9);
+            margin: 8px 0;
+        }
+        
+        .config-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .status-section {
+            display: none;
+            margin-top: 50px;
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        .status-section.visible {
+            display: block;
+        }
+        
+        .progress-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 40px;
+            margin-bottom: 30px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            padding: 4px;
+            margin: 25px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar-fill {
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            height: 25px;
+            border-radius: 50px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            min-width: 80px;
+        }
+        
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .video-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 25px;
+            padding: 25px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .video-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 0, 110, 0.3);
+        }
+        
+        .video-card video {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .video-card h4 {
+            color: white;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 20px;
+            box-shadow: 0 15px 40px rgba(255, 0, 110, 0.4);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            max-width: 450px;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+        }
+        
+        .notification.success {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+        }
+        
+        .notification.warning {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+        
+        .creatomate-btn {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            padding: 18px 40px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
+        }
+        
+        .creatomate-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .creatomate-btn:hover::before {
+            left: 100%;
+        }
+        
+        .creatomate-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(255, 107, 107, 0.6);
+        }
+        
+        .creatomate-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .pricing-highlight {
+            background: linear-gradient(135deg, rgba(255, 193, 7, 0.2), rgba(255, 152, 0, 0.2));
+            border: 2px solid rgba(255, 193, 7, 0.4);
+            border-radius: 20px;
+            padding: 20px;
+            margin-top: 20px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .quality-badge {
+            display: inline-block;
+            padding: 6px 15px;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-left: 15px;
+        }
+        
+        .quality-fast {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+        }
+        
+        .quality-premium {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+            color: white;
+        }
+        
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0b2e 25%, #16213e 75%, #0f3460 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            color: white;
+            flex-direction: column;
+        }
+        
+        .spinner {
+            border: 4px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top: 4px solid #ff006e;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 30px;
+        }
+
+        /* Enhanced Loading States */
+        .upload-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: 25px;
+            z-index: 100;
+            flex-direction: column;
+        }
+
+        .upload-loading.active {
+            display: flex;
+        }
+
+        .upload-spinner {
+            width: 80px;
+            height: 80px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top: 4px solid #ff006e;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        .upload-loading-text {
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .upload-loading-subtext {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        /* Video Generation Loading */
+        .generation-loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            flex-direction: column;
+        }
+
+        .generation-loading.active {
+            display: flex;
+        }
+
+        .generation-spinner-container {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .generation-spinner {
+            width: 120px;
+            height: 120px;
+            border: 6px solid rgba(255, 255, 255, 0.2);
+            border-top: 6px solid #ff006e;
+            border-right: 6px solid #8338ec;
+            border-radius: 50%;
+            animation: spin 2s linear infinite;
+        }
+
+        .generation-spinner-inner {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 80px;
+            height: 80px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 4px solid #3a86ff;
+            border-radius: 50%;
+            animation: spinReverse 1.5s linear infinite;
+        }
+
+        .generation-content {
+            text-align: center;
+            max-width: 600px;
+            padding: 0 40px;
+        }
+
+        .generation-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .generation-message {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .generation-submessage {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .generation-progress {
+            width: 100%;
+            height: 8px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .generation-progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            border-radius: 20px;
+            width: 0%;
+            transition: width 0.5s ease;
+            animation: progressPulse 2s ease-in-out infinite;
+        }
+
+        .generation-steps {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .generation-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+        .generation-step.active {
+            opacity: 1;
+        }
+
+        .generation-step.completed {
+            opacity: 1;
+        }
+
+        .generation-step-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .generation-step.active .generation-step-icon {
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            border-color: #ff006e;
+            animation: stepPulse 2s ease-in-out infinite;
+        }
+
+        .generation-step.completed .generation-step-icon {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            border-color: #2ecc71;
+        }
+
+        .generation-step-text {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .generation-step.active .generation-step-text {
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Floating elements animation */
+        .floating-elements {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .floating-element {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            border-radius: 50%;
+            opacity: 0.6;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes spinReverse {
+            0% { transform: rotate(360deg); }
+            100% { transform: rotate(0deg); }
+        }
+
+        @keyframes progressPulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+
+        @keyframes stepPulse {
+            0%, 100% { 
+                box-shadow: 0 0 0 0 rgba(255, 0, 110, 0.7);
+                transform: scale(1);
+            }
+            50% { 
+                box-shadow: 0 0 0 10px rgba(255, 0, 110, 0);
+                transform: scale(1.05);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(100vh) translateX(0px) rotate(0deg) scale(0); 
+                opacity: 0; 
+            }
+            10% { 
+                opacity: 0.6; 
+                transform: translateY(90vh) translateX(20px) rotate(45deg) scale(1); 
+            }
+            90% { 
+                opacity: 0.6; 
+                transform: translateY(-10vh) translateX(-20px) rotate(315deg) scale(1); 
+            }
+        }
+        
+        .access-denied {
+            text-align: center;
+            color: white;
+            padding: 60px 40px;
+        }
+        
+        .access-denied h2 {
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .access-denied p {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .dashboard-title {
+                font-size: 2.2rem;
+            }
+            
+            .config-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .scenes-header {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .nav-content {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .user-info {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .usage-stats {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+                gap: 20px;
+            }
+
+            .section-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.8rem;
+            }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .dashboard-header {
+                padding: 40px 30px;
+            }
+
+            .glass-card {
+                padding: 30px 25px;
+            }
+
+            .scene-card {
+                padding: 25px 20px;
+            }
+        }
+        @media (max-width: 768px) {
+    .nav-content {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .nav-links {
+        gap: 15px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .user-info {
+        width: 100%;
+        justify-content: space-between;
+    }
+    
+    /* Rest of your existing mobile styles... */
+}
+    </style>
+</head>
+<body>
+    <!-- Floating Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="spinner"></div>
+        <h2>Loading MagicCutAI...</h2>
+        <p>Checking your subscription and setting up your workspace</p>
+    </div>
+
+    <!-- Video Generation Loading Overlay -->
+    <div class="generation-loading" id="generationLoading">
+        <div class="floating-elements" id="floatingElements"></div>
+        
+        <div class="generation-spinner-container">
+            <div class="generation-spinner"></div>
+            <div class="generation-spinner-inner"></div>
+        </div>
+        
+        <div class="generation-content">
+            <h2 class="generation-title">🎬 Creating Magic</h2>
+            <div class="generation-message" id="generationMessage">Preparing your video generation...</div>
+            <div class="generation-submessage" id="generationSubmessage">Please wait while our AI creates professional-quality videos for you</div>
+            
+            <div class="generation-progress">
+                <div class="generation-progress-fill" id="generationProgressFill"></div>
+            </div>
+            
+            <div class="generation-steps">
+                <div class="generation-step" id="step1">
+                    <div class="generation-step-icon">📝</div>
+                    <div class="generation-step-text">Analyzing Scenes</div>
+                </div>
+                <div class="generation-step" id="step2">
+                    <div class="generation-step-icon">🎭</div>
+                    <div class="generation-step-text">Processing Characters</div>
+                </div>
+                <div class="generation-step" id="step3">
+                    <div class="generation-step-icon">🎬</div>
+                    <div class="generation-step-text">Generating Videos</div>
+                </div>
+                <div class="generation-step" id="step4">
+                    <div class="generation-step-icon">✨</div>
+                    <div class="generation-step-text">Final Polish</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Access Denied Screen -->
+    <div class="loading-screen" id="accessDenied" style="display: none;">
+        <div class="access-denied">
+            <h2>🔒 Subscription Required</h2>
+            <p>You need an active subscription to access MagicCutAI video creation tools.</p>
+            <a href="pricing.html" class="btn btn-secondary" style="color: white; margin-right: 15px;">View Pricing Plans</a>
+            <a href="index.html" class="btn btn-danger" style="color: white;">Back to Homepage</a>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="mainApp" style="display: none;">
+        <!-- Navigation -->
+        <nav class="navbar">
+            <div class="nav-content">
+                <div class="logo">
+                    <div class="logo-icon">🎬</div>
+                    MagicCutAI
+                </div>
+                <div class="nav-links">
+                    <a href="/app" class="nav-link active">Create Videos</a>
+                    <a href="/image-studio" class="nav-link">🎨 AI Images</a>
+                    <a href="/videos" class="nav-link">📹 My Videos</a>
+                    <a href="/pricing" class="nav-link">Pricing</a>
+                </div>
+                <div class="user-info">
+                    <div class="user-details">
+                        <div class="user-name" id="userName">Loading...</div>
+                        <div class="user-plan" id="userPlan">Loading plan...</div>
+                    </div>
+                    <div class="nav-buttons">
+                        <a href="pricing.html" class="btn btn-secondary">Account</a>
+                        <button class="btn btn-warning" onclick="repairQuota()" id="repairBtn" style="display: none;">Fix Quota</button>
+                        <button class="btn btn-danger" onclick="logout()">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <!-- Dashboard Header -->
+            <div class="dashboard-header">
+                <h1 class="dashboard-title">Create Professional Videos</h1>
+                <p class="dashboard-subtitle">Welcome to your MagicCutAI workspace. Upload characters, create scenes, and generate stunning videos with AI-powered precision.</p>
+            </div>
+
+            <!-- Usage Card -->
+            <div class="usage-card">
+                <div class="usage-header">
+                    <div class="usage-title">📊 Your Usage This Month</div>
+                    <a href="pricing.html" class="upgrade-btn">Upgrade Plan</a>
+                </div>
+                <div class="usage-stats">
+                    <div class="usage-stat">
+                        <div class="usage-number" id="videosUsed">0</div>
+                        <div class="usage-label">Videos Created</div>
+                    </div>
+                    <div class="usage-stat">
+                        <div class="usage-number" id="videosLimit">0</div>
+                        <div class="usage-label">Monthly Limit</div>
+                    </div>
+                    <div class="usage-stat">
+                        <div class="usage-number" id="videosRemaining">0</div>
+                        <div class="usage-label">Remaining</div>
+                    </div>
+                </div>
+                <div class="usage-bar">
+                    <div class="usage-fill" id="usageBar" style="width: 0%"></div>
+                </div>
+                
+                <!-- Debug Information -->
+                <!-- <button class="debug-toggle" onclick="toggleDebugInfo()">🔍 Toggle Debug Info</button> -->
+                <div class="debug-info" id="debugInfo" style="display: none;">
+                    <div>No debug data yet. Load user data to see quota debugging information.</div>
+                </div>
+            </div>
+
+            <!-- Character Analysis Section -->
+            <div class="glass-card">
+                <div class="section-header">
+                    <span class="section-icon">👤</span>
+                    <h2 class="section-title">Character Analysis</h2>
+                </div>
+                
+                <div class="optional-toggle">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="useCharacterAnalysis">
+                        <span class="slider"></span>
+                    </label>
+                    <label for="useCharacterAnalysis" class="toggle-label" style="cursor: pointer;">Enable Character Analysis (Optional)</label>
+                </div>
+                
+                <div id="characterSection" style="display: none;">
+                    <div class="upload-area" id="characterUploadArea" style="position: relative;">
+                        <input type="file" id="characterImage" accept="image/*">
+                        <div onclick="document.getElementById('characterImage').click()">
+                            <span style="font-size: 3rem; display: block; margin-bottom: 15px;">📸</span>
+                            <button type="button" class="upload-btn">Upload Character Image</button>
+                            <p style="color: rgba(255, 255, 255, 0.7); margin-top: 15px;">
+                                Upload a high-quality image of your character for AI analysis
+                            </p>
+                        </div>
+                        
+                        <!-- Character Upload Loading -->
+                        <div class="upload-loading" id="characterUploadLoading">
+                            <div class="upload-spinner"></div>
+                            <div class="upload-loading-text">🎭 Analyzing Character</div>
+                            <div class="upload-loading-subtext">Our AI is analyzing facial features, expressions, and characteristics...</div>
+                        </div>
+                    </div>
+                    
+                    <div id="characterResult" class="upload-result" style="display: none;">
+                        <h4>✅ Character Analysis Complete!</h4>
+                        <p id="characterName"></p>
+                        <p id="characterVoice"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Analysis Section -->
+            <div class="glass-card">
+                <div class="section-header">
+                    <span class="section-icon">📦</span>
+                    <h2 class="section-title">Product Analysis</h2>
+                </div>
+                
+                <div class="optional-toggle">
+                    <label class="toggle-switch">
+                        <input type="checkbox" id="useProductAnalysis">
+                        <span class="slider"></span>
+                    </label>
+                    <label for="useProductAnalysis" class="toggle-label" style="cursor: pointer;">Enable Product Analysis (Optional)</label>
+                </div>
+                
+                <div id="productSection" style="display: none;">
+                    <div class="upload-area" id="productUploadArea" style="position: relative;">
+                        <input type="file" id="productImage" accept="image/*">
+                        <div onclick="document.getElementById('productImage').click()">
+                            <span style="font-size: 3rem; display: block; margin-bottom: 15px;">📦</span>
+                            <button type="button" class="upload-btn">Upload Product Image</button>
+                            <p style="color: rgba(255, 255, 255, 0.7); margin-top: 15px;">
+                                Add a product for consistent brand integration
+                            </p>
+                        </div>
+                        
+                        <!-- Product Upload Loading -->
+                        <div class="upload-loading" id="productUploadLoading">
+                            <div class="upload-spinner"></div>
+                            <div class="upload-loading-text">📦 Analyzing Product</div>
+                            <div class="upload-loading-subtext">Our AI is identifying product features, colors, and branding elements...</div>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Product Description</label>
+                        <input type="text" id="productDescription" class="form-input" placeholder="Describe your product (optional)">
+                    </div>
+                    
+                    <div id="productResult" class="upload-result" style="display: none;">
+                        <h4>✅ Product Analysis Complete!</h4>
+                        <p id="productName"></p>
+                        <p id="productCategory"></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Configuration -->
+            <div class="glass-card">
+                <div class="section-header">
+                    <span class="section-icon">⚙️</span>
+                    <h2 class="section-title">Video Configuration</h2>
+                </div>
+                
+                <div class="config-grid">
+                    <div class="form-group">
+                        <label class="form-label">Quality Model</label>
+                        <select id="veoModel" class="form-select" onchange="updatePricing()">
+                            <option value="fast">Quick Generation</option> 
+                            <!-- <option value="normal"> Normal - Premium Quality (5x cost)</option> -->
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Video Duration (per scene)</label>
+                        <select id="videoDuration" class="form-select" onchange="updatePricing()">
+                            <option value="8">8 seconds</option>
+                        </select>
+                        <div id="pricingInfo" style="margin-top: 15px; padding: 15px; background: rgba(255,255,255,0.1); border-radius: 15px; color: rgba(255,255,255,0.8); font-size: 0.9rem;"></div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Spoken Language</label>
+                        <select id="spokenLanguage" class="form-select">
+                            <option value="en">🇺🇸 English</option>
+                            <option value="nl">🇳🇱 Nederlands</option>
+                            <option value="de">🇩🇪 Deutsch</option>
+                            <option value="es">🇪🇸 Español</option>
+                            <option value="fr">🇫🇷 Français</option>
+                            <option value="it">🇮🇹 Italiano</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Scene Creator -->
+            <div class="glass-card">
+                <div class="section-header">
+                    <span class="section-icon">🎭</span>
+                    <h2 class="section-title">Scene Creator</h2>
+                </div>
+                
+                <div class="scenes-container">
+                    <div class="scenes-header">
+                        <div>
+                            <h3 style="color: white; margin: 0; font-size: 1.5rem;">Create Your Scenes</h3>
+                            <p style="color: rgba(255, 255, 255, 0.7); margin: 8px 0 0 0;">Add up to 3 scenes for your video</p>
+                        </div>
+                        <div class="scene-count" id="sceneCount">1 Scene</div>
+                    </div>
+                    
+                    <div id="scenesContainer">
+                        <!-- Initial scene will be added by JavaScript -->
+                    </div>
+                    
+                    <button class="add-scene-btn" id="addSceneBtn" onclick="addScene()">
+                        ➕ Add Another Scene
+                    </button>
+                    
+                    <button class="generate-btn" id="generateBtn" onclick="generateVideos()">
+                        🚀 Generate Professional Videos
+                    </button>
+                </div>
+            </div>
+
+            <!-- Status Section -->
+            <div class="status-section" id="statusSection">
+                <div class="glass-card">
+                    <div class="section-header">
+                        <span class="section-icon">📊</span>
+                        <h2 class="section-title">Generation Progress</h2>
+                    </div>
+                    
+                    <div class="progress-card">
+                        <h3 style="color: white; margin-bottom: 20px; font-size: 1.5rem;">🔄 Processing Your Videos</h3>
+                        <div id="batchInfo"></div>
+                        <div class="progress-bar">
+                            <div class="progress-bar-fill" id="progressBar">0%</div>
+                        </div>
+                        <p style="color: rgba(255, 255, 255, 0.8); text-align: center; margin-top: 15px;">
+                            Your videos are being generated with professional quality
+                        </p>
+                    </div>
+                    
+                    <div class="video-grid" id="videoGrid"></div>
+                    
+                    <!-- COMMENTED OUT: Creatomate Section (disabled for now) -->
+                    <!--
+                    <div id="creatomateSection" style="display: none; margin-top: 40px;">
+                        <div class="glass-card" style="background: linear-gradient(135deg, rgba(255, 107, 107, 0.2), rgba(238, 90, 82, 0.2)); border: 2px solid rgba(255, 107, 107, 0.3);">
+                            <div class="section-header">
+                                <span class="section-icon">🎞️</span>
+                                <h2 class="section-title">Professional Video Editing</h2>
+                            </div>
+                            
+                            <div style="text-align: center; padding: 30px;">
+                                <p style="color: rgba(255, 255, 255, 0.9); font-size: 1.2rem; margin-bottom: 25px;">
+                                    🎉 Your videos are ready! Now create a professional edited version with Creatomate templates.
+                                </p>
+                                
+                                <button class="creatomate-btn" id="creatomateBtn" onclick="startCreatomateEditing()">
+                                    🎨 Start Professional Editing
+                                </button>
+                                
+                                <div id="creatomateStatus" style="margin-top: 25px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification -->
+    <div class="notification" id="notification"></div>
+
+    <script>
+        let scenes = [];
+        let currentUser = null;
+        let currentBatchId = null;
+        let characterTemplateId = null;
+        let productTemplateId = null;
+        let statusCheckInterval = null;
+        let debugData = {};
+
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 50;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 6 + 8) + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Create floating elements for generation loading
+        function createFloatingElements() {
+            const container = document.getElementById('floatingElements');
+            const elementCount = 20;
+            
+            for (let i = 0; i < elementCount; i++) {
+                const element = document.createElement('div');
+                element.className = 'floating-element';
+                element.style.left = Math.random() * 100 + '%';
+                element.style.animationDelay = Math.random() * 8 + 's';
+                element.style.animationDuration = (Math.random() * 6 + 8) + 's';
+                container.appendChild(element);
+            }
+        }
+
+        // Video generation loading control
+        function showGenerationLoading() {
+            const loadingOverlay = document.getElementById('generationLoading');
+            loadingOverlay.classList.add('active');
+            
+            // Reset all steps
+            const steps = document.querySelectorAll('.generation-step');
+            steps.forEach(step => {
+                step.classList.remove('active', 'completed');
+            });
+            
+            // Reset progress
+            document.getElementById('generationProgressFill').style.width = '0%';
+            
+            // Start step animation
+            animateGenerationSteps();
+        }
+
+        function hideGenerationLoading() {
+            const loadingOverlay = document.getElementById('generationLoading');
+            loadingOverlay.classList.remove('active');
+        }
+
+        function updateGenerationMessage(message, submessage) {
+            document.getElementById('generationMessage').textContent = message;
+            document.getElementById('generationSubmessage').textContent = submessage;
+        }
+
+        function updateGenerationProgress(percent) {
+            document.getElementById('generationProgressFill').style.width = percent + '%';
+        }
+
+        function animateGenerationSteps() {
+            const steps = [
+                { id: 'step1', delay: 1000, message: '📝 Analyzing Your Scenes', submessage: 'Processing scene descriptions and dialogue...' },
+                { id: 'step2', delay: 3000, message: '🎭 Processing Characters', submessage: 'Applying character analysis and voice profiles...' },
+                { id: 'step3', delay: 5000, message: '🎬 Generating Videos', submessage: 'Creating professional-quality videos with VEO3 AI...' },
+                { id: 'step4', delay: 8000, message: '✨ Adding Final Polish', submessage: 'Optimizing quality and preparing your videos...' }
+            ];
+
+            steps.forEach((step, index) => {
+                setTimeout(() => {
+                    // Mark previous steps as completed
+                    if (index > 0) {
+                        document.getElementById(steps[index - 1].id).classList.remove('active');
+                        document.getElementById(steps[index - 1].id).classList.add('completed');
+                    }
+                    
+                    // Activate current step
+                    document.getElementById(step.id).classList.add('active');
+                    
+                    // Update message
+                    updateGenerationMessage(step.message, step.submessage);
+                    
+                    // Update progress
+                    updateGenerationProgress(((index + 1) / steps.length) * 100);
+                }, step.delay);
+            });
+        }
+
+        // Initialize particles
+        createParticles();
+        createFloatingElements();
+
+        // Get authentication token
+        function getAuthToken() {
+            return localStorage.getItem('token');
+        }
+
+        // Check if user is authenticated
+        function isAuthenticated() {
+            return !!getAuthToken();
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            window.location.href = 'index.html';
+        }
+
+        // Toggle debug information
+        function toggleDebugInfo() {
+            const debugInfo = document.getElementById('debugInfo');
+            debugInfo.style.display = debugInfo.style.display === 'none' ? 'block' : 'none';
+        }
+
+        // Update debug information display
+        function updateDebugDisplay(data) {
+            debugData = { ...debugData, ...data };
+            const debugInfo = document.getElementById('debugInfo');
+            debugInfo.innerHTML = `
+                <div><strong>🔍 QUOTA DEBUGGING:</strong></div>
+                <div>Plan Detection: ${debugData.planDetection || 'N/A'}</div>
+                <div>Has Active Subscription: ${debugData.hasActiveSubscription || 'N/A'}</div>
+                <div>Calculated Limit: ${debugData.calculatedLimit || 'N/A'}</div>
+                <div>Subscription Data: ${JSON.stringify(debugData.subscriptionData || {}, null, 2)}</div>
+                <div>Usage Data: ${JSON.stringify(debugData.usageData || {}, null, 2)}</div>
+                <div><strong>Last Updated:</strong> ${new Date().toISOString()}</div>
+            `;
+        }
+
+        // Repair quota function
+        async function repairQuota() {
+            try {
+                const repairBtn = document.getElementById('repairBtn');
+                repairBtn.disabled = true;
+                repairBtn.textContent = 'Repairing...';
+                
+                const token = getAuthToken();
+                const response = await fetch('/api/admin/repair-user-quota', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({})
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showNotification('✅ Quota repaired successfully! Refreshing...', 'success');
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                } else {
+                    showNotification(`❌ Repair failed: ${result.error}`, 'error');
+                }
+                
+            } catch (error) {
+                showNotification(`❌ Repair error: ${error.message}`, 'error');
+            } finally {
+                const repairBtn = document.getElementById('repairBtn');
+                repairBtn.disabled = false;
+                repairBtn.textContent = 'Fix Quota';
+            }
+        }
+
+        // ENHANCED: Load and verify user access with detailed debugging
+        async function loadUserData() {
+            try {
+                const token = getAuthToken();
+                
+                if (!token) {
+                    window.location.href = 'index.html?message=login_required';
+                    return;
+                }
+                
+                console.log('🔍 Loading user data with enhanced debugging...');
+                
+                // Get user info with enhanced debugging
+                const response = await fetch('/api/auth/me', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to load user data');
+                }
+                
+                const userData = await response.json();
+                console.log('📊 User data response:', userData);
+                
+                if (!userData.success) {
+                    throw new Error('Invalid user data');
+                }
+                
+                currentUser = userData.user;
+                
+                // Update debug information
+                if (userData.debug) {
+                    updateDebugDisplay(userData.debug);
+                    
+                    // Show repair button if quota seems wrong
+                    if (userData.debug.hasActiveSubscription && userData.debug.calculatedLimit === 1) {
+                        document.getElementById('repairBtn').style.display = 'inline-block';
+                    }
+                }
+                
+                // Check subscription access
+                if (!currentUser.hasActiveSubscription) {
+                    document.getElementById('loadingScreen').style.display = 'none';
+                    document.getElementById('accessDenied').style.display = 'flex';
+                    return;
+                }
+                
+                // Update UI with user data
+                updateUserInterface();
+                
+                // Show main app
+                document.getElementById('loadingScreen').style.display = 'none';
+                document.getElementById('mainApp').style.display = 'block';
+                
+            } catch (error) {
+                console.error('Error loading user data:', error);
+                showNotification(`❌ Failed to load user data: ${error.message}`, 'error');
+                
+                // Redirect to login on error
+                setTimeout(() => {
+                    window.location.href = 'index.html?message=session_expired';
+                }, 3000);
+            }
+        }
+
+        // ENHANCED: Update UI with user information and debugging
+        function updateUserInterface() {
+            // Update user info in navbar
+            document.getElementById('userName').textContent = `${currentUser.firstName} ${currentUser.lastName}`;
+            document.getElementById('userPlan').textContent = `${currentUser.subscription?.plan?.charAt(0)?.toUpperCase() + currentUser.subscription?.plan?.slice(1) || 'Unknown'} Plan`;
+            
+            // Update usage stats with fresh MongoDB data
+            const usage = currentUser.usage || {};
+            const videosUsed = usage.videosGenerated || 0;
+            const monthlyLimit = usage.monthlyLimit || 0;
+            const videosRemaining = Math.max(0, monthlyLimit - videosUsed);
+            
+            document.getElementById('videosUsed').textContent = videosUsed;
+            document.getElementById('videosLimit').textContent = monthlyLimit;
+            document.getElementById('videosRemaining').textContent = videosRemaining;
+            
+            console.log(`📊 UI Updated - Usage: ${videosUsed}/${monthlyLimit}, Remaining: ${videosRemaining}`);
+            
+            // Update usage bar
+            const usagePercent = monthlyLimit > 0 ? Math.min(100, (videosUsed / monthlyLimit) * 100) : 0;
+            document.getElementById('usageBar').style.width = `${usagePercent}%`;
+            
+            // Hide upgrade button if already on highest plan
+            if (currentUser.subscription?.plan === 'enterprise') {
+                const upgradeBtn = document.querySelector('.upgrade-btn');
+                if (upgradeBtn) {
+                    upgradeBtn.style.display = 'none';
+                }
+            }
+            
+            // Show quota warning if close to limit
+            if (videosRemaining <= 1 && videosRemaining > 0) {
+                showNotification(`⚠️ Only ${videosRemaining} video${videosRemaining !== 1 ? 's' : ''} remaining this month`, 'warning');
+            }
+            
+            // Update debug display with user info
+            updateDebugDisplay({
+                userEmail: currentUser.email,
+                userSubscription: currentUser.subscription,
+                userUsage: currentUser.usage,
+                hasActiveSubscription: currentUser.hasActiveSubscription
+            });
+        }
+
+        function updatePricing() {
+            const model = document.getElementById('veoModel')?.value || 'fast';
+            const duration = parseInt(document.getElementById('videoDuration')?.value || 8);
+            
+            let basePrice, modelName, qualityBadge;
+            if (model === 'fast') {
+                basePrice = 1.20;
+                modelName = 'MC Fast';
+                qualityBadge = '<span class="quality-badge quality-fast">⚡ Fast</span>';
+            } else {
+                basePrice = 6.00;
+                modelName = 'VEO3 Normal';
+                qualityBadge = '<span class="quality-badge quality-premium">👑 Premium</span>';
+            }
+            
+            const pricePerVideo = (basePrice * duration) / 8;
+            const totalEstimate = pricePerVideo * scenes.length;
+            
+            const pricingInfo = document.getElementById('pricingInfo');
+            if (pricingInfo) {
+                pricingInfo.innerHTML = `
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <strong>${modelName}</strong>
+                        ${qualityBadge}
+                    </div>
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                    
+                    </div>
+                    <div style="display: flex; justify-content: space-between; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.2);">
+                        <span>Total estimate (${scenes.length} scene${scenes.length !== 1 ? 's' : ''}):</span>
+                    </div>
+                    ${model === 'normal' ? '<div style="margin-top: 12px; font-size: 0.8rem; color: rgba(255,255,255,0.6);">💎 Premium quality with enhanced details and smoother motion</div>' : ''}
+                `;
+            }
+        }
+
+        function updateSceneCount() {
+            const count = scenes.length;
+            const sceneCountEl = document.getElementById('sceneCount');
+            if (sceneCountEl) {
+                sceneCountEl.textContent = `${count} Scene${count !== 1 ? 's' : ''}`;
+            }
+            
+            const addBtn = document.getElementById('addSceneBtn');
+            if (addBtn) {
+                addBtn.disabled = count >= 3;
+                addBtn.style.display = count >= 3 ? 'none' : 'block';
+            }
+            
+            updatePricing();
+        }
+
+        function updateScene(sceneId, field, value) {
+            const scene = scenes.find(s => s.id === sceneId);
+            if (scene) {
+                scene[field] = value;
+            }
+        }
+
+        function addScene() {
+            if (scenes.length >= 3) {
+                showNotification('Maximum 3 scenes allowed', 'error');
+                return;
+            }
+
+            const sceneNumber = scenes.length + 1;
+            const sceneId = `scene_${sceneNumber}`;
+            
+            scenes.push({
+                id: sceneId,
+                number: sceneNumber,
+                title: '',
+                description: '',
+                dialogue: ''
+            });
+
+            const sceneHTML = `
+                <div class="scene-card" id="${sceneId}">
+                    <div class="scene-header">
+                        <div class="scene-number">Scene ${sceneNumber}</div>
+                        ${sceneNumber > 1 ? `<button class="scene-delete" onclick="removeScene('${sceneId}')" title="Remove Scene">×</button>` : ''}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Scene Title</label>
+                        <input type="text" class="form-input" placeholder="Enter a catchy title for your scene" 
+                               onchange="updateScene('${sceneId}', 'title', this.value)">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Scene Description</label>
+                        <textarea class="form-textarea" rows="3" placeholder="Describe what happens in this scene - be specific about actions, emotions, and visual elements"
+                                  onchange="updateScene('${sceneId}', 'description', this.value)"></textarea>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Character Dialogue (Optional)</label>
+                        <textarea class="form-textarea" rows="2" placeholder="What does the character say in this scene?"
+                                  onchange="updateScene('${sceneId}', 'dialogue', this.value)"></textarea>
+                    </div>
+                </div>
+            `;
+
+            const container = document.getElementById('scenesContainer');
+            if (container) {
+                container.insertAdjacentHTML('beforeend', sceneHTML);
+            }
+            updateSceneCount();
+        }
+
+        function removeScene(sceneId) {
+            const sceneIndex = scenes.findIndex(s => s.id === sceneId);
+            if (sceneIndex > -1) {
+                scenes.splice(sceneIndex, 1);
+                const sceneElement = document.getElementById(sceneId);
+                if (sceneElement) {
+                    sceneElement.remove();
+                }
+                
+                // Renumber remaining scenes
+                scenes.forEach((scene, index) => {
+                    scene.number = index + 1;
+                    const sceneElement = document.getElementById(scene.id);
+                    if (sceneElement) {
+                        const numberElement = sceneElement.querySelector('.scene-number');
+                        if (numberElement) {
+                            numberElement.textContent = `Scene ${scene.number}`;
+                        }
+                    }
+                });
+                
+                updateSceneCount();
+            }
+        }
+
+        // Make functions globally available
+        window.addScene = addScene;
+        window.removeScene = removeScene;
+        window.updateScene = updateScene;
+        window.updatePricing = updatePricing;
+        window.generateVideos = generateVideos;
+        window.startCreatomateEditing = startCreatomateEditing;
+        window.repairQuota = repairQuota;
+        window.toggleDebugInfo = toggleDebugInfo;
+
+        // ENHANCED: Video generation with detailed error handling
+        async function generateVideos() {
+            console.log('🎬 Starting video generation with enhanced debugging...');
+            
+            if (scenes.length === 0) {
+                showNotification('Please add at least one scene!', 'error');
+                return;
+            }
+
+            // Validate scenes
+            const invalidScenes = scenes.filter(scene => !scene.title || !scene.description);
+            if (invalidScenes.length > 0) {
+                showNotification('Please fill in title and description for all scenes!', 'error');
+                return;
+            }
+
+            const useCharacter = document.getElementById('useCharacterAnalysis').checked;
+            const useProduct = document.getElementById('useProductAnalysis').checked;
+
+            if (useCharacter && !characterTemplateId) {
+                showNotification('Please upload and analyze a character image first!', 'error');
+                return;
+            }
+
+            if (useProduct && !productTemplateId) {
+                showNotification('Please upload and analyze a product image first!', 'error');
+                return;
+            }
+
+            try {
+                const generateBtn = document.getElementById('generateBtn');
+                generateBtn.disabled = true;
+                generateBtn.textContent = '🔄 Checking Quota...';
+
+                const token = getAuthToken();
+
+                // First, get fresh user quota data before generation
+                console.log('📊 Fetching fresh user quota data...');
+                const userResponse = await fetch('/api/auth/me', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+
+                if (!userResponse.ok) {
+                    throw new Error('Failed to verify account status');
+                }
+
+                const userData = await userResponse.json();
+                console.log('📊 Fresh user data:', userData);
+                
+                if (!userData.success) {
+                    throw new Error('Invalid account data');
+                }
+
+                // Update current user data with fresh info
+                currentUser = userData.user;
+                updateUserInterface(); // Refresh the UI with latest data
+                
+                // Update debug information
+                if (userData.debug) {
+                    updateDebugDisplay(userData.debug);
+                }
+
+                // Check if user has active subscription (fresh check)
+                if (!currentUser.hasActiveSubscription) {
+                    showNotification('❌ Subscription required! Please upgrade your plan.', 'error');
+                    setTimeout(() => {
+                        window.location.href = 'pricing.html';
+                    }, 2000);
+                    generateBtn.disabled = false;
+                    generateBtn.textContent = '🚀 Generate Professional Videos';
+                    return;
+                }
+
+                generateBtn.textContent = '📝 Generating Prompts...';
+
+                // Generate prompts
+                console.log('📝 Generating enhanced prompts...');
+                const promptData = {
+                    characterTemplateId: useCharacter ? characterTemplateId : null,
+                    productTemplateId: useProduct ? productTemplateId : null,
+                    scenes: scenes.map(scene => ({
+                        title: scene.title,
+                        scene: scene.description,
+                        dialogue: scene.dialogue
+                    })),
+                    spokenLanguage: document.getElementById('spokenLanguage').value,
+                    sceneDuration: parseInt(document.getElementById('videoDuration').value)
+                };
+
+                const promptResponse = await fetch('/api/generate-prompts', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify(promptData)
+                });
+
+                const promptResult = await promptResponse.json();
+                
+                if (!promptResult.success) {
+                    throw new Error(promptResult.error);
+                }
+
+                generateBtn.textContent = '🎬 Starting AI Generation...';
+                showNotification('🎬 Professional video generation started!', 'success');
+                
+                // Show enhanced loading screen
+                showGenerationLoading();
+
+                // Generate videos - server will handle quota validation with fresh MongoDB data
+                console.log('🎬 Starting AI generation with enhanced quota checking...');
+                const model = document.getElementById('veoModel').value;
+                const videoResponse = await fetch('/api/generate-veo3-videos', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        prompts: promptResult.prompts,
+                        options: { 
+                            durationSeconds: parseInt(document.getElementById('videoDuration').value),
+                            generateAudio: true,
+                            aspectRatio: '16:9',
+                            model: model
+                        }
+                    })
+                });
+
+                const videoResult = await videoResponse.json();
+                console.log('🎬 AI generation response:', videoResult);
+                
+                // Hide loading screen
+                hideGenerationLoading();
+                
+                // ENHANCED: Handle server-side errors with debugging
+                if (!videoResult.success) {
+                    // Hide loading screen on error
+                    hideGenerationLoading();
+                    
+                    if (videoResponse.status === 402 || videoResponse.status === 429) {
+                        // Subscription or quota issues - show detailed error
+                        const errorMsg = videoResult.message || videoResult.error;
+                        showNotification(`❌ ${errorMsg}`, 'error');
+                        
+                        // Update debug info with error details
+                        if (videoResult.debug) {
+                            updateDebugDisplay({
+                                ...videoResult.debug,
+                                lastError: errorMsg,
+                                lastErrorTime: new Date().toISOString()
+                            });
+                        }
+                        
+                        if (videoResult.redirectTo) {
+                            setTimeout(() => {
+                                window.location.href = videoResult.redirectTo;
+                            }, 3000);
+                        }
+                    } else {
+                        throw new Error(videoResult.error || 'Video generation failed');
+                    }
+                    generateBtn.disabled = false;
+                    generateBtn.textContent = '🚀 Generate Professional Videos';
+                    return;
+                }
+                
+                // Success - update UI and start monitoring
+                console.log('✅ MagicCut AI video generation started successfully');
+                currentBatchId = videoResult.batchId;
+                
+                // Update user usage in UI with fresh data from server
+                if (videoResult.userUsage) {
+                    document.getElementById('videosUsed').textContent = videoResult.userUsage.current;
+                    document.getElementById('videosRemaining').textContent = videoResult.userUsage.remaining;
+                    
+                    const usagePercent = (videoResult.userUsage.current / videoResult.userUsage.limit) * 100;
+                    document.getElementById('usageBar').style.width = `${usagePercent}%`;
+                }
+                
+                // Update debug info with generation details
+                if (videoResult.quotaDebug) {
+                    updateDebugDisplay({
+                        ...videoResult.quotaDebug,
+                        generationSuccessful: true,
+                        batchId: videoResult.batchId,
+                        videosGenerated: videoResult.totalVideos
+                    });
+                }
+                
+                // Show status section
+                document.getElementById('statusSection').classList.add('visible');
+                document.getElementById('batchInfo').innerHTML = `
+                    <div style="background: rgba(255, 255, 255, 0.1); padding: 20px; border-radius: 15px; margin-bottom: 20px;">
+                        <h4 style="color: white; margin-bottom: 15px; font-size: 1.2rem;">🎬 Generation Details</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                            <p style="color: rgba(255, 255, 255, 0.8);"><strong>Videos:</strong> ${videoResult.totalVideos} × ${document.getElementById('videoDuration').value}s</p>
+                            <p style="color: rgba(255, 255, 255, 0.8);"><strong>Language:</strong> ${document.getElementById('spokenLanguage').value.toUpperCase()}</p>
+                            <p style="color: rgba(255, 255, 255, 0.8);"><strong>Remaining:</strong> ${videoResult.userUsage.remaining}</p>
+                        </div>
+                        ${videoResult.quotaDebug ? `<p style="color: rgba(255, 255, 255, 0.6); margin-top: 10px; font-size: 0.9rem;"><strong>Plan:</strong> ${videoResult.quotaDebug.planDetection}</p>` : ''}
+                    </div>
+                `;
+                
+                // Start status checking
+                startStatusChecking();
+                
+                generateBtn.textContent = '✅ Generation Started!';
+                generateBtn.disabled = false;
+                
+            } catch (error) {
+                console.error('❌ Generation error:', error);
+                
+                // Hide loading screen on error
+                hideGenerationLoading();
+                
+                showNotification(`❌ Generation failed: ${error.message}`, 'error');
+                
+                // Update debug info with error
+                updateDebugDisplay({
+                    lastError: error.message,
+                    lastErrorTime: new Date().toISOString(),
+                    generationFailed: true
+                });
+                
+                const generateBtn = document.getElementById('generateBtn');
+                generateBtn.textContent = '🚀 Generate Professional Videos';
+                generateBtn.disabled = false;
+            }
+        }
+
+        // Status checking functions remain the same...
+        function startStatusChecking() {
+            if (statusCheckInterval) clearInterval(statusCheckInterval);
+            
+            statusCheckInterval = setInterval(checkBatchStatus, 5000);
+            checkBatchStatus();
+        }
+
+        async function checkBatchStatus() {
+            if (!currentBatchId) return;
+
+            try {
+                const token = getAuthToken();
+                const response = await fetch(`/api/batch-status/${currentBatchId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                const result = await response.json();
+
+                if (result.success) {
+                    updateProgress(result);
+                    updateVideoGrid(result.videos);
+                    
+                    // Check for failed videos and notify user
+                    const failedVideos = result.videos?.filter(v => v.status === 'failed') || [];
+                    if (failedVideos.length > 0) {
+                        // Only show notification once per batch
+                        if (!window.failedNotificationShown) {
+                            window.failedNotificationShown = true;
+                            const hasContentFilter = failedVideos.some(v => 
+                                v.error && (v.error.includes('Content is filtered') || v.error.includes('filtered due to unknown reasons'))
+                            );
+                            
+                            if (hasContentFilter) {
+                                showNotification('🚫 Some videos were blocked by Google\'s content policy. Try different descriptions!', 'warning');
+                            } else {
+                                showNotification('⚠️ Some videos failed to generate. Please try again with different scenes.', 'warning');
+                            }
+                        }
+                    }
+                    
+                    if (result.allCompleted) {
+                        clearInterval(statusCheckInterval);
+                        const successCount = result.videos?.filter(v => v.publicUrl).length || 0;
+                        const failureCount = failedVideos.length;
+                        
+                        if (successCount > 0 && failureCount === 0) {
+                            showNotification('🎉 All videos completed successfully!', 'success');
+                        } else if (successCount > 0) {
+                            showNotification(`✅ ${successCount} videos completed, ${failureCount} failed. Try regenerating failed scenes.`, 'warning');
+                        } else {
+                            showNotification('❌ All videos failed to generate. Please try different scene descriptions.', 'error');
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Status check error:', error);
+            }
+        }
+
+        function updateProgress(result) {
+            const completedCount = result.completedCount || 0;
+            const totalVideos = scenes.length;
+            const progress = Math.round((completedCount / totalVideos) * 100);
+            
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = `${progress}%`;
+            progressBar.textContent = `${progress}% (${completedCount}/${totalVideos})`;
+        }
+
+        function updateVideoGrid(videos) {
+            const grid = document.getElementById('videoGrid');
+            
+            if (!videos || videos.length === 0) {
+                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; color: rgba(255,255,255,0.7); padding: 50px;"><h3>🔄 Processing Videos</h3><p>Your professional videos are being generated...</p></div>';
+                return;
+            }
+            
+            const completedVideos = videos.filter(v => v.publicUrl);
+            const failedVideos = videos.filter(v => v.status === 'failed');
+            
+            grid.innerHTML = videos.map(video => `
+                <div class="video-card">
+                    <h4>Scene ${video.sceneNumber}: ${video.title || 'Processing...'}</h4>
+                    ${video.publicUrl ? `
+                        <video controls>
+                            <source src="${video.publicUrl}" type="video/mp4">
+                        </video>
+                        <p style="color: rgba(255,255,255,0.8); margin-top: 15px;">
+                            <strong>Size:</strong> ${video.size}MB | <strong>Quality:</strong> Professional
+                        </p>
+                    ` : video.status === 'failed' ? `
+                        <div style="height: 220px; display: flex; align-items: center; justify-content: center; background: rgba(255, 107, 107, 0.2); border: 2px solid rgba(255, 107, 107, 0.4); border-radius: 15px; flex-direction: column; padding: 20px; text-align: center;">
+                            <div style="font-size: 2rem; margin-bottom: 15px;">❌</div>
+                            <div style="color: #ff6b6b; font-weight: bold; margin-bottom: 10px;">Generation Failed</div>
+                            <div style="color: rgba(255,255,255,0.8); font-size: 0.9rem; line-height: 1.4;">
+                                ${video.error ? video.error.replace('Content is filtered due to unknown reasons.', 'Content was blocked by Google\'s content policy. Try a different scene description.') : 'Unknown error occurred'}
+                            </div>
+                            <div style="color: rgba(255,255,255,0.6); font-size: 0.8rem; margin-top: 10px;">
+                                💡 Try rephrasing your scene or remove sensitive content
+                            </div>
+                        </div>
+                    ` : '<div style="height: 220px; display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.1); border-radius: 15px; color: rgba(255,255,255,0.7);">🔄 Processing...</div>'}
+                </div>
+            `).join('');
+            
+            // Show notification for failed videos
+            if (failedVideos.length > 0) {
+                const failedCount = failedVideos.length;
+                const errorMsg = failedVideos[0].error || 'Unknown error';
+                const isContentFiltered = errorMsg.includes('Content is filtered') || errorMsg.includes('filtered due to unknown reasons');
+                
+                if (isContentFiltered) {
+                    showNotification(`❌ ${failedCount} video${failedCount > 1 ? 's' : ''} blocked by content policy. Try different scene descriptions!`, 'error');
+                } else {
+                    showNotification(`❌ ${failedCount} video${failedCount > 1 ? 's' : ''} failed to generate. Please try again.`, 'error');
+                }
+            }
+            
+            // COMMENTED OUT: Creatomate section (disabled for now)
+            /*
+            if (completedVideos.length >= 2) {
+                document.getElementById('creatomateSection').style.display = 'block';
+            }
+            */
+        }
+
+        async function startCreatomateEditing() {
+            if (!currentBatchId) {
+                showNotification('❌ No video batch found!', 'error');
+                return;
+            }
+
+            try {
+                const creatomateBtn = document.getElementById('creatomateBtn');
+                creatomateBtn.disabled = true;
+                creatomateBtn.textContent = '🔄 Starting Editor...';
+
+                const token = getAuthToken();
+                const response = await fetch('/api/export-creatomate', {
+                    method: 'POST',
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        batchId: currentBatchId,
+                        options: {
+                            template: 'professional',
+                            transitions: true,
+                            music: true,
+                            branding: false
+                        }
+                    })
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    document.getElementById('creatomateStatus').innerHTML = `
+                        <div style="background: rgba(46, 204, 113, 0.2); border: 2px solid rgba(46, 204, 113, 0.5); border-radius: 20px; padding: 25px; margin-top: 20px;">
+                            <h4 style="color: #2ecc71; margin-bottom: 15px; font-size: 1.2rem;">🎨 Professional Editing Started!</h4>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 10px;">
+                                <p style="color: rgba(255, 255, 255, 0.9);"><strong>Job ID:</strong> ${result.jobId}</p>
+                                <p style="color: rgba(255, 255, 255, 0.9);"><strong>Template:</strong> ${result.templateType}</p>
+                                <p style="color: rgba(255, 255, 255, 0.9);"><strong>Status:</strong> ${result.status}</p>
+                                <p style="color: rgba(255, 255, 255, 0.9);"><strong>ETA:</strong> ${result.estimatedTime}</p>
+                            </div>
+                        </div>
+                    `;
+                    
+                    showNotification('🎨 Professional video editing started!', 'success');
+                    creatomateBtn.textContent = '✅ Editing Started!';
+                } else {
+                    throw new Error(result.error || 'Creatomate export failed');
+                }
+                
+            } catch (error) {
+                console.error('Creatomate error:', error);
+                showNotification(`❌ Editing failed: ${error.message}`, 'error');
+                const creatomateBtn = document.getElementById('creatomateBtn');
+                creatomateBtn.textContent = '🎨 Start Professional Editing';
+                creatomateBtn.disabled = false;
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.getElementById('notification');
+            if (notification) {
+                notification.textContent = message;
+                notification.className = `notification show ${type}`;
+                
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 5000);
+            }
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 MagicCutAI Enhanced Debugging Version - Starting...');
+            createFloatingElements(); // Initialize floating elements for loading screen
+            loadUserData();
+            addScene(); // Add initial scene
+            updatePricing();
+            
+            // Setup event listeners for toggles and file uploads
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // Toggle sections
+            const characterToggle = document.getElementById('useCharacterAnalysis');
+            const productToggle = document.getElementById('useProductAnalysis');
+            
+            if (characterToggle) {
+                characterToggle.addEventListener('change', function() {
+                    const section = document.getElementById('characterSection');
+                    if (section) {
+                        section.style.display = this.checked ? 'block' : 'none';
+                        if (this.checked) {
+                            section.style.animation = 'fadeInUp 0.5s ease-out';
+                        }
+                    }
+                });
+            }
+
+            if (productToggle) {
+                productToggle.addEventListener('change', function() {
+                    const section = document.getElementById('productSection');
+                    if (section) {
+                        section.style.display = this.checked ? 'block' : 'none';
+                        if (this.checked) {
+                            section.style.animation = 'fadeInUp 0.5s ease-out';
+                        }
+                    }
+                });
+            }
+
+            // File upload handlers
+            const charImage = document.getElementById('characterImage');
+            if (charImage) {
+                charImage.addEventListener('change', handleCharacterUpload);
+            }
+            
+            const prodImage = document.getElementById('productImage');
+            if (prodImage) {
+                prodImage.addEventListener('change', handleProductUpload);
+            }
+        }
+
+        async function handleCharacterUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append('characterImage', file);
+
+            // Show loading state
+            const loadingOverlay = document.getElementById('characterUploadLoading');
+            loadingOverlay.classList.add('active');
+
+            try {
+                showNotification('🎭 Analyzing character image...', 'info');
+                
+                const token = getAuthToken();
+                const response = await fetch('/api/analyze-character', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    characterTemplateId = result.templateId;
+                    document.getElementById('characterResult').style.display = 'block';
+                    document.getElementById('characterName').textContent = `Character: ${result.character.name}`;
+                    document.getElementById('characterVoice').textContent = `Voice: ${result.character.voiceProfileSelection.selectedVoice}`;
+                    showNotification(`✅ Character analyzed: ${result.character.name}`, 'success');
+                } else {
+                    showNotification(`❌ Character analysis failed: ${result.error}`, 'error');
+                }
+            } catch (error) {
+                showNotification(`❌ Error: ${error.message}`, 'error');
+            } finally {
+                // Hide loading state
+                loadingOverlay.classList.remove('active');
+            }
+        }
+
+        async function handleProductUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const formData = new FormData();
+            formData.append('productImage', file);
+            
+            const description = document.getElementById('productDescription').value;
+            if (description) {
+                formData.append('productDescription', description);
+            }
+
+            // Show loading state
+            const loadingOverlay = document.getElementById('productUploadLoading');
+            loadingOverlay.classList.add('active');
+
+            try {
+                showNotification('📦 Analyzing product image...', 'info');
+                
+                const token = getAuthToken();
+                const response = await fetch('/api/analyze-product', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+
+                const result = await response.json();
+                
+                if (result.success) {
+                    productTemplateId = result.templateId;
+                    document.getElementById('productResult').style.display = 'block';
+                    document.getElementById('productName').textContent = `Product: ${result.product.name}`;
+                    document.getElementById('productCategory').textContent = `Category: ${result.product.category}`;
+                    showNotification(`✅ Product analyzed: ${result.product.name}`, 'success');
+                } else {
+                    showNotification(`❌ Product analysis failed: ${result.error}`, 'error');
+                }
+            } catch (error) {
+                showNotification(`❌ Error: ${error.message}`, 'error');
+            } finally {
+                // Hide loading state
+                loadingOverlay.classList.remove('active');
+            }
+        }
+    </script>
+</body>
+</html>

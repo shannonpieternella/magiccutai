@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+
+# Environment variables (BELANGRIJK!)
+.env
+.env.local
+.env.production
+
+# Uploads en generated content
+uploads/
+generated-videos/
+generated/images/
+temp_videos/
+images/
+product-images/
+
+# Logs
+logs/
+*.log
+
+# Database dumps
+*.sql
+*.db
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Google Cloud credentials (als je deze lokaal hebt)
+*-service-account.json
+gcloud-key.json
+
+# PM2
+.pm2/

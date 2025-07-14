@@ -1,0 +1,66 @@
+{
+  "id": "evelyn_grace_304235",
+  "template": {
+    "character": {
+      "name": "Evelyn Grace",
+      "visualRefinement": {
+        "facialFeatures": {
+          "exactEyeColorAndShape": "Her eyes are a vibrant hazel, predominantly green with a burst of golden brown near the pupils, shaped in a slightly almond form with well-defined upper eyelids and moderately long, dark brown lashes enhancing their expressive appearance.",
+          "distinctNoseStructure": "The nose features a straight and narrow bridge, leading down to delicately flared nostrils and a rounded, slightly upturned tip, presenting a harmonious profile that complements her symmetrical facial features.",
+          "lipFullnessAndShape": "Her lips are of medium fullness with a well-defined cupid's bow and slightly upturned corners, presenting a natural rosy pink shade and a smooth, hydrated texture that enhances her warm smile.",
+          "subtleWrinklesOrLines": "There are minimal visible lines, except for faint nasolabial folds that accentuate her smile, contributing to a youthful yet experienced demeanor.",
+          "cheekboneProminence": "Her cheekbones are prominently high, casting subtle shadows under her cheeks, which are softly rounded and contribute to a balanced, oval facial structure.",
+          "jawlineDefinition": "The jawline is distinctly defined with a slight softness at the edges, tapering elegantly from the ears to a softly pointed chin, creating a graceful and feminine silhouette."
+        },
+        "hair": {
+          "preciseColor": "Her hair is a rich shade of copper with strands of golden blonde highlights and deeper reddish-brown lowlights, creating a vibrant, dimensional appearance that varies from roots to ends, with the roots being slightly darker.",
+          "exactStyleAndCut": "The hair is styled in loose, flowing waves that reach just past her shoulders, featuring subtle layers that add volume and movement. The part is slightly off-center, contributing to a casual yet polished look.",
+          "texture": "The texture of her hair is naturally wavy, exhibiting a healthy shine and a smooth, silky feel. The thickness is moderate, providing ample volume without being overly dense.",
+          "flyawaysOrSpecificStrands": "A few flyaways are visible near the crown, adding a touch of realism to her otherwise immaculate hairstyle, suggesting a natural and approachable persona."
+        },
+        "skin": {
+          "skinTone": "Her skin tone is fair with neutral undertones, leaning slightly towards a peachy complexion that radiates a natural warmth and vitality.",
+          "presenceOfFrecklesMolesScars": "There are no visible freckles, moles, or scars, contributing to a clear and smooth complexion that appears well-cared-for and flawless.",
+          "skinTexture": "The skin texture is remarkably smooth with a semi-matte finish, showing very fine pores and an even tone that suggests a meticulous skincare regimen."
+        },
+        "buildAndPosture": {
+          "exactBodyType": "Her build is slender and well-proportioned, with a balanced shoulder to hip ratio that suggests an active lifestyle and a poised stature.",
+          "typicalPosture": "Her posture is upright and confident, with shoulders slightly pulled back, a level head, and a gentle forward lean that conveys engagement and attentiveness."
+        },
+        "clothingAndAccessories": {
+          "specificGarmentTypesAndFit": "She wears a high-neck, long-sleeved silk blouse in a soft ivory color. The blouse is loosely fitted, draping elegantly across her torso and gathering at the neck, which adds a touch of sophistication and timeless style.",
+          "fabricTextures": "The blouse is made from a fine silk fabric, characterized by its smooth texture and subtle sheen, which gracefully reflects light and contours her upper body.",
+          "specificDetails": "The blouse features delicate gathers at the neck and wrists, secured by small, fabric-covered buttons that provide a seamless look. The cuffs are tight, contrasting with the otherwise flowing fabric.",
+          "jewelry": "None visible",
+          "eyeglassesStyle": "None visible"
+        },
+        "demeanorAndExpressions": {
+          "recurringMicroExpressions": "Her facial expressions frequently include a gentle smile with slightly raised eyebrows, which together convey a friendly and open demeanor, inviting trust and interaction.",
+          "feelOfTheirPresence": "Evelyn exudes a warm, approachable aura combined with a professional confidence. Her presence is calming yet assertive, suggesting she is both a thoughtful listener and a decisive leader."
+        }
+      },
+      "voiceProfileSelection": {
+        "selectedVoice": "Professional/Business",
+        "voiceDescription": "Her voice is clear, articulate, with a mid-range pitch and a slight warm timbre, perfect for conveying information with authority yet maintaining a friendly tone.",
+        "selectionReasoning": "This voice profile complements her visual appearance and demeanor, aligning with her professional attire and confident, engaging posture, making her an ideal representative in a business or authoritative role."
+      },
+      "category": "business"
+    },
+    "veo3Consistency": {
+      "wardrobe": "Maintain a selection of high-quality, professional attire such as silk blouses and tailored jackets in neutral tones to ensure consistency across scenes.",
+      "physicalTraits": "Consistent hair color and style, prominent cheekbones, and a clear complexion should be key visual traits maintained throughout.",
+      "mannerisms": "Maintain her gentle smiles, subtle head tilts when listening, and confident posture to ensure character consistency.",
+      "environmentSuggestions": [
+        "modern office",
+        "conference room",
+        "upscale urban setting"
+      ]
+    },
+    "cinematicStyle": "Use soft lighting to enhance her natural complexion and hair color, with close-ups that capture her expressive facial features and mid-shots that emphasize her professional attire and posture."
+  },
+  "metadata": {
+    "sourceImage": "images/68706656d1ad06b163eaea66_1752302277459.jpg",
+    "createdAt": "2025-07-12T06:38:24.241Z",
+    "analysisMethod": "openai"
+  }
+}

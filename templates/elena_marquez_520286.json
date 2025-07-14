@@ -1,0 +1,66 @@
+{
+  "id": "elena_marquez_520286",
+  "template": {
+    "character": {
+      "name": "Elena Marquez",
+      "visualRefinement": {
+        "facialFeatures": {
+          "exactEyeColorAndShape": "Her eyes are a rich hazel, predominantly green with a burst of brown near the pupil, shaped in a slightly almond form with well-defined, naturally arched eyebrows and moderately long, dark eyelashes.",
+          "distinctNoseStructure": "Her nose features a straight bridge of medium width, transitioning into subtly flared nostrils and a rounded, soft tip, giving a harmonious balance to her facial profile.",
+          "lipFullnessAndShape": "Elena's lips are moderately full with a well-defined cupid's bow and slightly upturned corners, presenting a natural rosy tint and a smooth, hydrated texture.",
+          "subtleWrinklesOrLines": "Her face is largely smooth with faint nasolabial folds that become slightly more pronounced when smiling, adding a touch of warmth to her expression.",
+          "cheekboneProminence": "Her cheekbones are distinctly high and well-defined, casting subtle shadows under her cheeks, which enhances her facial structure and adds to her photogenic qualities.",
+          "jawlineDefinition": "She possesses a strong yet feminine jawline that is slightly rounded at the chin, providing a graceful contour that complements her overall facial symmetry."
+        },
+        "hair": {
+          "preciseColor": "Her hair is a deep black with subtle natural brown highlights visible under direct sunlight, exhibiting a healthy sheen and uniform color from roots to ends.",
+          "exactStyleAndCut": "Her hair is styled in tight, glossy curls approximately 12 inches in length, parted on the left side with intricate, neat cornrow braids framing the face, adding a touch of elegance and cultural expression.",
+          "texture": "The texture of her hair is thick and curly, demonstrating a natural volume and bounce, with each curl well-defined and the overall density contributing to a full-bodied appearance.",
+          "flyawaysOrSpecificStrands": "There are minimal flyaways, indicating meticulous grooming, with a few baby hairs styled smoothly along her hairline, enhancing her neat appearance."
+        },
+        "skin": {
+          "skinTone": "Her skin tone is a warm caramel with golden undertones, presenting a uniform and smooth complexion that radiates a natural glow.",
+          "presenceOfFrecklesMolesScars": "There are no visible freckles, moles, or scars, contributing to her clear and even skin texture.",
+          "skinTexture": "Her skin appears velvety and matte, with barely visible pores and a consistent texture that suggests careful skincare and health."
+        },
+        "buildAndPosture": {
+          "exactBodyType": "Elena has a slender build with balanced proportions, indicating a healthy physique with toned shoulders and a poised stature.",
+          "typicalPosture": "Her posture is upright and confident, with shoulders back and a slight tilt of the head, exuding a sense of self-assuredness and alertness."
+        },
+        "clothingAndAccessories": {
+          "specificGarmentTypesAndFit": "She wears a high-neck, long-sleeve teal sweater that fits snugly, accentuating her slender frame while offering a look that is both professional and approachable.",
+          "fabricTextures": "The sweater is made of a fine knit fabric, likely a blend of cotton and synthetic fibers, providing a smooth texture and slight stretch for comfort.",
+          "specificDetails": "The sweater is unadorned with no visible buttons or embellishments, featuring a ribbed neckline and cuffs, and is well-maintained with no pilling or wear.",
+          "jewelry": "She wears large, round gold earrings and a delicate gold necklace with a small pendant, adding a subtle touch of elegance without overpowering her natural beauty.",
+          "eyeglassesStyle": "None visible"
+        },
+        "demeanorAndExpressions": {
+          "recurringMicroExpressions": "Elena often shows a slight smile with a relaxed brow, indicating a friendly and approachable demeanor, with occasional thoughtful glances that suggest introspection.",
+          "feelOfTheirPresence": "Her overall presence is calm and composed, with an air of quiet confidence and a readiness to engage thoughtfully in conversations, making her seem both professional and warm."
+        }
+      },
+      "voiceProfileSelection": {
+        "selectedVoice": "Professional/Business",
+        "voiceDescription": "Her voice is likely clear, articulate, with a calm and soothing tone, suitable for professional settings where clarity and approachability are key.",
+        "selectionReasoning": "Given her professional attire and composed demeanor, a voice that is both clear and warm would complement her visual presentation and enhance her effectiveness in professional interactions."
+      },
+      "category": "business"
+    },
+    "veo3Consistency": {
+      "wardrobe": "Maintain a selection of high-neck, solid-color sweaters and professional attire to ensure consistency across scenes, focusing on neat, tailored fits.",
+      "physicalTraits": "Consistent portrayal of her distinctive facial features, hair style, and skin tone must be maintained to ensure character recognition and continuity.",
+      "mannerisms": "Include subtle smiles, thoughtful expressions, and confident posture to reflect her composed and professional demeanor consistently.",
+      "environmentSuggestions": [
+        "modern office",
+        "conference room",
+        "urban outdoor setting"
+      ]
+    },
+    "cinematicStyle": "A clean, modern cinematic style with soft lighting to enhance her natural features and a shallow depth of field to keep the focus tightly on her, reflecting a professional yet approachable atmosphere."
+  },
+  "metadata": {
+    "sourceImage": "images/68706656d1ad06b163eaea66_1752289497326.jpeg",
+    "createdAt": "2025-07-12T03:05:20.297Z",
+    "analysisMethod": "openai"
+  }
+}

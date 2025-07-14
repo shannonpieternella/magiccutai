@@ -1,0 +1,66 @@
+{
+  "id": "elena_martinez_717766",
+  "template": {
+    "character": {
+      "name": "Elena Martinez",
+      "visualRefinement": {
+        "facialFeatures": {
+          "exactEyeColorAndShape": "Elena's eyes are a captivating hazel, blending green and brown hues with subtle golden specks, shaped in a slightly almond form with well-defined, naturally arched eyebrows and long, dark eyelashes enhancing their expressive appearance.",
+          "distinctNoseStructure": "Her nose features a straight bridge with a slight width, complemented by delicately flared nostrils and a rounded tip, presenting a harmonious profile that balances her facial symmetry.",
+          "lipFullnessAndShape": "Elena possesses medium-full lips with a pronounced cupid's bow and slightly upturned corners, presenting a soft pink shade that enhances her warm, inviting smile.",
+          "subtleWrinklesOrLines": "Her face shows minimal lines, with only faint smile lines around her mouth that appear when she smiles, adding to her youthful, vibrant expression.",
+          "cheekboneProminence": "Her cheekbones are moderately high and well-defined, casting subtle shadows under her eyes, which accentuates her facial structure and adds depth to her facial expressions.",
+          "jawlineDefinition": "Elena has a soft yet defined jawline that creates a gentle curve from ear to chin, providing a graceful contour that complements her overall facial structure."
+        },
+        "hair": {
+          "preciseColor": "Her hair is a rich, dark brown with subtle natural highlights that catch the light, enhancing the deep color. The roots are slightly darker, blending seamlessly into the lighter ends.",
+          "exactStyleAndCut": "Elena's hair is styled in tight, glossy curls that fall to her shoulders. The hair is parted on the left side, with braided strands framing her face, adding texture and visual interest.",
+          "texture": "The texture of her hair is thick and curly, each curl well-defined and springy, demonstrating a healthy sheen that suggests careful maintenance and hydration.",
+          "flyawaysOrSpecificStrands": "A few wispy strands escape from her braids, softly framing her face and adding a natural, relaxed feel to her otherwise structured hairstyle."
+        },
+        "skin": {
+          "skinTone": "Elena's skin tone is a smooth, medium olive with warm undertones that give her complexion a radiant, sun-kissed look.",
+          "presenceOfFrecklesMolesScars": "She has a small, barely noticeable mole just above her right eyebrow and a few faint freckles across her nose, adding character to her visage.",
+          "skinTexture": "Her skin appears exceptionally smooth and well cared for, with a matte finish that suggests a balanced skincare regimen without excessive oiliness or dryness."
+        },
+        "buildAndPosture": {
+          "exactBodyType": "Elena has a slender build with balanced proportions, her shoulders slightly rounded, which softens her silhouette, indicating a graceful, yet strong physical presence.",
+          "typicalPosture": "Her posture is upright with a slight relaxed lean forward, suggesting attentiveness and a readiness to engage, which complements her approachable demeanor."
+        },
+        "clothingAndAccessories": {
+          "specificGarmentTypesAndFit": "She wears a high-neck, long-sleeve teal sweater that fits snugly, accentuating her slender frame while the rich color contrasts beautifully with her skin tone.",
+          "fabricTextures": "The sweater is made from a fine knit fabric, likely a soft wool blend, which offers a slight sheen under lighting and a smooth texture that speaks to its quality.",
+          "specificDetails": "The sweater's cuffs and collar are tightly ribbed, providing a subtle textural contrast to the smoother main fabric, enhancing the garment's fit and style.",
+          "jewelry": "Elena wears large, gold hoop earrings and a delicate gold necklace with a small pendant, adding a touch of elegance and personal style to her outfit.",
+          "eyeglassesStyle": "None visible"
+        },
+        "demeanorAndExpressions": {
+          "recurringMicroExpressions": "Elena often shows a slight tilt of her head when listening, paired with a soft, thoughtful smile, indicating her empathetic and considerate nature.",
+          "feelOfTheirPresence": "Her overall demeanor exudes a calm confidence and warmth, making her seem highly approachable and genuinely interested in those around her, with an underlying strength that suggests resilience and determination."
+        }
+      },
+      "voiceProfileSelection": {
+        "selectedVoice": "Healthcare/Caring",
+        "voiceDescription": "Elena's voice is likely soft and soothing, with a melodious tone that conveys empathy and warmth, making her ideal for roles that require a nurturing and caring presence.",
+        "selectionReasoning": "Her gentle facial features and warm expressions suggest a person who is both approachable and compassionate, qualities that are essential in healthcare and supportive roles."
+      },
+      "category": "healthcare"
+    },
+    "veo3Consistency": {
+      "wardrobe": "Maintain a palette of soft, warm colors like teal, which complement her olive skin tone and dark hair, ensuring clothing is always well-fitted and of high quality.",
+      "physicalTraits": "Consistency in her curly hairstyle, medium-full lips, and subtle makeup that enhances her natural beauty should be maintained across scenes.",
+      "mannerisms": "Include gentle head tilts and soft smiles in her mannerisms to reinforce her empathetic and attentive character.",
+      "environmentSuggestions": [
+        "hospital",
+        "community health center",
+        "counseling office"
+      ]
+    },
+    "cinematicStyle": "A soft-focus, warm lighting cinematic style would suit Elena, highlighting her approachable demeanor and the textures of her clothing and hair, creating a comforting and inviting atmosphere."
+  },
+  "metadata": {
+    "sourceImage": "images/68747aedf8cb1255bf9d9784_1752467691064.jpeg",
+    "createdAt": "2025-07-14T04:35:17.780Z",
+    "analysisMethod": "openai"
+  }
+}
