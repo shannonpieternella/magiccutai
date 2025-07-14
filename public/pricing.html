@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Meta Pixel Code -->
+<script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '233493752693325');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=233493752693325&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pricing - MagicCutAI</title>
@@ -358,6 +375,198 @@
         .auth-required .btn {
             margin: 8px;
         }
+
+        /* Service Selection Section */
+        .service-selection {
+            padding: 80px 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .service-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .service-header {
+            text-align: center;
+            margin-bottom: 60px;
+            color: white;
+        }
+
+        .service-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .service-header p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: rgba(255, 255, 255, 0.8);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .service-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 25px;
+            padding: 40px 35px;
+            text-align: center;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 0, 110, 0.05), rgba(131, 56, 236, 0.05));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+        }
+
+        .service-card:hover::before {
+            opacity: 1;
+        }
+
+        .service-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255, 0, 110, 0.3);
+            box-shadow: 0 30px 80px rgba(255, 0, 110, 0.2);
+        }
+
+        .service-card.recommended {
+            border-color: rgba(255, 0, 110, 0.4);
+            background: rgba(255, 0, 110, 0.08);
+        }
+
+        .service-card.recommended:hover {
+            border-color: rgba(255, 0, 110, 0.6);
+        }
+
+        .service-card > * {
+            position: relative;
+            z-index: 2;
+        }
+
+        .service-badge {
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 5;
+        }
+
+        .service-badge-alt {
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #3a86ff, #8338ec);
+            color: white;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            z-index: 5;
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin: 20px 0 15px;
+            display: block;
+        }
+
+        .service-card h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: white;
+        }
+
+        .service-type {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1rem;
+            margin-bottom: 25px;
+        }
+
+        .service-features {
+            list-style: none;
+            margin-bottom: 30px;
+            text-align: left;
+            max-width: 280px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .service-features li {
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+        }
+
+        .service-features li::before {
+            content: '✓';
+            flex-shrink: 0;
+            width: 20px;
+            height: 20px;
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+            color: white;
+        }
+
+        .service-btn {
+            width: 100%;
+            padding: 16px;
+            border-radius: 15px;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+        }
         
         .pricing-section {
             padding: 80px 20px;
@@ -671,6 +880,45 @@
                 padding: 60px 20px;
             }
 
+            .service-selection {
+                padding: 60px 15px;
+            }
+
+            .service-grid {
+                grid-template-columns: 1fr;
+                gap: 30px;
+                margin-top: 40px;
+            }
+
+            .service-card {
+                padding: 35px 25px;
+            }
+
+            .service-badge,
+            .service-badge-alt {
+                font-size: 0.6rem;
+                padding: 6px 16px;
+            }
+
+            .service-icon {
+                font-size: 2.5rem;
+                margin: 15px 0 12px;
+            }
+
+            .service-card h3 {
+                font-size: 1.6rem;
+            }
+
+            .service-features li {
+                font-size: 0.85rem;
+                padding: 6px 0;
+            }
+
+            .service-btn {
+                padding: 14px;
+                font-size: 13px;
+            }
+
             .pricing-section {
                 padding: 60px 15px;
             }
@@ -735,6 +983,18 @@
         @media (max-width: 480px) {
             .hero {
                 padding: 50px 15px;
+            }
+
+            .service-selection {
+                padding: 50px 10px;
+            }
+
+            .service-card {
+                padding: 25px 20px;
+            }
+
+            .service-features li {
+                font-size: 0.8rem;
             }
 
             .pricing-card {
@@ -810,6 +1070,58 @@
 
     <!-- Status Messages -->
     <div id="statusMessage" style="display: none;"></div>
+
+    <!-- Service Selection Section -->
+    <section class="service-selection">
+        <div class="service-container">
+            <div class="service-header">
+                <h2>Choose Your Creative Service</h2>
+                <p>Select the AI service that best fits your creative needs</p>
+            </div>
+            
+            <div class="service-grid">
+                <!-- Video AI Service -->
+                <div class="service-card video-service recommended">
+                    <div class="service-badge">RECOMMENDED</div>
+                    <div class="service-icon">🎬</div>
+                    <h3>Video AI</h3>
+                    <p class="service-type">(Subscription)</p>
+                    
+                    <ul class="service-features">
+                        <li>Monthly plans</li>
+                        <li>Best value</li>
+                        <li>Professional videos</li>
+                        <li>Multiple formats</li>
+                        <li>Analytics & insights</li>
+                    </ul>
+                    
+                    <button class="service-btn btn-primary" onclick="scrollToPricing()">
+                        View Plans
+                    </button>
+                </div>
+                
+                <!-- Image AI Service -->
+                <div class="service-card image-service">
+                    <div class="service-badge-alt">TRY NOW</div>
+                    <div class="service-icon">🎨</div>
+                    <h3>Image AI</h3>
+                    <p class="service-type">(Pay-per-Credit)</p>
+                    
+                    <ul class="service-features">
+                        <li>No commitment</li>
+                        <li>Instant access</li>
+                        <li>3 FREE images included</li>
+                        <li>Buy credits as needed</li>
+                        <li>Professional quality</li>
+                    </ul>
+                    
+                    <button class="service-btn btn-secondary" onclick="goToImageApp()">
+                        Start Creating Images
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Pricing Section -->
     <section class="pricing-section">
@@ -943,6 +1255,20 @@
             hamburger.classList.remove('active');
             mobileNav.classList.remove('active');
             document.body.style.overflow = '';
+        }
+
+        // Scroll to pricing section
+        function scrollToPricing() {
+            const pricingSection = document.querySelector('.pricing-section');
+            pricingSection.scrollIntoView({ 
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+
+        // Go to image app
+        function goToImageApp() {
+            window.location.href = 'image-app.html';
         }
 
         // Initialize particles
@@ -1405,6 +1731,8 @@
         window.cancelCurrentSubscription = cancelCurrentSubscription;
         window.checkAppAccess = checkAppAccess;
         window.toggleMobileMenu = toggleMobileMenu;
+        window.scrollToPricing = scrollToPricing;
+        window.goToImageApp = goToImageApp;
     </script>
 </body>
 </html>

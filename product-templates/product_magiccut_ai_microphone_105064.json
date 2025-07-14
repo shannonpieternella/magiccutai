@@ -1,0 +1,58 @@
+{
+  "id": "product_magiccut_ai_microphone_105064",
+  "template": {
+    "product": {
+      "name": "MagicCut AI Microphone",
+      "category": "tech",
+      "visualRefinement": {
+        "physicalCharacteristics": {
+          "exactSizeAndDimensions": "The microphone is approximately 20 cm in length and 5 cm in diameter at its thickest point, tapering to about 2 cm at the base, providing a sleek and modern appearance.",
+          "colorScheme": "The primary color of the microphone is a deep metallic purple, with vibrant blue and pink digital circuit patterns emanating from the center, creating a visually striking contrast.",
+          "materialComposition": "Constructed from high-quality aluminum for the body, providing a lightweight yet durable structure, with a polished finish that enhances its sleek design.",
+          "shapeAndForm": "The microphone has a cylindrical shape with a gradual taper towards the base, featuring a smooth, seamless surface that complements its futuristic aesthetic.",
+          "brandingElements": "Features the 'magicCutAI' logo in a stylized, modern font in white at the base of the microphone, prominently displayed for brand recognition."
+        },
+        "visualDetails": {
+          "surfaceFinish": "The surface of the microphone has a glossy finish that reflects light, highlighting its smooth, metallic texture and enhancing its futuristic look.",
+          "distinctiveFeatures": "Unique digital circuit patterns in blue and pink glow subtly, symbolizing AI technology, making the microphone not only a tool but also a piece of modern art.",
+          "packagingElements": "Product only, no packaging",
+          "lightingInteraction": "The glossy finish and metallic colors interact dynamically with light, creating varying reflections and highlights that emphasize its contours."
+        },
+        "contextualInformation": {
+          "useCase": "Ideal for professional recording, streaming, and broadcasting, enhancing audio input with advanced AI technology for clarity and precision.",
+          "targetAudience": "Tech enthusiasts, professional broadcasters, and podcasters who value both functionality and design.",
+          "keySellingPoints": "Advanced AI technology for superior sound clarity, striking visual design with interactive lighting, lightweight and durable construction, and easy integration with various devices."
+        }
+      },
+      "veo3Consistency": {
+        "productPlacement": "Ensure the microphone is centrally positioned with the logo facing forward. The lighting should highlight its metallic finish and digital patterns.",
+        "lightingRequirements": "Soft, diffused lighting to enhance the reflective metallic body and illuminate the digital patterns without causing harsh shadows.",
+        "cameraAngles": "Frontal view to capture the complete logo and digital patterns, a top-down angle to emphasize the sleek shape, and a close-up on the patterns for detail.",
+        "interactionGuidelines": "Presenters should handle the microphone gently, focusing on the smooth, tapered end and occasionally rotating it to showcase the AI patterns."
+      }
+    },
+    "sceneOptimization": {
+      "bestPresentationAngles": [
+        "frontal",
+        "45-degree angle",
+        "top-down"
+      ],
+      "recommendedEnvironments": [
+        "studio setting with controlled lighting",
+        "modern office",
+        "high-tech workspace"
+      ],
+      "demonstrationSuggestions": [
+        "demonstrating voice recording",
+        "showing connectivity with a computer",
+        "highlighting the AI features through a simulated use case"
+      ]
+    }
+  },
+  "metadata": {
+    "source": "images/68706656d1ad06b163eaea66_1752499081832.png",
+    "sourceType": "image",
+    "createdAt": "2025-07-14T13:18:25.064Z",
+    "analysisMethod": "openai"
+  }
+}

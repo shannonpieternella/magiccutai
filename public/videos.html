@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Meta Pixel Code -->
+<script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '233493752693325');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=233493752693325&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MagicCutAI - Video Library</title>
@@ -987,120 +1004,7 @@
             <!-- Video Grid -->
             <div id="videoContainer">
                 <div class="video-grid" id="videoGrid">
-                    <!-- Demo Videos -->
-                    <div class="video-card" data-video-id="demo-1">
-                        <div class="video-thumbnail">
-                            <video preload="metadata">
-                                <source src="https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4" type="video/mp4">
-                            </video>
-                            <div class="play-overlay" onclick="playVideo('demo-1')">▶</div>
-                        </div>
-                        
-                        <div class="video-info">
-                            <h3 class="video-title">AI Marketing Video</h3>
-                            
-                            <div class="video-meta">
-                                <div class="meta-item">
-                                    <span class="meta-label">Duration</span>
-                                    <span class="meta-value">8s</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Size</span>
-                                    <span class="meta-value">2.5 MB</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Language</span>
-                                    <span class="meta-value">EN</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Model</span>
-                                    <span class="meta-value">veo3-fast</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Created</span>
-                                    <span class="meta-value">Today</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Scene</span>
-                                    <span class="meta-value">#1</span>
-                                </div>
-                            </div>
-                            
-                            <div class="meta-item" style="margin-top: 15px;">
-                                <span class="meta-label">Dialogue</span>
-                                <span class="meta-value">"Welcome to the future of AI marketing!"</span>
-                            </div>
-                            
-                            <div class="video-actions">
-                                <button class="action-btn btn-download" onclick="downloadVideo('demo-1')">
-                                    💾 Download
-                                </button>
-                                <button class="action-btn btn-share" onclick="shareVideo('demo-1')">
-                                    🔗 Share
-                                </button>
-                                <button class="action-btn btn-delete" onclick="deleteVideo('demo-1')">
-                                    🗑️ Delete
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="video-card" data-video-id="demo-2">
-                        <div class="video-thumbnail">
-                            <video preload="metadata">
-                                <source src="https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4" type="video/mp4">
-                            </video>
-                            <div class="play-overlay" onclick="playVideo('demo-2')">▶</div>
-                        </div>
-                        
-                        <div class="video-info">
-                            <h3 class="video-title">Product Showcase Video</h3>
-                            
-                            <div class="video-meta">
-                                <div class="meta-item">
-                                    <span class="meta-label">Duration</span>
-                                    <span class="meta-value">8s</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Size</span>
-                                    <span class="meta-value">3.2 MB</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Language</span>
-                                    <span class="meta-value">NL</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Model</span>
-                                    <span class="meta-value">veo3-fast</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Created</span>
-                                    <span class="meta-value">Yesterday</span>
-                                </div>
-                                <div class="meta-item">
-                                    <span class="meta-label">Scene</span>
-                                    <span class="meta-value">#2</span>
-                                </div>
-                            </div>
-                            
-                            <div class="meta-item" style="margin-top: 15px;">
-                                <span class="meta-label">Dialogue</span>
-                                <span class="meta-value">"Ontdek ons nieuwste product!"</span>
-                            </div>
-                            
-                            <div class="video-actions">
-                                <button class="action-btn btn-download" onclick="downloadVideo('demo-2')">
-                                    💾 Download
-                                </button>
-                                <button class="action-btn btn-share" onclick="shareVideo('demo-2')">
-                                    🔗 Share
-                                </button>
-                                <button class="action-btn btn-delete" onclick="deleteVideo('demo-2')">
-                                    🗑️ Delete
-                                </button>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Videos will be loaded here -->
                 </div>
             </div>
 
@@ -1178,11 +1082,11 @@
             return !!getAuthToken();
         }
 
-        // Logout function
         function logout() {
+            localStorage.removeItem('imageToken');
             localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            window.location.href = 'index.html';
+            localStorage.removeItem('imageUser');
+            window.location.href = '/';
         }
 
         // Load user data and videos
@@ -1197,14 +1101,25 @@
                 
                 console.log('🔍 Loading user data and video library...');
                 
-                // For demo purposes, simulate user data
-                currentUser = {
-                    firstName: 'Shannon',
-                    lastName: 'Pieternella',
-                    subscription: {
-                        plan: 'pro'
+                // Fetch real user data from API
+                const response = await fetch('/api/auth/me', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
                     }
-                };
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to load user data');
+                }
+                
+                const userData = await response.json();
+                console.log('📊 User data response:', userData);
+                
+                if (!userData.success) {
+                    throw new Error('Invalid user data');
+                }
+                
+                currentUser = userData.user;
                 
                 // Update UI with user data
                 updateUserInterface();
@@ -1242,39 +1157,32 @@
             try {
                 console.log('📹 Loading video library...');
                 
-                // For demo purposes, simulate video data
-                allVideos = [
-                    {
-                        videoId: 'demo-1',
-                        title: 'AI Marketing Video',
-                        dialogue: 'Welcome to the future of AI marketing!',
-                        duration: 8,
-                        size: 2500000,
-                        createdAt: new Date().toISOString(),
-                        metadata: { spokenLanguage: 'en', model: 'veo3-fast' },
-                        sceneNumber: 1,
-                        publicUrl: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_1mb.mp4'
-                    },
-                    {
-                        videoId: 'demo-2',
-                        title: 'Product Showcase Video',
-                        dialogue: 'Ontdek ons nieuwste product!',
-                        duration: 8,
-                        size: 3200000,
-                        createdAt: new Date(Date.now() - 86400000).toISOString(),
-                        metadata: { spokenLanguage: 'nl', model: 'veo3-fast' },
-                        sceneNumber: 2,
-                        publicUrl: 'https://sample-videos.com/zip/10/mp4/SampleVideo_1280x720_2mb.mp4'
+                const token = getAuthToken();
+                const response = await fetch('/api/videos/library?limit=100', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
                     }
-                ];
+                });
                 
-                filteredVideos = [...allVideos];
+                if (!response.ok) {
+                    throw new Error('Failed to load video library');
+                }
                 
-                if (allVideos.length === 0) {
-                    showEmptyState();
+                const data = await response.json();
+                console.log('📹 Video library data:', data);
+                
+                if (data.success) {
+                    allVideos = data.videos || [];
+                    filteredVideos = [...allVideos];
+                    
+                    if (allVideos.length === 0) {
+                        showEmptyState();
+                    } else {
+                        hideEmptyState();
+                        renderVideos();
+                    }
                 } else {
-                    hideEmptyState();
-                    renderVideos();
+                    throw new Error(data.error || 'Failed to load videos');
                 }
                 
             } catch (error) {
@@ -1539,18 +1447,36 @@
             }
             
             try {
-                // Remove from local arrays
-                allVideos = allVideos.filter(v => v.videoId !== videoId);
-                filteredVideos = filteredVideos.filter(v => v.videoId !== videoId);
+                const token = getAuthToken();
+                const response = await fetch(`/api/videos/${videoId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 
-                // Re-render
-                if (allVideos.length === 0) {
-                    showEmptyState();
-                } else {
-                    renderVideos();
+                if (!response.ok) {
+                    throw new Error('Failed to delete video');
                 }
                 
-                showNotification(`🗑️ Video deleted: ${video.title}`, 'success');
+                const result = await response.json();
+                
+                if (result.success) {
+                    // Remove from local arrays
+                    allVideos = allVideos.filter(v => v.videoId !== videoId);
+                    filteredVideos = filteredVideos.filter(v => v.videoId !== videoId);
+                    
+                    // Re-render
+                    if (allVideos.length === 0) {
+                        showEmptyState();
+                    } else {
+                        renderVideos();
+                    }
+                    
+                    showNotification(`🗑️ Video deleted: ${video.title}`, 'success');
+                } else {
+                    throw new Error(result.error || 'Delete failed');
+                }
                 
             } catch (error) {
                 console.error('Delete error:', error);

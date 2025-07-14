@@ -1,6 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Meta Pixel Code -->
+<script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '233493752693325');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=233493752693325&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gallery - MagicCut AI Images</title>
@@ -895,7 +912,7 @@
                 </div>
                 
                 <div class="nav-buttons">
-                    <a href="/" class="btn btn-primary">Create New</a>
+                    <a href="/image-app" class="btn btn-primary">Create New</a>
                     <button class="btn btn-secondary" onclick="logout()">Logout</button>
                 </div>
 
@@ -970,78 +987,7 @@
 
             <!-- Gallery Grid -->
             <div class="gallery-grid" id="galleryGrid">
-                <!-- Demo Images -->
-                <div class="image-card">
-                    <div class="image-container">
-                        <img src="https://picsum.photos/400/400?random=1" alt="AI generated image" onclick="openModal('https://picsum.photos/800/800?random=1')">
-                        <div class="image-overlay">
-                            <div class="image-actions">
-                                <a href="https://picsum.photos/800/800?random=1" download="ai-image-1.png" class="image-action">
-                                    💾 Download
-                                </a>
-                                <button class="image-action delete" onclick="deleteImage('demo-1')">
-                                    🗑️ Delete
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="image-info">
-                        <div class="image-title">Stunning landscape with mountains</div>
-                        <div class="image-prompt">A beautiful landscape with snow-capped mountains reflecting in a crystal clear lake</div>
-                        <div class="image-meta">
-                            <span class="image-type">creation</span>
-                            <span>Today</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="image-card">
-                    <div class="image-container">
-                        <img src="https://picsum.photos/400/400?random=2" alt="AI generated image" onclick="openModal('https://picsum.photos/800/800?random=2')">
-                        <div class="image-overlay">
-                            <div class="image-actions">
-                                <a href="https://picsum.photos/800/800?random=2" download="ai-image-2.png" class="image-action">
-                                    💾 Download
-                                </a>
-                                <button class="image-action delete" onclick="deleteImage('demo-2')">
-                                    🗑️ Delete
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="image-info">
-                        <div class="image-title">Futuristic cityscape</div>
-                        <div class="image-prompt">A cyberpunk city with neon lights and flying cars in the rain</div>
-                        <div class="image-meta">
-                            <span class="image-type">edit</span>
-                            <span>Yesterday</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="image-card">
-                    <div class="image-container">
-                        <img src="https://picsum.photos/400/400?random=3" alt="AI generated image" onclick="openModal('https://picsum.photos/800/800?random=3')">
-                        <div class="image-overlay">
-                            <div class="image-actions">
-                                <a href="https://picsum.photos/800/800?random=3" download="ai-image-3.png" class="image-action">
-                                    💾 Download
-                                </a>
-                                <button class="image-action delete" onclick="deleteImage('demo-3')">
-                                    🗑️ Delete
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="image-info">
-                        <div class="image-title">Abstract art creation</div>
-                        <div class="image-prompt">Abstract digital art with vibrant colors and geometric shapes</div>
-                        <div class="image-meta">
-                            <span class="image-type">variation</span>
-                            <span>2 days ago</span>
-                        </div>
-                    </div>
-                </div>
+                <!-- Images will be loaded here -->
             </div>
 
             <!-- Empty State -->
@@ -1133,43 +1079,23 @@
                 
                 console.log('🖼️ Loading gallery...');
                 
-                // For demo purposes, simulate data
-                const galleryData = {
-                    success: true,
-                    images: [
-                        {
-                            imageId: 'demo-1',
-                            generatedImageUrl: 'https://picsum.photos/400/400?random=1',
-                            originalPrompt: 'A beautiful landscape with snow-capped mountains reflecting in a crystal clear lake',
-                            createdAt: new Date().toISOString(),
-                            metadata: { editType: 'creation' },
-                            size: 1024000
-                        },
-                        {
-                            imageId: 'demo-2',
-                            generatedImageUrl: 'https://picsum.photos/400/400?random=2',
-                            originalPrompt: 'A cyberpunk city with neon lights and flying cars in the rain',
-                            createdAt: new Date(Date.now() - 86400000).toISOString(),
-                            metadata: { editType: 'edit' },
-                            size: 1536000
-                        },
-                        {
-                            imageId: 'demo-3',
-                            generatedImageUrl: 'https://picsum.photos/400/400?random=3',
-                            originalPrompt: 'Abstract digital art with vibrant colors and geometric shapes',
-                            createdAt: new Date(Date.now() - 172800000).toISOString(),
-                            metadata: { editType: 'variation' },
-                            size: 1280000
-                        }
-                    ],
-                    stats: {
-                        totalImages: 3
-                    },
-                    credits: {
-                        used: 27,
-                        available: 73
+                // Fetch real gallery data from API
+                const response = await fetch('/api/image-gallery', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
                     }
-                };
+                });
+                
+                if (!response.ok) {
+                    throw new Error('Failed to load gallery');
+                }
+                
+                const galleryData = await response.json();
+                console.log('📊 Gallery data:', galleryData);
+                
+                if (!galleryData.success) {
+                    throw new Error('Invalid gallery data');
+                }
                 
                 allImages = galleryData.images;
                 filteredImages = [...allImages];
@@ -1334,17 +1260,32 @@
             }
             
             try {
-                // Remove from local arrays
-                allImages = allImages.filter(img => img.imageId !== imageId);
-                filteredImages = filteredImages.filter(img => img.imageId !== imageId);
+                const token = getAuthToken();
                 
-                // Re-render gallery
-                renderGallery();
+                const response = await fetch(`/api/image-gallery/${imageId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
                 
-                // Update stats
-                document.getElementById('totalImagesCount').textContent = allImages.length;
+                const result = await response.json();
                 
-                alert('Image deleted successfully!');
+                if (result.success) {
+                    // Remove from local arrays
+                    allImages = allImages.filter(img => img.imageId !== imageId);
+                    filteredImages = filteredImages.filter(img => img.imageId !== imageId);
+                    
+                    // Re-render gallery
+                    renderGallery();
+                    
+                    // Update stats
+                    document.getElementById('totalImagesCount').textContent = allImages.length;
+                    
+                    alert('Image deleted successfully!');
+                } else {
+                    throw new Error(result.error || 'Failed to delete image');
+                }
                 
             } catch (error) {
                 console.error('Delete error:', error);
