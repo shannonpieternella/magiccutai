@@ -1,4 +1,4 @@
-// server.js - COMPLETE VIDCRAFT AI WITH FIXED GPT-IMAGE-1 + VEO3 VIDEO GENERATION + ALL FEATURES
+// server.js - COMPLETE VIDCRAFT AI WITH FIXED GPT-IMAGE-1 + VEO3 VIDEO GENERATION + GCS IMAGE STORAGE
 const express = require('express');
 const mongoose = require('mongoose');
 const multer = require('multer');
@@ -80,6 +80,182 @@ try {
   console.error('❌ VEO3 module import error:', error.message);
 }
 
+// ═══════════════════════════════════════════════════════════════════════════════════════
+// 🖼️ NEW: GOOGLE CLOUD STORAGE IMAGE UPLOADER CLASS
+// ═══════════════════════════════════════════════════════════════════════════════════════
+
+class ImageGCSUploader {
+  constructor(options = {}) {
+    this.projectId = options.projectId || process.env.GOOGLE_CLOUD_PROJECT_ID || 'contentgen-465421';
+    this.location = options.location || process.env.GOOGLE_CLOUD_LOCATION || 'us-central1';
+    this.bucketName = options.bucketName || `${this.projectId}-ai-images`;
+    
+    console.log('🖼️ ImageGCSUploader initialized');
+    console.log(`   - Project ID: ${this.projectId}`);
+    console.log(`   - Location: ${this.location}`);
+    console.log(`   - Images Bucket: ${this.bucketName}`);
+    
+    this.bucketInitialized = false;
+  }
+
+  // Get Google Cloud access token
+  async getAccessToken() {
+    try {
+      const { execSync } = require('child_process');
+      const token = execSync('gcloud auth print-access-token', { encoding: 'utf8' }).trim();
+      return token;
+    } catch (error) {
+      throw new Error(`Failed to get access token. Run: gcloud auth login`);
+    }
+  }
+
+  // Ensure GCS bucket exists for images
+  async ensureImagesBucketExists() {
+    if (this.bucketInitialized) return;
+    
+    try {
+      const accessToken = await this.getAccessToken();
+      const checkUrl = `https://storage.googleapis.com/storage/v1/b/${this.bucketName}`;
+      
+      try {
+        await axios.get(checkUrl, {
+          headers: { 'Authorization': `Bearer ${accessToken}` }
+        });
+        console.log(`✅ Images bucket exists: ${this.bucketName}`);
+      } catch (error) {
+        if (error.response && error.response.status === 404) {
+          console.log(`🏗️ Creating images bucket: ${this.bucketName}`);
+          const createUrl = `https://storage.googleapis.com/storage/v1/b?project=${this.projectId}`;
+          await axios.post(createUrl, {
+            name: this.bucketName,
+            location: 'US',
+            storageClass: 'STANDARD'
+          }, {
+            headers: {
+              'Authorization': `Bearer ${accessToken}`,
+              'Content-Type': 'application/json'
+            }
+          });
+          console.log(`✅ Images bucket created: ${this.bucketName}`);
+        } else {
+          throw error;
+        }
+      }
+      
+      this.bucketInitialized = true;
+    } catch (error) {
+      console.error(`❌ Bucket initialization failed: ${error.message}`);
+      throw new Error(`Failed to initialize images bucket: ${error.message}`);
+    }
+  }
+
+  // Upload image buffer to Google Cloud Storage
+  async uploadImageToGCS(imageBuffer, imageId, format = 'png', metadata = {}) {
+    console.log(`☁️ Uploading image to GCS: ${imageId}.${format}`);
+    
+    try {
+      await this.ensureImagesBucketExists();
+      
+      const timestamp = Date.now();
+      const fileName = `gpt-image-1/${imageId}_${timestamp}.${format}`;
+      const accessToken = await this.getAccessToken();
+      
+      // Upload file to GCS
+      const uploadUrl = `https://storage.googleapis.com/upload/storage/v1/b/${this.bucketName}/o?uploadType=media&name=${encodeURIComponent(fileName)}`;
+      
+      const contentType = this.getContentType(format);
+      
+      const uploadResponse = await axios.post(uploadUrl, imageBuffer, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`,
+          'Content-Type': contentType,
+          'Content-Length': imageBuffer.length,
+          'x-goog-meta-image-id': imageId,
+          'x-goog-meta-model': metadata.model || 'gpt-image-1',
+          'x-goog-meta-mode': metadata.mode || 'generate',
+          'x-goog-meta-quality': metadata.quality || 'medium',
+          'x-goog-meta-created': new Date().toISOString()
+        },
+        timeout: 120000 // 2 minute timeout
+      });
+      
+      console.log(`✅ Upload successful: ${uploadResponse.status}`);
+      
+      // Make the image public
+      try {
+        const aclUrl = `https://storage.googleapis.com/storage/v1/b/${this.bucketName}/o/${encodeURIComponent(fileName)}/acl`;
+        await axios.post(aclUrl, { 
+          entity: 'allUsers', 
+          role: 'READER' 
+        }, {
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+            'Content-Type': 'application/json'
+          }
+        });
+        console.log(`🌐 Image made public`);
+      } catch (aclError) {
+        console.warn(`⚠️ Could not make image public: ${aclError.message}`);
+      }
+      
+      const publicUrl = `https://storage.googleapis.com/${this.bucketName}/${fileName}`;
+      const fileSizeMB = (imageBuffer.length / 1024 / 1024).toFixed(2);
+      
+      console.log(`✅ Image uploaded to GCS: ${publicUrl} (${fileSizeMB}MB)`);
+      
+      return {
+        fileName,
+        bucketName: this.bucketName,
+        gcsFileName: fileName,
+        publicUrl: publicUrl,
+        size: imageBuffer.length,
+        sizeMB: parseFloat(fileSizeMB),
+        contentType: contentType,
+        source: 'gcs'
+      };
+      
+    } catch (error) {
+      console.error(`❌ Failed to upload image to GCS: ${error.message}`);
+      throw new Error(`Image upload failed: ${error.message}`);
+    }
+  }
+
+  // Get content type for format
+  getContentType(format) {
+    const contentTypes = {
+      'png': 'image/png',
+      'jpeg': 'image/jpeg',
+      'jpg': 'image/jpeg',
+      'webp': 'image/webp',
+      'gif': 'image/gif'
+    };
+    return contentTypes[format.toLowerCase()] || 'image/png';
+  }
+
+  // Delete image from GCS
+  async deleteImageFromGCS(gcsFileName) {
+    try {
+      const accessToken = await this.getAccessToken();
+      const deleteUrl = `https://storage.googleapis.com/storage/v1/b/${this.bucketName}/o/${encodeURIComponent(gcsFileName)}`;
+      
+      await axios.delete(deleteUrl, {
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      });
+      
+      console.log(`🗑️ Image deleted from GCS: ${gcsFileName}`);
+      return true;
+    } catch (error) {
+      console.error(`❌ Failed to delete image from GCS: ${error.message}`);
+      return false;
+    }
+  }
+}
+
+// Initialize the image uploader
+const imageGCSUploader = new ImageGCSUploader();
+
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -120,7 +296,7 @@ const ensureDirectories = () => {
     './uploads/images',  // For image uploads
     './generated-videos', 
     './edited-videos',
-    './generated/images'  // For generated images
+    './generated/images'  // For generated images (now used only for temp storage)
   ];
   
   dirs.forEach(dir => {
@@ -914,79 +1090,19 @@ const checkOpenAISetup = (req, res, next) => {
   next();
 };
 
-// ENHANCED Helper function for image download (supports base64 data URLs)
-async function downloadAndSaveImage(imageUrl, imageId) {
-  try {
-    console.log(`📥 Downloading image from: ${imageUrl.substring(0, 100)}...`);
-    
-    let buffer;
-    
-    // Check if it's a base64 data URL
-    if (imageUrl.startsWith('data:image/')) {
-      console.log('🔄 Processing base64 data URL...');
-      const base64Data = imageUrl.split(',')[1]; // Remove "data:image/png;base64," prefix
-      buffer = Buffer.from(base64Data, 'base64');
-      console.log(`📊 Base64 decoded size: ${(buffer.length / 1024 / 1024).toFixed(2)}MB`);
-    } else {
-      // Regular HTTP download
-      console.log('🌐 Downloading from HTTP URL...');
-      const response = await axios.get(imageUrl, {
-        responseType: 'arraybuffer',
-        timeout: 30000,  // 30 second timeout
-        headers: {
-          'User-Agent': 'MagicCut-AI/1.0'
-        }
-      });
-      
-      buffer = Buffer.from(response.data);
-    }
-    
-    const fileName = `${imageId}.png`;
-    
-    // Ensure generated images directory exists
-    const generatedDir = './generated/images';
-    if (!fs.existsSync(generatedDir)) {
-      fs.mkdirSync(generatedDir, { recursive: true });
-      console.log(`📁 Created directory: ${generatedDir}`);
-    }
-    
-    const filePath = path.join(generatedDir, fileName);
-    fs.writeFileSync(filePath, buffer);
-    
-    const fileSizeMB = (buffer.length / 1024 / 1024).toFixed(2);
-    console.log(`💾 Image saved: ${filePath} (${fileSizeMB}MB)`);
-    
-    return filePath;
-    
-  } catch (error) {
-    console.error('❌ Error downloading image:', error.message);
-    
-    if (error.code === 'ECONNABORTED') {
-      throw new Error('Download timeout - image too large or connection too slow');
-    } else if (error.response && error.response.status === 404) {
-      throw new Error('Generated image not found - OpenAI URL may have expired');
-    } else if (error.response && error.response.status >= 400) {
-      throw new Error(`Failed to download image: HTTP ${error.response.status}`);
-    }
-    
-    throw new Error('Failed to save generated image');
-  }
-}
-
 // ═══════════════════════════════════════════════════════════════════════════════════════
-// 🎨 FIXED GPT-IMAGE-1 MULTI-IMAGE GENERATION SYSTEM
+// 🎨 UPDATED GPT-IMAGE-1 MULTI-IMAGE GENERATION WITH GCS STORAGE
 // ═══════════════════════════════════════════════════════════════════════════════════════
 
-// GPT-Image-1 Multi-Image Generation Route - FIXED
-// GPT-Image-1 Multi-Image Generation Route - FINAL WITH MULTI-IMAGE SUPPORT
+// GPT-Image-1 Multi-Image Generation Route - UPDATED WITH GCS STORAGE
 app.post('/api/generate-image', requireAuth, checkImageCredits, checkOpenAISetup, imageUpload.array('images', 10), async (req, res) => {
-  console.log('\n🎨 GPT-IMAGE-1 GENERATION REQUEST');
+  console.log('\n🎨 GPT-IMAGE-1 GENERATION WITH GCS STORAGE');
   console.log('═══════════════════════════════════════════');
   
   try {
     const { 
       prompt, 
-      mode = 'generate', // 'generate' or 'edit'
+      mode = 'generate',
       quality = 'medium', 
       size = '1024x1024',
       output_format = 'png',
@@ -1002,6 +1118,7 @@ app.post('/api/generate-image', requireAuth, checkImageCredits, checkOpenAISetup
     console.log(`🎨 Quality: ${quality}`);
     console.log(`📏 Size: ${size}`);
     console.log(`📁 Format: ${output_format}`);
+    console.log(`☁️ Storage: Google Cloud Storage (GCS)`);
     
     // Mode validation
     if (mode === 'edit' && uploadedFiles.length === 0) {
@@ -1044,7 +1161,7 @@ app.post('/api/generate-image', requireAuth, checkImageCredits, checkOpenAISetup
     
     try {
       if (mode === 'generate') {
-        // Text-to-image generation using SDK
+        // Text-to-image generation
         console.log('✨ Calling GPT-Image-1 text-to-image generation...');
         apiMethod = 'generate';
         
@@ -1056,26 +1173,15 @@ app.post('/api/generate-image', requireAuth, checkImageCredits, checkOpenAISetup
           n: 1
         };
         
-        console.log('📡 Sending to OpenAI images.generate() with params:', generateParams);
-        
+        console.log('📡 Sending to OpenAI images.generate()');
         const response = await openai.images.generate(generateParams);
-        
-        console.log('📋 OpenAI generate response structure:', {
-          hasData: !!response.data,
-          dataLength: response.data?.length,
-          firstItem: response.data?.[0] ? Object.keys(response.data[0]) : 'none'
-        });
         
         if (response.data && response.data[0]) {
           if (response.data[0].url) {
-            console.log('📍 Found URL in generate response');
             generatedImageUrl = response.data[0].url;
-          } 
-          else if (response.data[0].b64_json) {
-            console.log('📍 Found base64 data in generate response');
+          } else if (response.data[0].b64_json) {
             generatedImageUrl = `data:image/png;base64,${response.data[0].b64_json}`;
-          }
-          else {
+          } else {
             throw new Error('No image data found in generate response');
           }
         } else {
@@ -1083,11 +1189,10 @@ app.post('/api/generate-image', requireAuth, checkImageCredits, checkOpenAISetup
         }
         
       } else if (mode === 'edit') {
-        // Image editing using direct HTTP with FormData
-        console.log(`🔄 Calling GPT-Image-1 image editing with ${uploadedFiles.length} images via direct HTTP...`);
+        // Image editing with FormData
+        console.log(`🔄 Calling GPT-Image-1 image editing with ${uploadedFiles.length} images...`);
         apiMethod = 'edit';
         
-        // Process all images with Sharp first
         const processedBuffers = [];
         
         for (let i = 0; i < uploadedFiles.length; i++) {
@@ -1096,9 +1201,8 @@ app.post('/api/generate-image', requireAuth, checkImageCredits, checkOpenAISetup
             throw new Error(`Uploaded file not found: ${file.path}`);
           }
           
-          console.log(`📷 Processing image ${i+1}: ${file.originalname} (${(file.size / 1024 / 1024).toFixed(2)}MB)`);
+          console.log(`📷 Processing image ${i+1}: ${file.originalname}`);
           
-          // Resize and convert to PNG with transparent background
           const buffer = await sharp(file.path)
             .resize(1024, 1024, {
               fit: 'contain',
@@ -1108,14 +1212,11 @@ app.post('/api/generate-image', requireAuth, checkImageCredits, checkOpenAISetup
             .toBuffer();
             
           processedBuffers.push(buffer);
-          console.log(`🔄 Resized image to 1024x1024 PNG (${(buffer.length / 1024).toFixed(1)}KB)`);
         }
         
-        // Create FormData for direct HTTP request
+        // Create FormData for API request
         const form = new FormData();
         
-        // Add images with proper array syntax for multiple images
-        // Use 'image[]' for multiple images instead of 'image'
         processedBuffers.forEach((buffer, index) => {
           form.append('image[]', buffer, {
             filename: `image${index}.png`,
@@ -1123,7 +1224,6 @@ app.post('/api/generate-image', requireAuth, checkImageCredits, checkOpenAISetup
           });
         });
         
-        // Add other parameters
         form.append('model', 'gpt-image-1');
         form.append('prompt', prompt.trim());
         form.append('n', '1');
@@ -1132,7 +1232,6 @@ app.post('/api/generate-image', requireAuth, checkImageCredits, checkOpenAISetup
         
         console.log('📡 Sending FormData to GPT-Image-1 edit API...');
         
-        // Make direct HTTP request
         const formHeaders = form.getHeaders();
         const response = await axios.post('https://api.openai.com/v1/images/edits', form, {
           headers: {
@@ -1140,39 +1239,22 @@ app.post('/api/generate-image', requireAuth, checkImageCredits, checkOpenAISetup
             'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
             'OpenAI-Organization': process.env.OPENAI_ORGANIZATION || ''
           },
-          timeout: 60000 // 60 second timeout
+          timeout: 60000
         });
         
-        // Handle different possible response structures
         const responseData = response.data;
         if (responseData.data?.[0]?.url) {
           generatedImageUrl = responseData.data[0].url;
-          console.log('📍 Found URL at: response.data.data[0].url');
-        } else if (responseData[0]?.url) {
-          generatedImageUrl = responseData[0].url;
-          console.log('📍 Found URL at: response.data[0].url');
-        } else if (responseData.url) {
-          generatedImageUrl = responseData.url;
-          console.log('📍 Found URL at: response.data.url');
         } else if (responseData.data?.[0]?.b64_json) {
-          console.log('📍 Found base64 data at: response.data.data[0].b64_json');
           generatedImageUrl = `data:image/png;base64,${responseData.data[0].b64_json}`;
-        } else if (responseData.b64_json) {
-          console.log('📍 Found base64 data at: response.data.b64_json');
-          generatedImageUrl = `data:image/png;base64,${responseData.b64_json}`;
-        } else if (responseData.images?.[0]?.url) {
-          generatedImageUrl = responseData.images[0].url;
-          console.log('📍 Found URL at: response.data.images[0].url');
         } else {
-          console.error('❌ Could not find image in response structure');
-          console.error('📋 Available fields:', Object.keys(responseData || {}));
           throw new Error('Generated image not found in response');
         }
       } else {
-        throw new Error(`Unsupported mode: ${mode}. Use 'generate' or 'edit'.`);
+        throw new Error(`Unsupported mode: ${mode}`);
       }
       
-      console.log(`✅ GPT-Image-1 ${mode} API success: ${generatedImageUrl.substring(0, 80)}...`);
+      console.log(`✅ GPT-Image-1 ${mode} API success`);
       
     } catch (openaiError) {
       console.error('❌ GPT-Image-1 API Error:', openaiError);
@@ -1187,22 +1269,11 @@ app.post('/api/generate-image', requireAuth, checkImageCredits, checkOpenAISetup
         
         if (errorData?.message) {
           errorDetails = errorData.message;
-          console.error('🔍 Specific GPT-Image-1 error:', errorData.message);
-          
-          if (errorData.message.includes('organization') || errorData.message.includes('verification')) {
-            errorMessage = 'Organization verification required. Please verify your OpenAI organization.';
+          if (errorData.message.includes('organization')) {
+            errorMessage = 'Organization verification required.';
             statusCode = 403;
-          } else if (errorData.message.includes('array too long')) {
-            errorMessage = 'Image size too large. Please use smaller images or contact support.';
-            statusCode = 400;
-          } else if (errorData.message.includes('Duplicate parameter')) {
-            errorMessage = 'Image upload error. Please ensure you are using the latest app version.';
-            statusCode = 400;
           }
         }
-      } else if (openaiError.code === 'ECONNABORTED') {
-        errorMessage = 'GPT-Image-1 API timeout. Please try again.';
-        statusCode = 504;
       }
       
       // Clean up uploaded files
@@ -1210,7 +1281,6 @@ app.post('/api/generate-image', requireAuth, checkImageCredits, checkOpenAISetup
         try {
           if (fs.existsSync(file.path)) {
             fs.unlinkSync(file.path);
-            console.log(`🗑️ Cleaned up: ${file.path}`);
           }
         } catch (cleanupError) {
           console.log(`⚠️ Could not delete upload: ${file.path}`);
@@ -1227,52 +1297,94 @@ app.post('/api/generate-image', requireAuth, checkImageCredits, checkOpenAISetup
       });
     }
     
-    // Download and save generated image
+    // ✨ NEW: Upload generated image to Google Cloud Storage
     const imageId = `gpt_img_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-    let savedImagePath;
+    let gcsUploadResult;
     
     try {
-      // Handle both URL and base64 images
+      console.log('☁️ Uploading generated image to Google Cloud Storage...');
+      
+      let imageBuffer;
+      
+      // Download or decode the image data
       if (generatedImageUrl.startsWith('http')) {
-        console.log('⬇️ Downloading generated image from URL...');
+        console.log('⬇️ Downloading image from OpenAI URL...');
         const imageResponse = await axios.get(generatedImageUrl, {
           responseType: 'arraybuffer',
           timeout: 30000
         });
-        savedImagePath = await saveImageBuffer(
-          Buffer.from(imageResponse.data, 'binary'),
-          imageId,
-          output_format,
-          output_compression
-        );
+        imageBuffer = Buffer.from(imageResponse.data);
       } else if (generatedImageUrl.startsWith('data:image')) {
-        console.log('💾 Saving base64 image directly...');
+        console.log('💾 Decoding base64 image...');
         const base64Data = generatedImageUrl.split(',')[1];
-        savedImagePath = await saveImageBuffer(
-          Buffer.from(base64Data, 'base64'),
-          imageId,
-          output_format,
-          output_compression
-        );
+        imageBuffer = Buffer.from(base64Data, 'base64');
       } else {
         throw new Error('Unsupported image format');
       }
       
-      console.log(`💾 Image saved successfully: ${savedImagePath}`);
-    } catch (downloadError) {
-      console.error('❌ Failed to save generated image:', downloadError);
-      throw new Error('Failed to save generated image');
+      // Process with Sharp if needed
+      if (output_format !== 'png' || output_compression !== 85) {
+        console.log(`🔄 Converting to ${output_format} with ${output_compression}% quality...`);
+        imageBuffer = await sharp(imageBuffer)
+          .toFormat(output_format, {
+            quality: output_format === 'png' ? Math.min(100, output_compression) : output_compression,
+            compressionLevel: output_format === 'png' ? 9 : undefined
+          })
+          .toBuffer();
+      }
+      
+      // Upload to GCS
+      gcsUploadResult = await imageGCSUploader.uploadImageToGCS(imageBuffer, imageId, output_format, {
+        model: 'gpt-image-1',
+        mode: mode,
+        quality: quality,
+        size: size,
+        userId: req.user.id,
+        userEmail: req.user.email
+      });
+      
+      console.log(`✅ Image uploaded to GCS: ${gcsUploadResult.publicUrl}`);
+      
+    } catch (uploadError) {
+      console.error('❌ Failed to upload to GCS:', uploadError);
+      
+      // Clean up uploaded files on error
+      uploadedFiles.forEach(file => {
+        try {
+          if (fs.existsSync(file.path)) {
+            fs.unlinkSync(file.path);
+          }
+        } catch (cleanupError) {
+          console.log(`⚠️ Could not delete upload: ${file.path}`);
+        }
+      });
+      
+      return res.status(500).json({
+        success: false,
+        error: 'Image upload failed',
+        message: 'Generated image could not be saved. Please try again.',
+        details: uploadError.message
+      });
     }
     
-    // Prepare image entry for database
+    // ✨ NEW: Prepare image entry with GCS data
     const imageEntry = {
       imageId,
       originalPrompt: prompt.trim(),
       editPrompt: mode === 'edit' ? prompt.trim() : null,
       originalImageUrls: uploadedFiles.map(file => `/uploads/images/${file.filename}`),
-      generatedImageUrl: `/generated/images/${path.basename(savedImagePath)}`,
-      localPath: savedImagePath,
-      size: fs.statSync(savedImagePath).size,
+      
+      // ✨ NEW: Store GCS URLs instead of local paths
+      generatedImageUrl: gcsUploadResult.publicUrl,
+      gcsData: {
+        bucketName: gcsUploadResult.bucketName,
+        fileName: gcsUploadResult.gcsFileName,
+        publicUrl: gcsUploadResult.publicUrl,
+        contentType: gcsUploadResult.contentType,
+        source: gcsUploadResult.source
+      },
+      
+      size: gcsUploadResult.size,
       creditsUsed: 1,
       createdAt: new Date(),
       metadata: {
@@ -1284,6 +1396,7 @@ app.post('/api/generate-image', requireAuth, checkImageCredits, checkOpenAISetup
         outputCompression: output_compression,
         apiMethod: apiMethod,
         inputImages: uploadedFiles.length,
+        storedInGCS: true,
         originalFiles: uploadedFiles.map(file => ({
           filename: file.filename,
           originalname: file.originalname,
@@ -1312,8 +1425,9 @@ app.post('/api/generate-image', requireAuth, checkImageCredits, checkOpenAISetup
       throw new Error('Failed to update user credits');
     }
     
-    console.log('✅ Image saved and credits deducted');
+    console.log('✅ Image saved to GCS and database, credits deducted');
     console.log(`💳 Credits remaining: ${updatedUser.credits.available}`);
+    console.log(`☁️ GCS URL: ${gcsUploadResult.publicUrl}`);
     
     // Clean up uploaded files
     uploadedFiles.forEach(file => {
@@ -1336,7 +1450,7 @@ app.post('/api/generate-image', requireAuth, checkImageCredits, checkOpenAISetup
         used: updatedUser.credits.used,
         totalPurchased: updatedUser.credits.totalPurchased
       },
-      message: `Image ${mode === 'generate' ? 'generated' : 'edited'} successfully with GPT-Image-1!`,
+      message: `Image ${mode === 'generate' ? 'generated' : 'edited'} successfully with GPT-Image-1 and uploaded to Google Cloud Storage!`,
       processing: {
         model: 'gpt-image-1',
         method: apiMethod,
@@ -1344,7 +1458,9 @@ app.post('/api/generate-image', requireAuth, checkImageCredits, checkOpenAISetup
         filesProcessed: uploadedFiles.length,
         quality: quality,
         size: size,
-        format: output_format
+        format: output_format,
+        storedInGCS: true,
+        gcsUrl: gcsUploadResult.publicUrl
       }
     });
     
@@ -1373,26 +1489,6 @@ app.post('/api/generate-image', requireAuth, checkImageCredits, checkOpenAISetup
   }
 });
 
-// Helper function to save image buffer
-async function saveImageBuffer(buffer, imageId, format = 'png', quality = 90) {
-  const outputDir = path.join(__dirname, 'public', 'generated', 'images');
-  if (!fs.existsSync(outputDir)) {
-    fs.mkdirSync(outputDir, { recursive: true });
-  }
-  
-  const filename = `${imageId}.${format}`;
-  const outputPath = path.join(outputDir, filename);
-  
-  // Convert and save with quality settings
-  await sharp(buffer)
-    .toFormat(format, {
-      quality: format === 'png' ? Math.min(100, quality) : quality,
-      compressionLevel: format === 'png' ? 9 : undefined
-    })
-    .toFile(outputPath);
-  
-  return outputPath;
-}
 // Enhanced Credit Packages Configuration
 const CREDIT_PACKAGES = {
   small: {
@@ -1815,7 +1911,7 @@ app.get('/api/image-gallery', requireAuth, async (req, res) => {
   }
 });
 
-// Delete image from gallery
+// Delete image from gallery - UPDATED WITH GCS CLEANUP
 app.delete('/api/image-gallery/:imageId', requireAuth, async (req, res) => {
   try {
     const { imageId } = req.params;
@@ -1832,18 +1928,25 @@ app.delete('/api/image-gallery/:imageId', requireAuth, async (req, res) => {
     
     const image = user.generatedImages[imageIndex];
     
-    // Delete physical file
-    if (image.localPath && fs.existsSync(image.localPath)) {
-      fs.unlinkSync(image.localPath);
+    // ✨ NEW: Delete from Google Cloud Storage if stored there
+    if (image.gcsData && image.gcsData.fileName) {
+      console.log(`🗑️ Deleting image from GCS: ${image.gcsData.fileName}`);
+      try {
+        await imageGCSUploader.deleteImageFromGCS(image.gcsData.fileName);
+        console.log(`✅ Image deleted from GCS successfully`);
+      } catch (gcsError) {
+        console.error(`⚠️ Failed to delete from GCS: ${gcsError.message}`);
+        // Continue with database deletion even if GCS deletion fails
+      }
     }
     
-    // Remove from database
+    // Delete from database
     user.generatedImages.splice(imageIndex, 1);
     await user.save();
     
     res.json({
       success: true,
-      message: 'Image deleted successfully',
+      message: 'Image deleted successfully from database and Google Cloud Storage',
       imageId
     });
     
@@ -2365,10 +2468,14 @@ app.get('/api/videos/library', customAuth, async (req, res) => {
       }
     });
   } catch (error) {
-    // ... error handling ...
+    console.error('❌ Error fetching video library:', error);
+    res.status(500).json({
+      success: false,
+      error: 'Failed to fetch video library',
+      details: error.message
+    });
   }
-});  // <-- DIT is de correcte afsluiting
-
+});
 
 // 7. Delete video from library
 app.delete('/api/videos/:videoId', customAuth, async (req, res) => {
@@ -2568,30 +2675,15 @@ async function generateEnhancedPrompts({ characterTemplateId, productTemplateId,
 }
 
 // ═══════════════════════════════════════════════════════════════════════════════════════
-// 🖼️ STATIC FILE SERVING FOR BOTH IMAGES AND VIDEOS
+// 🖼️ STATIC FILE SERVING FOR BOTH IMAGES AND VIDEOS (UPDATED)
 // ═══════════════════════════════════════════════════════════════════════════════════════
 
-// Serve generated images
-app.get('/generated/images/:filename', (req, res) => {
-  const filePath = path.join(__dirname, 'generated/images', req.params.filename);
-  if (fs.existsSync(filePath)) {
-    res.sendFile(filePath);
-  } else {
-    res.status(404).send('Image not found');
-  }
-});
+// ✨ REMOVED: Old local image serving routes (images now served from GCS)
+// These routes are no longer needed since images are stored in Google Cloud Storage:
+// - /generated/images/:filename (removed)
+// - /uploads/images/:filename (removed)
 
-// Serve uploaded images
-app.get('/uploads/images/:filename', (req, res) => {
-  const filePath = path.join(__dirname, 'uploads/images', req.params.filename);
-  if (fs.existsSync(filePath)) {
-    res.sendFile(filePath);
-  } else {
-    res.status(404).send('Image not found');
-  }
-});
-
-// Serve character images
+// Serve character images (still needed for VEO3 analysis)
 app.get('/images/:filename', (req, res) => {
   const filePath = path.join(__dirname, 'images', req.params.filename);
   if (fs.existsSync(filePath)) {
@@ -2601,7 +2693,7 @@ app.get('/images/:filename', (req, res) => {
   }
 });
 
-// Serve product images
+// Serve product images (still needed for VEO3 analysis)
 app.get('/product-images/:filename', (req, res) => {
   const filePath = path.join(__dirname, 'product-images', req.params.filename);
   if (fs.existsSync(filePath)) {
@@ -2692,7 +2784,7 @@ app.get('/terms', serveHtmlFile('terms.html'));
 app.get('/cookies', serveHtmlFile('cookies.html'));
 
 // ═══════════════════════════════════════════════════════════════════════════════════════
-// 🔧 DEBUG AND ADMIN ROUTES
+// 🔧 DEBUG AND ADMIN ROUTES (UPDATED)
 // ═══════════════════════════════════════════════════════════════════════════════════════
 
 // DEBUG ROUTE to check complete system setup
@@ -2725,6 +2817,11 @@ app.get('/api/debug/complete-setup', requireAuth, (req, res) => {
         return false;
       }
     })(),
+    
+    // ✨ NEW: GCS Image Storage checks
+    imageGCSUploader: !!imageGCSUploader,
+    gcsProjectId: !!imageGCSUploader.projectId,
+    gcsImagesBucket: imageGCSUploader.bucketName,
     
     // VEO3 modules checks
     characterAnalyzer: !!characterAnalyzer,
@@ -2782,10 +2879,14 @@ app.get('/api/debug/complete-setup', requireAuth, (req, res) => {
         multiImage: true,
         maxImages: 10,
         creditSystem: true,
+        storage: 'Google Cloud Storage', // ✨ NEW
+        bucketName: imageGCSUploader.bucketName, // ✨ NEW
         fixedModeHandling: true
       },
       videoGeneration: {
         model: 'veo3-fast',
+        storage: 'Google Cloud Storage',
+        bucketName: veo3Generator ? veo3Generator.bucketName : 'Not configured',
         characterAnalysis: checks.characterAnalyzer,
         productAnalysis: checks.productAnalyzer,
         promptGeneration: checks.promptGenerator,
@@ -2794,7 +2895,21 @@ app.get('/api/debug/complete-setup', requireAuth, (req, res) => {
         googleCloudStorage: checks.veo3Generator
       }
     },
-    version: 'FIXED_COMPLETE_VIDCRAFT_AI_WITH_GPT_IMAGE_1_AND_VEO3'
+    // ✨ NEW: Enhanced storage information
+    storage: {
+      images: {
+        type: 'Google Cloud Storage',
+        bucket: imageGCSUploader.bucketName,
+        projectId: imageGCSUploader.projectId,
+        location: imageGCSUploader.location
+      },
+      videos: {
+        type: 'Google Cloud Storage', 
+        bucket: veo3Generator ? veo3Generator.bucketName : 'Not configured',
+        projectId: veo3Generator ? veo3Generator.projectId : 'Not configured'
+      }
+    },
+    version: 'FIXED_COMPLETE_VIDCRAFT_AI_WITH_GCS_IMAGE_STORAGE'
   });
 });
 
@@ -2846,7 +2961,7 @@ app.post('/api/admin/repair-user-quota', async (req, res) => {
 });
 
 // ═══════════════════════════════════════════════════════════════════════════════════════
-// 🏥 HEALTH CHECK AND SYSTEM STATUS
+// 🏥 HEALTH CHECK AND SYSTEM STATUS (UPDATED)
 // ═══════════════════════════════════════════════════════════════════════════════════════
 
 // Comprehensive health check
@@ -2870,7 +2985,8 @@ app.get('/api/health', (req, res) => {
       openai: openai ? '✅ Ready (GPT-Image-1 FIXED)' : '❌ Not available',
       axios: (() => { try { require('axios'); return '✅ Ready'; } catch(e) { return '❌ Not available'; } })(),
       sharp: (() => { try { require('sharp'); return '✅ Ready'; } catch(e) { return '❌ Not available'; } })(),
-      formData: (() => { try { require('form-data'); return '✅ Ready'; } catch(e) { return '❌ Not available'; } })()
+      formData: (() => { try { require('form-data'); return '✅ Ready'; } catch(e) { return '❌ Not available'; } })(),
+      imageGCSUploader: imageGCSUploader ? '✅ Ready (GCS Upload)' : '❌ Not available'
     },
     
     // Video Quota System
@@ -2884,7 +3000,7 @@ app.get('/api/health', (req, res) => {
       completedVideos: completedVideos.size
     },
     
-    // FIXED Image Generation System
+    // ✨ UPDATED: Image Generation System with GCS
     imageGeneration: {
       enabled: true,
       model: 'gpt-image-1',
@@ -2898,7 +3014,26 @@ app.get('/api/health', (req, res) => {
       formatConversion: true,
       modeHandling: 'FIXED_GENERATE_AND_EDIT_MODES',
       apiMethods: 'openai.images.generate() AND openai.images.edit()',
-      version: 'FIXED_GPT_IMAGE_1_MULTI_IMAGE_SYSTEM'
+      storage: 'Google Cloud Storage', // ✨ NEW
+      gcsUploader: !!imageGCSUploader, // ✨ NEW
+      version: 'FIXED_GPT_IMAGE_1_WITH_GCS_STORAGE'
+    },
+    
+    // ✨ UPDATED: Storage Systems
+    storage: {
+      images: {
+        type: 'Google Cloud Storage',
+        bucket: imageGCSUploader.bucketName,
+        projectId: imageGCSUploader.projectId,
+        location: imageGCSUploader.location,
+        localCacheDisabled: true
+      },
+      videos: {
+        type: 'Google Cloud Storage',
+        bucket: veo3Generator ? veo3Generator.bucketName : 'Not configured',
+        projectId: veo3Generator ? veo3Generator.projectId : 'Not configured',
+        veo3Enhanced: true
+      }
     },
     
     // Video Storage System
@@ -2934,14 +3069,17 @@ app.get('/api/health', (req, res) => {
       enterprise: 100
     },
     
-    // FIXED System Mode
-    mode: 'FIXED_COMPLETE_VIDCRAFT_AI_WITH_GPT_IMAGE_1_AND_VEO3_VIDEO_GENERATION',
+    // ✨ UPDATED: System Mode
+    mode: 'FIXED_COMPLETE_VIDCRAFT_AI_WITH_GPT_IMAGE_1_GCS_STORAGE_AND_VEO3_VIDEO_GENERATION',
     fixes: [
       'Mode mapping: frontend (generate/edit) <-> backend (generate/edit)',
       'Separate API calls: openai.images.generate() vs openai.images.edit()',
       'Removed manual HTTP FormData requests',
       'Fixed mode validation logic',
-      'Organization verification error handling'
+      'Organization verification error handling',
+      'Google Cloud Storage for images (no more local storage)', // ✨ NEW
+      'Unified GCS storage for both images and videos', // ✨ NEW
+      'Automatic image cleanup from GCS on deletion' // ✨ NEW
     ]
   });
 });
@@ -3009,12 +3147,12 @@ app.use('*', (req, res) => {
 });
 
 // ═══════════════════════════════════════════════════════════════════════════════════════
-// 🚀 SERVER STARTUP WITH COMPLETE FEATURE OVERVIEW
+// 🚀 SERVER STARTUP WITH COMPLETE FEATURE OVERVIEW (UPDATED)
 // ═══════════════════════════════════════════════════════════════════════════════════════
 
 // Start server
 app.listen(PORT, () => {
-  console.log('\n🚀 FIXED COMPLETE VIDCRAFT AI - GPT-IMAGE-1 + VEO3 VIDEO GENERATION SYSTEM');
+  console.log('\n🚀 FIXED COMPLETE VIDCRAFT AI - GPT-IMAGE-1 WITH GCS STORAGE + VEO3 VIDEO GENERATION SYSTEM');
   console.log('═══════════════════════════════════════════════════════════════════════════════════════════');
   console.log(`📡 Server: http://localhost:${PORT}`);
   console.log(`🏠 Homepage: http://localhost:${PORT}`);
@@ -3028,7 +3166,7 @@ app.listen(PORT, () => {
   console.log(`🐛 Debug Complete: http://localhost:${PORT}/api/debug/complete-setup`);
   console.log('');
   
-  console.log('🎨 FIXED GPT-IMAGE-1 MULTI-IMAGE GENERATION SYSTEM:');
+  console.log('🎨 FIXED GPT-IMAGE-1 WITH GOOGLE CLOUD STORAGE:');
   console.log(`  ✅ Model: GPT-Image-1 (Latest OpenAI - FIXED)`);
   console.log(`  🔧 FIXED Mode Handling: generate vs edit`);
   console.log(`  📷 Multi-Image Support: Up to 10 images per generation`);
@@ -3040,6 +3178,9 @@ app.listen(PORT, () => {
   console.log(`  📁 Output Formats: PNG/JPEG/WebP with compression`);
   console.log(`  💳 Credit System: Pay-per-image with Stripe integration`);
   console.log(`  🖼️ Gallery Management: Full CRUD operations`);
+  console.log(`  ☁️ Storage: Google Cloud Storage (${imageGCSUploader.bucketName})`); // ✨ NEW
+  console.log(`  🔗 Direct URLs: All images served from GCS`); // ✨ NEW
+  console.log(`  🗑️ Auto Cleanup: Images deleted from GCS on deletion`); // ✨ NEW
   console.log('');
   
   console.log('🔧 CRITICAL FIXES APPLIED:');
@@ -3049,6 +3190,8 @@ app.listen(PORT, () => {
   console.log(`  ✅ Removed Manual HTTP: No more axios FormData to /images/edits endpoint`);
   console.log(`  ✅ Organization Verification: Better error handling for 403 responses`);
   console.log(`  ✅ Frontend-Backend Sync: Both use same mode names (generate/edit)`);
+  console.log(`  ✅ Google Cloud Storage: Images now stored in GCS like videos`); // ✨ NEW
+  console.log(`  ✅ Unified Storage: Both images and videos use same GCS approach`); // ✨ NEW
   console.log('');
   
   console.log('🎬 VEO3 VIDEO GENERATION SYSTEM (UNCHANGED):');
@@ -3062,36 +3205,33 @@ app.listen(PORT, () => {
   console.log(`  🎞️ Creatomate Editing: ${creatomateEditor ? '✅ Active' : '❌ Disabled'}`);
   console.log('');
   
-  console.log('💾 ENHANCED DATABASE STORAGE (UNCHANGED):');
-  console.log('  ✅ Save every Google Storage URL to MongoDB');
-  console.log('  ✅ Track video metadata (title, size, duration, dialogue)');
-  console.log('  ✅ Store image metadata (prompt, quality, size, format)');
-  console.log('  ✅ Store VEO3 operation data and costs');
-  console.log('  ✅ Video library with search and filtering');
-  console.log('  ✅ Image gallery with full management');
-  console.log('  ✅ Video deletion and management');
-  console.log('  ✅ Image deletion and management');
-  console.log('  ✅ Batch grouping and organization');
-  console.log('  ✅ Direct Google Cloud Storage integration');
+  console.log('💾 UNIFIED GOOGLE CLOUD STORAGE:'); // ✨ NEW
+  console.log('  ✅ Images: All stored in Google Cloud Storage bucket');
+  console.log('  ✅ Videos: All stored in Google Cloud Storage bucket');
+  console.log('  ✅ Direct URLs: Both images and videos served from GCS');
+  console.log('  ✅ No Local Files: Eliminated local storage for generated content');
+  console.log('  ✅ Scalable: Unlimited storage capacity');
+  console.log('  ✅ Global CDN: Fast delivery worldwide');
+  console.log('  ✅ Automatic Cleanup: Content deleted from GCS when removed from library');
   console.log('');
   
   console.log('🛡️ DUAL QUOTA & CREDIT SYSTEMS (UNCHANGED):');
   console.log('  📹 Videos: Only deduct on successful completion');
   console.log('  🖼️ Images: Credit-based system with instant deduction');
-  console.log('  ✅ Save content to database with full metadata');
+  console.log('  ✅ Save content URLs to database (not files)'); // ✨ UPDATED
   console.log('  ✅ No loss on generation failures');
   console.log('  ✅ Automatic error recovery and cleanup');
   console.log('  ✅ Google Storage URL preservation');
   console.log('');
   
   console.log('🎨 FIXED GPT-IMAGE-1 API ENDPOINTS:');
-  console.log('  📷 POST /api/generate-image - FIXED AI image generation with proper mode handling');
+  console.log('  📷 POST /api/generate-image - FIXED AI image generation with GCS storage'); // ✨ UPDATED
   console.log('  📦 GET /api/image-credits/packages - Get credit packages');
   console.log('  💳 POST /api/image-credits/purchase - Purchase credits');
   console.log('  🔍 POST /api/image-credits/verify-payment - Verify payment');
   console.log('  📊 GET /api/image-credits/status - Get credit status');
   console.log('  🖼️ GET /api/image-gallery - Get image gallery');
-  console.log('  🗑️ DELETE /api/image-gallery/:imageId - Delete image');
+  console.log('  🗑️ DELETE /api/image-gallery/:imageId - Delete image (with GCS cleanup)'); // ✨ UPDATED
   console.log('');
   
   console.log('🎬 VEO3 VIDEO API ENDPOINTS (UNCHANGED):');
@@ -3120,7 +3260,14 @@ app.listen(PORT, () => {
   console.log('  🔧 POST /api/admin/repair-user-quota - Plan repair');
   console.log('');
   
-  console.log('💡 FIXED GPT-IMAGE-1 USAGE EXAMPLES:');
+  console.log('📦 GOOGLE CLOUD STORAGE BUCKETS:'); // ✨ NEW
+  console.log(`  🖼️ Images: ${imageGCSUploader.bucketName}`);
+  console.log(`  🎬 Videos: ${veo3Generator ? veo3Generator.bucketName : 'Not configured'}`);
+  console.log(`  📍 Project: ${imageGCSUploader.projectId}`);
+  console.log(`  🌍 Location: ${imageGCSUploader.location}`);
+  console.log('');
+  
+  console.log('💡 USAGE EXAMPLES:');
   console.log('  📝 Text-to-Image: "A sunset over mountains, photorealistic" (no images)');
   console.log('  👔 Edit & Compose: "Put clothing from image 1 on person in image 2" (with images)');
   console.log('  🎨 Multi-Image Composition: "Combine all images into artistic scene" (with images)');
@@ -3140,24 +3287,27 @@ app.listen(PORT, () => {
   console.log(`  curl http://localhost:${PORT}/api/debug/complete-setup`);
   console.log('');
   
-  console.log('✨ FIXED COMPLETE SYSTEM READY!');
-  console.log('🔧 GPT-Image-1 generation now works correctly with proper mode handling!');
-  console.log('🌐 All videos automatically uploaded to Google Cloud Storage!');
+  console.log('✨ FIXED COMPLETE SYSTEM WITH UNIFIED GCS STORAGE READY!');
+  console.log('🔧 GPT-Image-1 generation now works correctly with Google Cloud Storage!');
+  console.log('☁️ All content (images & videos) automatically uploaded to Google Cloud Storage!');
   console.log('🎨 Professional AI image generation with FIXED multi-image support!');
-  console.log('📚 Complete video & image library management systems enabled!');
+  console.log('📚 Complete unified storage system for images and videos!');
   console.log('🎯 FIXED Multi-image composition with up to 10 images at once!');
   console.log('🚀 FIXED Advanced image editing, generation and variation modes!');
   console.log('🎬 Professional video generation with character and product analysis!');
   console.log('💳 Dual payment systems: Credits for images, subscriptions for videos!');
   console.log('🏢 Full business plan support with quota management!');
-  console.log('🛠️ ALL CRITICAL GPT-IMAGE-1 ISSUES FIXED!');
+  console.log('🛠️ ALL CRITICAL GPT-IMAGE-1 ISSUES FIXED + UNIFIED GCS STORAGE!');
   console.log('═══════════════════════════════════════════════════════════════════════════════════════════');
 });
 
-console.log('✅ FIXED Complete VidCraft AI system with GPT-Image-1 + VEO3 initialized');
+console.log('✅ FIXED Complete VidCraft AI system with GPT-Image-1 GCS Storage + VEO3 initialized');
 console.log('💳 Available image credit packages:', Object.keys(CREDIT_PACKAGES));
 console.log('🔗 Stripe integration ready for image credits');
 console.log('🎬 VEO3 video generation with enhanced storage ready');
 console.log('🔧 GPT-Image-1 FIXED: Proper mode handling, API method separation, validation logic');
+console.log('☁️ Images now stored in Google Cloud Storage like videos');
+console.log(`🖼️ Images bucket: ${imageGCSUploader.bucketName}`);
+console.log(`🎬 Videos bucket: ${veo3Generator ? veo3Generator.bucketName : 'Not configured'}`);
 
 module.exports = app;

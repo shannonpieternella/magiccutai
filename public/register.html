@@ -513,6 +513,31 @@
     <script>
         console.log('🔍 SCRIPT LOADED - Register page');
 
+        // 🛡️ AUTH CHECK - Redirect if already logged in
+        function checkAuthAndRedirect() {
+            const token = localStorage.getItem('token');
+            const user = localStorage.getItem('user');
+            
+            if (token && user) {
+                try {
+                    const userData = JSON.parse(user);
+                    console.log('🔄 User already logged in, redirecting...');
+                    
+                    // Redirect based on subscription status
+                    if (userData.hasActiveSubscription) {
+                        window.location.href = '/app';
+                    } else {
+                        window.location.href = '/pricing';
+                    }
+                } catch (error) {
+                    console.log('⚠️ Invalid user data found, clearing storage...');
+                    // Invalid user data, clear storage
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('user');
+                }
+            }
+        }
+
         // Create floating particles
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
@@ -666,8 +691,9 @@
             }
         });
         
-        // Page load handler
+        // Page load handler - CHECK AUTH FIRST!
         window.addEventListener('DOMContentLoaded', function() {
+            checkAuthAndRedirect(); // 🛡️ FIRST: Check if user is already logged in
             console.log('🔍 DOM fully loaded');
             
             const form = document.getElementById('registerForm');
