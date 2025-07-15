@@ -836,11 +836,13 @@
             display: flex;
             gap: 12px;
             z-index: 10;
+            flex-wrap: wrap;
+            justify-content: center;
         }
         
         .slider-dot {
-            width: 14px;
-            height: 14px;
+            width: 12px;
+            height: 12px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.3);
             cursor: pointer;
@@ -1442,6 +1444,16 @@
                 grid-template-columns: repeat(2, 1fr);
                 gap: 25px;
             }
+
+            .slider-controls {
+                bottom: 20px;
+                gap: 8px;
+            }
+
+            .slider-dot {
+                width: 10px;
+                height: 10px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -1500,6 +1512,16 @@
             .cta-buttons .btn-hero {
                 max-width: 100%;
             }
+
+            .slider-controls {
+                bottom: 15px;
+                gap: 6px;
+            }
+
+            .slider-dot {
+                width: 8px;
+                height: 8px;
+            }
         }
 
         @media (max-width: 360px) {
@@ -1516,6 +1538,17 @@
             .placeholder-description,
             .slide-description {
                 font-size: 0.9rem;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
     </style>
@@ -1666,17 +1699,8 @@
             <div class="video-slider" id="videoSlider">
                 <!-- Video Slide 1 -->
                 <div class="video-slide">
-                    <div class="slide-placeholder">
-                        <div class="placeholder-icon">🎬</div>
-                        <h3 class="placeholder-title">Cinematic Storytelling</h3>
-                        <p class="placeholder-description">Create epic narratives with dynamic camera movements, professional lighting, and stunning visual effects that rival Hollywood productions.</p>
-                    </div>
-                </div>
-                
-                <!-- Video Slide 2 -->
-                <div class="video-slide">
                     <video class="slide-video" muted loop playsinline>
-                        <source src="videos/veo3_fast_veo3_12821256_rq5n_scene_1_1752212893581.mp4" type="video/mp4">
+                        <source src="videos/Billion-dollar-ad-TWO.mp4" type="video/mp4">
                     </video>
                     
                     <div class="slide-placeholder">
@@ -1691,10 +1715,28 @@
                     </div>
                 </div>
                 
+                <!-- Video Slide 2 -->
+                <div class="video-slide">
+                    <video class="slide-video" muted loop playsinline>
+                        <source src="videos/cinematic-storytelling.mp4" type="video/mp4">
+                    </video>
+                    
+                    <div class="slide-placeholder">
+                        <div class="placeholder-icon">🎬</div>
+                        <h3 class="placeholder-title">Cinematic Storytelling</h3>
+                        <p class="placeholder-description">Create compelling narratives with dynamic camera movements and professional cinematographic techniques.</p>
+                    </div>
+                    
+                    <div class="slide-overlay">
+                        <h3 class="slide-title">Cinematic Storytelling</h3>
+                        <p class="slide-description">Create compelling narratives with dynamic camera movements and professional cinematography.</p>
+                    </div>
+                </div>
+                
                 <!-- Video Slide 3 -->
                 <div class="video-slide">
                     <video class="slide-video" muted loop playsinline>
-                        <source src="videos/veo3_fast_veo3_23587173_xaix_scene_1_1752223658560.mp4" type="video/mp4">
+                        <source src="videos/download-2025-07-14T195720.615.mp4" type="video/mp4">
                     </video>
                     
                     <div class="slide-placeholder">
@@ -1709,16 +1751,97 @@
                     </div>
                 </div>
                 
-                <!-- Video Slide 4 -->
-                <div class="video-slide">
+               <!-- Video Slide 4 -->
+               <div class="video-slide">
+                    <video class="slide-video" muted loop playsinline>
+                        <source src="videos/download-2025-07-14T200106.082.mp4" type="video/mp4">
+                    </video>
+                    
                     <div class="slide-placeholder">
-                        <div class="placeholder-icon">⚡</div>
-                        <h3 class="placeholder-title">Lightning Speed</h3>
-                        <p class="placeholder-description">Generate professional-quality content in minutes, not hours. Perfect for rapid prototyping and iterative creativity.</p>
+                        <div class="placeholder-icon">🚀</div>
+                        <h3 class="placeholder-title">Lightning Fast</h3>
+                        <p class="placeholder-description">Generate high-quality videos in minutes, not hours. Experience the power of next-generation AI processing.</p>
+                    </div>
+                    
+                    <div class="slide-overlay">
+                        <h3 class="slide-title">Lightning Fast</h3>
+                        <p class="slide-description">Generate high-quality videos in minutes, not hours with AI-powered processing.</p>
+                    </div>
+                </div>
+
+                <!-- Video Slide 5 -->
+                <div class="video-slide">
+                    <video class="slide-video" muted loop playsinline>
+                        <source src="videos/download(43).mp4" type="video/mp4">
+                    </video>
+                    
+                    <div class="slide-placeholder">
+                        <div class="placeholder-icon">💎</div>
+                        <h3 class="placeholder-title">Premium Quality</h3>
+                        <p class="placeholder-description">Professional-grade output that rivals traditional video production with crystal-clear quality and stunning visual effects.</p>
+                    </div>
+                    
+                    <div class="slide-overlay">
+                        <h3 class="slide-title">Premium Quality</h3>
+                        <p class="slide-description">Professional-grade output that rivals traditional video production with stunning effects.</p>
+                    </div>
+                </div>
+
+                <!-- Video Slide 6 -->
+                <div class="video-slide">
+                    <video class="slide-video" muted loop playsinline>
+                        <source src="videos/FirstBillionDollarAd.mp4" type="video/mp4">
+                    </video>
+                    
+                    <div class="slide-placeholder">
+                        <div class="placeholder-icon">💰</div>
+                        <h3 class="placeholder-title">Billion Dollar Impact</h3>
+                        <p class="placeholder-description">Create advertising content that could generate millions in revenue with compelling narratives and professional execution.</p>
+                    </div>
+                    
+                    <div class="slide-overlay">
+                        <h3 class="slide-title">Billion Dollar Impact</h3>
+                        <p class="slide-description">Create advertising content with compelling narratives and professional execution.</p>
+                    </div>
+                </div>
+
+                <!-- Video Slide 7 -->
+                <div class="video-slide">
+                    <video class="slide-video" muted loop playsinline>
+                        <source src="videos/Gotoad3.mp4" type="video/mp4">
+                    </video>
+                    
+                    <div class="slide-placeholder">
+                        <div class="placeholder-icon">🎯</div>
+                        <h3 class="placeholder-title">Marketing Excellence</h3>
+                        <p class="placeholder-description">Build powerful marketing campaigns with AI-generated content that captures attention and drives conversions.</p>
+                    </div>
+                    
+                    <div class="slide-overlay">
+                        <h3 class="slide-title">Marketing Excellence</h3>
+                        <p class="slide-description">Build powerful marketing campaigns that capture attention and drive conversions.</p>
+                    </div>
+                </div>
+
+                <!-- Video Slide 8 -->
+                <div class="video-slide">
+                    <video class="slide-video" muted loop playsinline>
+                        <source src="videos/Billion-dollar-ad-TWO.mp4" type="video/mp4">
+                    </video>
+                    
+                    <div class="slide-placeholder">
+                        <div class="placeholder-icon">🔥</div>
+                        <h3 class="placeholder-title">Viral Potential</h3>
+                        <p class="placeholder-description">Create content designed to go viral with engaging storytelling, perfect timing, and audience-captivating visuals.</p>
+                    </div>
+                    
+                    <div class="slide-overlay">
+                        <h3 class="slide-title">Viral Potential</h3>
+                        <p class="slide-description">Create content designed to go viral with engaging storytelling and captivating visuals.</p>
                     </div>
                 </div>
             </div>
-            
+
             <!-- Slider Controls -->
             <div class="slider-arrows arrow-prev" onclick="previousSlide()">‹</div>
             <div class="slider-arrows arrow-next" onclick="nextSlide()">›</div>
@@ -1728,6 +1851,10 @@
                 <div class="slider-dot" onclick="goToSlide(1)"></div>
                 <div class="slider-dot" onclick="goToSlide(2)"></div>
                 <div class="slider-dot" onclick="goToSlide(3)"></div>
+                <div class="slider-dot" onclick="goToSlide(4)"></div>
+                <div class="slider-dot" onclick="goToSlide(5)"></div>
+                <div class="slider-dot" onclick="goToSlide(6)"></div>
+                <div class="slider-dot" onclick="goToSlide(7)"></div>
             </div>
         </div>
     </section>
@@ -2019,9 +2146,9 @@
             }
         }
 
-        // Enhanced Video Slider
+        // Enhanced Video Slider - FIXED VERSION
         let currentSlide = 0;
-        const totalSlides = 4;
+        const totalSlides = 8; // Updated to match actual number of slides
         const slider = document.getElementById('videoSlider');
         const dots = document.querySelectorAll('.slider-dot');
 
@@ -2040,6 +2167,7 @@
                 const source = video.querySelector('source');
                 if (source && source.src && source.src !== '') {
                     video.addEventListener('loadeddata', () => {
+                        console.log(`✅ Video ${index + 1} loaded successfully`);
                         showVideo(placeholder, video, overlay);
                         if (index === currentSlide) {
                             attemptAutoplay(video, index + 1);
@@ -2053,6 +2181,7 @@
                     });
                     
                     video.addEventListener('error', (e) => {
+                        console.warn(`⚠️ Video ${index + 1} failed to load:`, e);
                         showPlaceholder(placeholder, video, overlay);
                     });
                     
@@ -2060,14 +2189,18 @@
                         toggleVideoPlayback(video, index + 1);
                     });
                     
+                    // Try to load the video
                     video.load();
                 } else {
+                    console.log(`📺 Video ${index + 1} using placeholder (no source)`);
                     showPlaceholder(placeholder, video, overlay);
                 }
             });
         }
 
         function attemptAutoplay(video, slideNumber) {
+            if (!video) return;
+            
             video.muted = true;
             video.currentTime = 0;
             
@@ -2077,30 +2210,38 @@
                 playPromise
                     .then(() => {
                         console.log(`✅ Video ${slideNumber} autoplay successful!`);
+                        removePlayButton(video);
                     })
                     .catch(error => {
-                        console.warn(`⚠️ Video ${slideNumber} autoplay blocked`);
+                        console.warn(`⚠️ Video ${slideNumber} autoplay blocked:`, error);
                         addPlayButton(video);
                     });
             }
         }
 
         function toggleVideoPlayback(video, slideNumber) {
+            if (!video) return;
+            
             if (video.paused) {
                 video.play()
                     .then(() => {
+                        console.log(`▶️ Video ${slideNumber} playing`);
                         removePlayButton(video);
                     })
                     .catch(error => {
                         console.error(`❌ Failed to play video ${slideNumber}:`, error);
+                        addPlayButton(video);
                     });
             } else {
                 video.pause();
+                console.log(`⏸️ Video ${slideNumber} paused`);
                 addPlayButton(video);
             }
         }
 
         function addPlayButton(video) {
+            if (!video || !video.parentElement) return;
+            
             removePlayButton(video);
             
             const playButton = document.createElement('div');
@@ -2116,6 +2257,8 @@
         }
 
         function removePlayButton(video) {
+            if (!video || !video.parentElement) return;
+            
             const existingButton = video.parentElement.querySelector('.video-play-button');
             if (existingButton) {
                 existingButton.remove();
@@ -2123,34 +2266,38 @@
         }
 
         function showVideo(placeholder, video, overlay) {
-            placeholder.style.display = 'none';
-            video.style.display = 'block';
-            overlay.style.display = 'block';
+            if (placeholder) placeholder.style.display = 'none';
+            if (video) video.style.display = 'block';
+            if (overlay) overlay.style.display = 'block';
         }
 
         function showPlaceholder(placeholder, video, overlay) {
-            placeholder.style.display = 'flex';
-            video.style.display = 'none';
-            overlay.style.display = 'none';
+            if (placeholder) placeholder.style.display = 'flex';
+            if (video) video.style.display = 'none';
+            if (overlay) overlay.style.display = 'none';
         }
 
         function updateSlider() {
             const translateX = -currentSlide * 100;
             slider.style.transform = `translateX(${translateX}%)`;
             
+            // Update dots
             dots.forEach((dot, index) => {
                 dot.classList.toggle('active', index === currentSlide);
             });
 
+            // Handle video playback
             const allVideos = document.querySelectorAll('.slide-video');
             allVideos.forEach((video, index) => {
                 const source = video.querySelector('source');
                 if (source && source.src && source.src !== '') {
                     if (index === currentSlide) {
+                        // Current slide - try to play
                         if (video.readyState >= 3) {
                             attemptAutoplay(video, index + 1);
                         }
                     } else {
+                        // Other slides - pause and remove play button
                         if (!video.paused) {
                             video.pause();
                         }
@@ -2158,6 +2305,8 @@
                     }
                 }
             });
+
+            console.log(`🎬 Switched to slide ${currentSlide + 1}/${totalSlides}`);
         }
 
         function nextSlide() {
@@ -2171,23 +2320,57 @@
         }
 
         function goToSlide(slideIndex) {
-            currentSlide = slideIndex;
-            updateSlider();
+            if (slideIndex >= 0 && slideIndex < totalSlides) {
+                currentSlide = slideIndex;
+                updateSlider();
+            }
         }
 
-        // Auto-play slider
-        let autoplayInterval = setInterval(nextSlide, 8000);
+        // Auto-play slider with pause on hover
+        let autoplayInterval = setInterval(nextSlide, 6000);
 
         const sliderContainer = document.querySelector('.video-slider-container');
         if (sliderContainer) {
             sliderContainer.addEventListener('mouseenter', () => {
                 clearInterval(autoplayInterval);
+                console.log('🛑 Autoplay paused (hover)');
             });
 
             sliderContainer.addEventListener('mouseleave', () => {
-                autoplayInterval = setInterval(nextSlide, 8000);
+                autoplayInterval = setInterval(nextSlide, 6000);
+                console.log('▶️ Autoplay resumed');
+            });
+
+            // Touch/swipe support for mobile
+            let startX = 0;
+            let endX = 0;
+
+            sliderContainer.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].clientX;
+            });
+
+            sliderContainer.addEventListener('touchend', (e) => {
+                endX = e.changedTouches[0].clientX;
+                const diff = startX - endX;
+                
+                if (Math.abs(diff) > 50) {
+                    if (diff > 0) {
+                        nextSlide();
+                    } else {
+                        previousSlide();
+                    }
+                }
             });
         }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                previousSlide();
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
+            }
+        });
 
         // FAQ functionality
         function initFAQ() {
@@ -2291,8 +2474,10 @@
             }
         });
 
-        // Initialize everything
+        // Initialize everything when DOM is loaded
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('🚀 MagicCutAI - Initializing...');
+            
             createParticles();
             initAuthState();
             handleScrollAnimations();
@@ -2300,6 +2485,8 @@
             initializeVideos();
             initFAQ();
             updateSlider();
+            
+            console.log('✅ MagicCutAI - Ready!');
         });
 
         // Event listeners
@@ -2311,6 +2498,35 @@
         window.previousSlide = previousSlide;
         window.goToSlide = goToSlide;
         window.logout = logout;
+
+        // Add error handling for video loading
+        window.addEventListener('error', function(e) {
+            if (e.target.tagName === 'VIDEO') {
+                console.warn('Video loading error:', e.target.src);
+            }
+        }, true);
+
+        // Performance optimization: Preload videos on interaction
+        let videosPreloaded = false;
+        function preloadVideos() {
+            if (videosPreloaded) return;
+            
+            const videos = document.querySelectorAll('.slide-video');
+            videos.forEach((video, index) => {
+                const source = video.querySelector('source');
+                if (source && source.src) {
+                    video.preload = 'metadata';
+                    console.log(`📋 Preloading video ${index + 1}`);
+                }
+            });
+            
+            videosPreloaded = true;
+        }
+
+        // Preload videos on first user interaction
+        ['click', 'touchstart', 'keydown'].forEach(event => {
+            document.addEventListener(event, preloadVideos, { once: true });
+        });
     </script>
 </body>
 </html>
