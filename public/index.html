@@ -2146,61 +2146,70 @@
             }
         }
 
-        // Enhanced Video Slider - FIXED VERSION
+        // FIXED Video Slider System
         let currentSlide = 0;
-        const totalSlides = 8; // Updated to match actual number of slides
+        const totalSlides = 8;
         const slider = document.getElementById('videoSlider');
         const dots = document.querySelectorAll('.slider-dot');
+        let videosInitialized = false;
 
         function initializeVideos() {
+            if (videosInitialized) return;
+            
             const allVideos = document.querySelectorAll('.slide-video');
+            console.log(`🎬 Initializing ${allVideos.length} videos...`);
             
             allVideos.forEach((video, index) => {
                 const slide = video.closest('.video-slide');
                 const placeholder = slide.querySelector('.slide-placeholder');
                 const overlay = slide.querySelector('.slide-overlay');
                 
+                // Set video properties immediately
                 video.muted = true;
                 video.playsInline = true;
                 video.loop = true;
+                video.preload = 'metadata';
                 
-                const source = video.querySelector('source');
-                if (source && source.src && source.src !== '') {
-                    video.addEventListener('loadeddata', () => {
-                        console.log(`✅ Video ${index + 1} loaded successfully`);
-                        showVideo(placeholder, video, overlay);
-                        if (index === currentSlide) {
-                            attemptAutoplay(video, index + 1);
-                        }
-                    });
-                    
-                    video.addEventListener('canplaythrough', () => {
-                        if (index === currentSlide) {
-                            attemptAutoplay(video, index + 1);
-                        }
-                    });
-                    
-                    video.addEventListener('error', (e) => {
-                        console.warn(`⚠️ Video ${index + 1} failed to load:`, e);
-                        showPlaceholder(placeholder, video, overlay);
-                    });
-                    
-                    video.addEventListener('click', () => {
-                        toggleVideoPlayback(video, index + 1);
-                    });
-                    
-                    // Try to load the video
-                    video.load();
-                } else {
-                    console.log(`📺 Video ${index + 1} using placeholder (no source)`);
-                    showPlaceholder(placeholder, video, overlay);
-                }
+                // Remove any existing event listeners
+                video.removeEventListener('click', handleVideoClick);
+                
+                // Show video, hide placeholder initially
+                showVideo(placeholder, video, overlay);
+                
+                // Add click handler for manual play
+                video.addEventListener('click', handleVideoClick);
+                
+                console.log(`📹 Video ${index + 1} initialized: ${video.src || 'No source'}`);
             });
+            
+            videosInitialized = true;
+            
+            // Try to start first video after short delay
+            setTimeout(() => {
+                playCurrentVideo();
+            }, 500);
         }
 
-        function attemptAutoplay(video, slideNumber) {
+        function handleVideoClick(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const video = event.target;
+            const slideIndex = Array.from(document.querySelectorAll('.slide-video')).indexOf(video);
+            
+            console.log(`🎯 Video ${slideIndex + 1} clicked`);
+            
+            if (video.paused) {
+                playVideo(video, slideIndex + 1);
+            } else {
+                pauseVideo(video, slideIndex + 1);
+            }
+        }
+
+        function playVideo(video, slideNumber) {
             if (!video) return;
             
+            // Ensure video is ready
             video.muted = true;
             video.currentTime = 0;
             
@@ -2209,34 +2218,51 @@
             if (playPromise !== undefined) {
                 playPromise
                     .then(() => {
-                        console.log(`✅ Video ${slideNumber} autoplay successful!`);
+                        console.log(`✅ Video ${slideNumber} playing`);
                         removePlayButton(video);
                     })
                     .catch(error => {
-                        console.warn(`⚠️ Video ${slideNumber} autoplay blocked:`, error);
-                        addPlayButton(video);
-                    });
-            }
-        }
-
-        function toggleVideoPlayback(video, slideNumber) {
-            if (!video) return;
-            
-            if (video.paused) {
-                video.play()
-                    .then(() => {
-                        console.log(`▶️ Video ${slideNumber} playing`);
-                        removePlayButton(video);
-                    })
-                    .catch(error => {
-                        console.error(`❌ Failed to play video ${slideNumber}:`, error);
+                        console.log(`⚠️ Video ${slideNumber} play blocked, adding play button`);
                         addPlayButton(video);
                     });
             } else {
+                console.log(`⚠️ Video ${slideNumber} play() returned undefined`);
+                addPlayButton(video);
+            }
+        }
+
+        function pauseVideo(video, slideNumber) {
+            if (!video) return;
+            
+            try {
                 video.pause();
                 console.log(`⏸️ Video ${slideNumber} paused`);
                 addPlayButton(video);
+            } catch (error) {
+                console.error(`❌ Error pausing video ${slideNumber}:`, error);
             }
+        }
+
+        function playCurrentVideo() {
+            const currentVideo = document.querySelectorAll('.slide-video')[currentSlide];
+            if (currentVideo) {
+                playVideo(currentVideo, currentSlide + 1);
+            }
+        }
+
+        function pauseAllVideos() {
+            const allVideos = document.querySelectorAll('.slide-video');
+            allVideos.forEach((video, index) => {
+                if (!video.paused) {
+                    try {
+                        video.pause();
+                        video.currentTime = 0;
+                    } catch (error) {
+                        console.warn(`Error pausing video ${index + 1}:`, error);
+                    }
+                }
+                removePlayButton(video);
+            });
         }
 
         function addPlayButton(video) {
@@ -2250,7 +2276,9 @@
             
             playButton.addEventListener('click', (e) => {
                 e.stopPropagation();
-                video.click();
+                e.preventDefault();
+                const slideIndex = Array.from(document.querySelectorAll('.slide-video')).indexOf(video);
+                playVideo(video, slideIndex + 1);
             });
             
             video.parentElement.appendChild(playButton);
@@ -2286,25 +2314,13 @@
                 dot.classList.toggle('active', index === currentSlide);
             });
 
-            // Handle video playback
-            const allVideos = document.querySelectorAll('.slide-video');
-            allVideos.forEach((video, index) => {
-                const source = video.querySelector('source');
-                if (source && source.src && source.src !== '') {
-                    if (index === currentSlide) {
-                        // Current slide - try to play
-                        if (video.readyState >= 3) {
-                            attemptAutoplay(video, index + 1);
-                        }
-                    } else {
-                        // Other slides - pause and remove play button
-                        if (!video.paused) {
-                            video.pause();
-                        }
-                        removePlayButton(video);
-                    }
-                }
-            });
+            // Pause all videos first
+            pauseAllVideos();
+            
+            // Try to play current video after short delay
+            setTimeout(() => {
+                playCurrentVideo();
+            }, 300);
 
             console.log(`🎬 Switched to slide ${currentSlide + 1}/${totalSlides}`);
         }
@@ -2326,20 +2342,32 @@
             }
         }
 
-        // Auto-play slider with pause on hover
-        let autoplayInterval = setInterval(nextSlide, 6000);
+        // Auto-play slider with improved controls
+        let autoplayInterval;
+        let isAutoplayActive = false;
+
+        function startAutoplay() {
+            if (isAutoplayActive) return;
+            
+            autoplayInterval = setInterval(() => {
+                nextSlide();
+            }, 8000);
+            isAutoplayActive = true;
+            console.log('▶️ Autoplay started');
+        }
+
+        function stopAutoplay() {
+            if (!isAutoplayActive) return;
+            
+            clearInterval(autoplayInterval);
+            isAutoplayActive = false;
+            console.log('⏸️ Autoplay stopped');
+        }
 
         const sliderContainer = document.querySelector('.video-slider-container');
         if (sliderContainer) {
-            sliderContainer.addEventListener('mouseenter', () => {
-                clearInterval(autoplayInterval);
-                console.log('🛑 Autoplay paused (hover)');
-            });
-
-            sliderContainer.addEventListener('mouseleave', () => {
-                autoplayInterval = setInterval(nextSlide, 6000);
-                console.log('▶️ Autoplay resumed');
-            });
+            sliderContainer.addEventListener('mouseenter', stopAutoplay);
+            sliderContainer.addEventListener('mouseleave', startAutoplay);
 
             // Touch/swipe support for mobile
             let startX = 0;
@@ -2347,6 +2375,7 @@
 
             sliderContainer.addEventListener('touchstart', (e) => {
                 startX = e.touches[0].clientX;
+                stopAutoplay();
             });
 
             sliderContainer.addEventListener('touchend', (e) => {
@@ -2360,15 +2389,24 @@
                         previousSlide();
                     }
                 }
+                
+                // Restart autoplay after touch interaction
+                setTimeout(startAutoplay, 3000);
             });
         }
 
         // Keyboard navigation
         document.addEventListener('keydown', (e) => {
             if (e.key === 'ArrowLeft') {
+                e.preventDefault();
                 previousSlide();
+                stopAutoplay();
+                setTimeout(startAutoplay, 5000);
             } else if (e.key === 'ArrowRight') {
+                e.preventDefault();
                 nextSlide();
+                stopAutoplay();
+                setTimeout(startAutoplay, 5000);
             }
         });
 
@@ -2499,12 +2537,44 @@
         window.goToSlide = goToSlide;
         window.logout = logout;
 
-        // Add error handling for video loading
+        // Add comprehensive error handling and debugging
         window.addEventListener('error', function(e) {
-            if (e.target.tagName === 'VIDEO') {
-                console.warn('Video loading error:', e.target.src);
+            if (e.target && e.target.tagName === 'VIDEO') {
+                console.warn('📹 Video error detected:', {
+                    src: e.target.src,
+                    error: e.target.error,
+                    networkState: e.target.networkState,
+                    readyState: e.target.readyState
+                });
+                
+                // Show placeholder for failed video
+                const slide = e.target.closest('.video-slide');
+                if (slide) {
+                    const placeholder = slide.querySelector('.slide-placeholder');
+                    const overlay = slide.querySelector('.slide-overlay');
+                    showPlaceholder(placeholder, e.target, overlay);
+                }
             }
         }, true);
+
+        // Enhanced debugging for video states
+        function debugVideoStates() {
+            const videos = document.querySelectorAll('.slide-video');
+            console.log('🔍 Current video states:');
+            videos.forEach((video, index) => {
+                console.log(`Video ${index + 1}:`, {
+                    src: video.src,
+                    paused: video.paused,
+                    readyState: video.readyState,
+                    networkState: video.networkState,
+                    currentTime: video.currentTime,
+                    duration: video.duration || 'unknown'
+                });
+            });
+        }
+
+        // Make debug function available globally
+        window.debugVideos = debugVideoStates;
 
         // Performance optimization: Preload videos on interaction
         let videosPreloaded = false;
