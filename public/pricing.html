@@ -203,7 +203,7 @@
             gap: 20px;
         }
 
-        /* Mobile Navigation */
+        /* Mobile Navigation - ENHANCED */
         .mobile-nav {
             position: fixed;
             top: 0;
@@ -214,12 +214,12 @@
             backdrop-filter: blur(20px);
             display: flex;
             flex-direction: column;
-            padding: 80px 30px 30px;
+            padding: 80px 20px 30px;
             transition: right 0.3s ease;
             z-index: 1000;
             justify-content: center;
             align-items: center;
-            gap: 30px;
+            gap: 20px;
         }
 
         .mobile-nav.active {
@@ -227,11 +227,54 @@
         }
 
         .mobile-nav .btn {
+            width: 85%;
+            max-width: 280px;
+            text-align: center;
+            padding: 16px 20px;
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            box-sizing: border-box;
+        }
+
+        /* Mobile User Info Display */
+        .mobile-user-info {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 15px 20px;
+            margin-bottom: 10px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
             width: 80%;
             max-width: 300px;
-            text-align: center;
-            padding: 18px 24px;
-            font-size: 1.1rem;
+        }
+
+        .mobile-user-name {
+            font-weight: 600;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .mobile-user-plan {
+            color: #ff006e;
+            font-size: 0.8rem;
+        }
+
+        /* Logout Button Styling */
+        .btn-danger {
+            background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+            color: white;
+            border: 1px solid rgba(255, 107, 107, 0.3);
+        }
+
+        .btn-danger:hover {
+            background: linear-gradient(135deg, #ee5a52, #e74c3c);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
         }
         
         .btn {
@@ -1064,10 +1107,28 @@
             </div>
         </div>
 
-        <!-- Mobile Navigation -->
+        <!-- Enhanced Mobile Navigation with User Info and Logout -->
         <div class="mobile-nav" id="mobileNav">
+            <!-- User Info Display (only shown when logged in) -->
+            <div class="mobile-user-info" id="mobileUserInfo" style="display: none;">
+                <div class="mobile-user-name" id="mobileUserName">Loading...</div>
+                <div class="mobile-user-plan" id="mobileUserPlan">Loading plan...</div>
+            </div>
+            
+            <!-- Navigation Links -->
             <a href="index.html" class="btn btn-secondary">🏠 Home</a>
             <a href="#" class="btn btn-primary" onclick="checkAppAccess()">📊 Dashboard</a>
+            
+            <!-- Logout Button (only shown when logged in) -->
+            <button class="btn btn-danger" id="mobileLogoutBtn" onclick="logout()" style="display: none;">
+                🚪 Logout
+            </button>
+            
+            <!-- Login/Register Buttons (only shown when not logged in) -->
+            <div id="mobileAuthButtons" style="display: block; width: 100%;">
+                <a href="login.html" class="btn btn-primary" style="margin-bottom: 10px;">🔐 Login</a>
+                <a href="register.html" class="btn btn-secondary">📝 Register</a>
+            </div>
         </div>
     </nav>
 
@@ -1279,6 +1340,29 @@
             document.body.style.overflow = '';
         }
 
+        // ENHANCED: Logout function
+        function logout() {
+            console.log('🚪 Logging out user...');
+            
+            // Clear stored data
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            
+            // Close mobile menu
+            closeMobileMenu();
+            
+            // Show logout message
+            showStatus('Logged out successfully. Redirecting...', 'success');
+            
+            // Reset current user
+            currentUser = null;
+            
+            // Redirect to home page
+            setTimeout(() => {
+                window.location.href = 'index.html';
+            }, 1500);
+        }
+
         // Scroll to pricing section
         function scrollToPricing() {
             const pricingSection = document.querySelector('.pricing-section');
@@ -1303,7 +1387,7 @@
             handleUrlParams();
         });
         
-        // Check if user is logged in
+        // ENHANCED: Check if user is logged in and update mobile menu
         function checkAuthStatus() {
             const token = localStorage.getItem('token');
             const userData = localStorage.getItem('user');
@@ -1312,15 +1396,60 @@
                 try {
                     currentUser = JSON.parse(userData);
                     showUserInfo();
+                    updateMobileMenuForLoggedInUser();
                     console.log('✅ User logged in:', currentUser.email);
                 } catch (error) {
                     console.error('❌ Error parsing user data:', error);
                     showAuthRequired();
+                    updateMobileMenuForLoggedOutUser();
                 }
             } else {
                 console.log('⚠️ User not logged in');
                 showAuthRequired();
+                updateMobileMenuForLoggedOutUser();
             }
+        }
+
+        // NEW: Update mobile menu for logged in users
+        function updateMobileMenuForLoggedInUser() {
+            // Show user info in mobile menu
+            const mobileUserInfo = document.getElementById('mobileUserInfo');
+            const mobileUserName = document.getElementById('mobileUserName');
+            const mobileUserPlan = document.getElementById('mobileUserPlan');
+            const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
+            const mobileAuthButtons = document.getElementById('mobileAuthButtons');
+            
+            if (currentUser && mobileUserInfo && mobileUserName && mobileUserPlan) {
+                mobileUserInfo.style.display = 'block';
+                mobileUserName.textContent = `${currentUser.firstName} ${currentUser.lastName}`;
+                
+                const currentPlan = currentUser.subscription?.plan || 'free';
+                let displayPlan = '';
+                
+                if (currentPlan === 'free' || !currentPlan || currentPlan === 'No plan') {
+                    displayPlan = 'Getting Started';
+                } else {
+                    displayPlan = currentPlan.charAt(0).toUpperCase() + currentPlan.slice(1);
+                }
+                
+                mobileUserPlan.textContent = `${displayPlan} Plan`;
+            }
+            
+            // Show logout button, hide auth buttons
+            if (mobileLogoutBtn) mobileLogoutBtn.style.display = 'block';
+            if (mobileAuthButtons) mobileAuthButtons.style.display = 'none';
+        }
+
+        // NEW: Update mobile menu for logged out users
+        function updateMobileMenuForLoggedOutUser() {
+            // Hide user info and logout button
+            const mobileUserInfo = document.getElementById('mobileUserInfo');
+            const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
+            const mobileAuthButtons = document.getElementById('mobileAuthButtons');
+            
+            if (mobileUserInfo) mobileUserInfo.style.display = 'none';
+            if (mobileLogoutBtn) mobileLogoutBtn.style.display = 'none';
+            if (mobileAuthButtons) mobileAuthButtons.style.display = 'block';
         }
 
         // Check app access
@@ -1605,6 +1734,7 @@
                 
                 showStatus(`Account successfully upgraded to ${plan.toUpperCase()} plan!`, 'success');
                 showUserInfo(); // Refresh display
+                updateMobileMenuForLoggedInUser(); // Update mobile menu
                 
             } else {
                 throw new Error(data.error || 'Failed to update subscription');
@@ -1755,6 +1885,7 @@
         window.toggleMobileMenu = toggleMobileMenu;
         window.scrollToPricing = scrollToPricing;
         window.goToImageApp = goToImageApp;
+        window.logout = logout;
     </script>
 </body>
 </html>
