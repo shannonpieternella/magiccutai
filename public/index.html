@@ -1574,12 +1574,90 @@
             }
         }
     </style>
-    <script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
-    <script>
-        Weglot.initialize({
-            api_key: 'wg_399fca524874e5ed48a5e6492534a7622'
-        });
-    </script>
+    <!-- Weglot Script -->
+<script type="text/javascript" src="https://cdn.weglot.com/weglot.min.js"></script>
+<script>
+    Weglot.initialize({
+        api_key: 'wg_399fca524874e5ed48a5e6492534a7622'
+    });
+</script>
+
+<!-- IP Detectie voor NL/BE -->
+<script>
+    async function detectCountryAndSetLanguage() {
+        try {
+            console.log('🌍 Detecting visitor country...');
+            
+            const response = await fetch('https://ipapi.co/json/');
+            const data = await response.json();
+            
+            console.log('📍 Visitor location:', data.country_name, data.country_code);
+            
+            // Check of bezoeker uit Nederland of België komt
+            if (data.country_code === 'NL' || data.country_code === 'BE') {
+                console.log('🇳🇱 Nederlandse/Belgische bezoeker - Switching to Dutch');
+                
+                setTimeout(() => {
+                    if (window.Weglot) {
+                        Weglot.switchTo('nl');
+                        showLanguageNotification('🇳🇱 Automatisch ingesteld op Nederlands');
+                    }
+                }, 1000);
+                
+            } else {
+                console.log('🇬🇧 International visitor - Staying in English');
+            }
+            
+        } catch (error) {
+            console.log('⚠️ IP detection failed, staying in English:', error);
+        }
+    }
+    
+    function showLanguageNotification(message) {
+        const notification = document.createElement('div');
+        notification.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <span>${message}</span>
+                <button onclick="this.parentElement.parentElement.remove()" style="background: rgba(255,255,255,0.2); border: none; color: white; padding: 2px 6px; border-radius: 3px; cursor: pointer;">×</button>
+            </div>
+        `;
+        notification.style.cssText = `
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #ff006e, #8338ec);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-size: 14px;
+            z-index: 999999;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            animation: slideInFromRight 0.3s ease-out;
+            max-width: 300px;
+        `;
+        
+        document.body.appendChild(notification);
+        
+        setTimeout(() => {
+            if (notification.parentNode) {
+                notification.remove();
+            }
+        }, 5000);
+    }
+    
+    // Start IP detectie wanneer pagina geladen is
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(detectCountryAndSetLanguage, 500);
+    });
+</script>
+
+<!-- Animatie voor notificatie -->
+<style>
+    @keyframes slideInFromRight {
+        from { transform: translateX(100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+</style>
 </head>
 <body>
     <!-- Enhanced Navigation -->
