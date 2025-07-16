@@ -1582,64 +1582,76 @@
     });
 </script>
 
-<!-- BROWSER LANGUAGE DETECTION -->
+<!-- IPSTACK + BROWSER LANGUAGE DETECTION -->
 <script>
-    function detectBrowserLanguage() {
-        const userLang = navigator.language || navigator.userLanguage;
-        console.log('🌐 Browser language detected:', userLang);
-        
-        if (userLang.startsWith('nl')) {
-            console.log('🇳🇱 Dutch browser detected - Switching to Dutch');
-            setTimeout(() => {
-                if (window.Weglot) {
-                    Weglot.switchTo('nl');
-                    showLanguageNotification('🇳🇱 Nederlandse browser gedetecteerd');
-                }
-            }, 1000);
-        } else {
-            console.log('🌍 Non-Dutch browser detected - Staying English');
+    // IPStack API Configuration
+    const IPSTACK_API_KEY = '70ecd92819d19398a3fc822e051928cd';
+    const IPSTACK_URL = `https://api.ipstack.com/check?access_key=${IPSTACK_API_KEY}`;
+    
+    // IPStack API Detection
+    async function detectCountryWithIPStack() {
+        try {
+            const response = await fetch(IPSTACK_URL);
+            const data = await response.json();
+            
+            if (data.error) {
+                throw new Error(`IPStack Error: ${data.error.info}`);
+            }
+            
+            const countryCode = data.country_code;
+            console.log('🌍 IPStack detected:', data.country_name, countryCode);
+            
+            if (countryCode === 'NL' || countryCode === 'BE') {
+                setTimeout(() => {
+                    if (window.Weglot) {
+                        Weglot.switchTo('nl');
+                    }
+                }, 1000);
+                return true;
+            }
+            return false;
+            
+        } catch (error) {
+            console.log('❌ IPStack failed:', error.message);
+            return null;
         }
     }
     
-    // Optionele notificatie functie
-    function showLanguageNotification(message) {
-        const notification = document.createElement('div');
-        notification.innerHTML = `
-            <div style="display: flex; align-items: center; gap: 10px;">
-                <span>${message}</span>
-                <button onclick="this.parentElement.parentElement.remove()" style="background: rgba(255,255,255,0.2); border: none; color: white; padding: 2px 6px; border-radius: 3px; cursor: pointer;">×</button>
-            </div>
-        `;
-        notification.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: linear-gradient(135deg, #ff006e, #8338ec);
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            z-index: 999999;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
-            animation: slideInFromRight 0.3s ease-out;
-            max-width: 300px;
-        `;
+    // Browser Language Detection (Fallback)
+    function detectBrowserLanguage() {
+        const userLang = navigator.language || navigator.userLanguage;
+        console.log('🌐 Browser language:', userLang);
         
-        document.body.appendChild(notification);
-        
-        // Auto remove na 4 seconden
-        setTimeout(() => {
-            if (notification.parentNode) {
-                notification.remove();
-            }
-        }, 4000);
+        if (userLang.startsWith('nl')) {
+            setTimeout(() => {
+                if (window.Weglot) {
+                    Weglot.switchTo('nl');
+                }
+            }, 1000);
+            return true;
+        }
+        return false;
     }
     
-    // Start detectie wanneer pagina geladen is
-    document.addEventListener('DOMContentLoaded', detectBrowserLanguage);
+    // Main detection function
+    async function detectAndSetLanguage() {
+        console.log('🚀 Starting language detection...');
+        
+        const ipStackResult = await detectCountryWithIPStack();
+        
+        if (ipStackResult === null) {
+            console.log('🔄 IPStack failed, using browser language fallback...');
+            detectBrowserLanguage();
+        }
+    }
+    
+    // Start detection when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+        setTimeout(detectAndSetLanguage, 500);
+    });
 </script>
 
-<!-- ANIMATIE VOOR NOTIFICATIE -->
+<!-- ANIMATION FOR NOTIFICATIONS -->
 <style>
     @keyframes slideInFromRight {
         from { transform: translateX(100%); opacity: 0; }
