@@ -1584,64 +1584,73 @@
     });
 </script>
 
-<!-- SIMPLE COUNTRY DETECTION -->
-<script>
-    // IPStack API Key
-    const IPSTACK_API_KEY = '70ecd92819d19398a3fc822e051928cd';
-    
-    // Simple country detection function
-    async function detectCountryAndSwitch() {
-        try {
-            console.log('🌍 Detecting country...');
-            
-            // Call IPStack API
-            const response = await fetch(`https://api.ipstack.com/check?access_key=${IPSTACK_API_KEY}`);
-            const data = await response.json();
-            
-            console.log('📍 IPStack response:', data);
-            
-            // Check for errors
-            if (data.error) {
-                console.log('❌ IPStack error:', data.error);
-                return; // Stay in English if error
-            }
-            
-            const countryCode = data.country_code;
-            const countryName = data.country_name;
-            
-            console.log(`🏳️ Detected country: ${countryName} (${countryCode})`);
-            
-            // ONLY switch to Dutch for Netherlands and Belgium
-            if (countryCode === 'NL' || countryCode === 'BE') {
-                console.log('🇳🇱 Netherlands/Belgium detected - Switching to Dutch');
-                
-                // Wait for Weglot to be ready, then switch
-                setTimeout(() => {
-                    if (window.Weglot) {
-                        Weglot.switchTo('nl');
-                        console.log('✅ Switched to Dutch');
-                    }
-                }, 1000);
-                
-            } else {
-                console.log('🌍 Other country detected - Staying in English');
-                // Do nothing - stay in English
-            }
-            
-        } catch (error) {
-            console.log('❌ Detection failed:', error);
-            // Stay in English if detection fails
-        }
+<!-- LANGUAGE SWITCHER STYLING -->
+<style>
+    /* Style the Weglot language switcher */
+    .weglot-dropdown {
+        position: fixed !important;
+        bottom: 20px !important;
+        right: 20px !important;
+        z-index: 999999 !important;
+        background: rgba(0, 0, 0, 0.9) !important;
+        backdrop-filter: blur(20px) !important;
+        border: 2px solid #ff006e !important;
+        border-radius: 15px !important;
+        padding: 15px !important;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
     }
     
-    // Start detection when page loads
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('📄 Page loaded - Starting country detection');
+    .weglot-dropdown a {
+        color: white !important;
+        text-decoration: none !important;
+        padding: 12px 20px !important;
+        display: block !important;
+        border-radius: 10px !important;
+        transition: all 0.3s ease !important;
+        font-size: 16px !important;
+        font-weight: 600 !important;
+        text-align: center !important;
+        margin: 5px 0 !important;
+    }
+    
+    .weglot-dropdown a:hover {
+        background: linear-gradient(135deg, #ff006e, #8338ec) !important;
+        transform: translateY(-2px) !important;
+        box-shadow: 0 5px 15px rgba(255, 0, 110, 0.4) !important;
+    }
+    
+    .weglot-dropdown .wg-current {
+        background: linear-gradient(135deg, #ff006e, #8338ec) !important;
+        font-weight: bold !important;
+        box-shadow: 0 5px 15px rgba(255, 0, 110, 0.4) !important;
+    }
+    
+    /* Add flags to language options */
+    .weglot-dropdown a[data-lang="en"]::before {
+        content: "🇬🇧 ";
+        margin-right: 8px;
+    }
+    
+    .weglot-dropdown a[data-lang="nl"]::before {
+        content: "🇳🇱 ";
+        margin-right: 8px;
+    }
+    
+    /* Mobile responsive */
+    @media (max-width: 768px) {
+        .weglot-dropdown {
+            bottom: 15px !important;
+            right: 15px !important;
+            padding: 12px !important;
+        }
         
-        // Small delay to ensure everything is loaded
-        setTimeout(detectCountryAndSwitch, 1000);
-    });
-</script> 
+        .weglot-dropdown a {
+            padding: 10px 15px !important;
+            font-size: 14px !important;
+        }
+    }
+</style> 
 </head>
 <body>
     <!-- Enhanced Navigation -->
