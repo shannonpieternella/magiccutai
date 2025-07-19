@@ -952,6 +952,7 @@
                 <!-- Desktop Navigation -->
                 <div class="nav-links">
                     <a href="/app" class="nav-link">Create Videos</a>
+                    <a href="/templates" class="nav-link" id="templatesLink">🎬 Templates</a>
                     <a href="/videos" class="nav-link active">My Videos</a>
                     <a href="/pricing" class="nav-link">Pricing</a>
                 </div>
@@ -983,6 +984,7 @@
                     <div class="user-plan" id="mobileUserPlan">Loading...</div>
                 </div>
                 <a href="/app" class="nav-link">🎬 Create Videos</a>
+                <a href="/templates" class="nav-link" id="mobileTemplatesLink">🎬 Templates</a>
                 <a href="/videos" class="nav-link active">📹 My Videos</a>
                 <a href="/pricing" class="nav-link">💳 Pricing</a>
                 <div class="nav-buttons">
@@ -1174,6 +1176,21 @@
             document.getElementById('userPlan').textContent = userPlan;
             document.getElementById('mobileUserName').textContent = userName;
             document.getElementById('mobileUserPlan').textContent = userPlan;
+            
+            // Check subscription status for templates access
+            const isSubscribed = currentUser.subscription?.status === 'active' && currentUser.subscription?.plan !== 'free';
+            const templatesLink = document.getElementById('templatesLink');
+            const mobileTemplatesLink = document.getElementById('mobileTemplatesLink');
+            
+            if (!isSubscribed) {
+                // Hide templates links for non-subscribed users
+                if (templatesLink) templatesLink.style.display = 'none';
+                if (mobileTemplatesLink) mobileTemplatesLink.style.display = 'none';
+            } else {
+                // Show templates links for subscribed users
+                if (templatesLink) templatesLink.style.display = 'inline-block';
+                if (mobileTemplatesLink) mobileTemplatesLink.style.display = 'block';
+            }
         }
 
         // Load video library from API

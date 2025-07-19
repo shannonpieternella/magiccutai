@@ -1,0 +1,2734 @@
+.pricing-card.featured .plan-name {
+    margin-top: 30px;
+}
+
+.plan-features {
+    padding: 0 5px;
+}
+
+.plan-features li {
+    font-size: 0.95rem;
+    gap: 10px;
+}<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>(function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"25131350", enableAutoSpaTracking: true};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","//bat.bing.com/bat.js","uetq");</script>
+<!-- TikTok Pixel Code Start -->
+<script>
+!function (w, d, t) {
+w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
+var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+
+
+ttq.load('D1RKNIRC77UBOQJ5BUA0');
+ttq.page();
+}(window, document, 'ttq');
+</script>
+<!-- TikTok Pixel Code End -->
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-NN786SDC7E"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+
+gtag('config', 'G-NN786SDC7E');
+</script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '233493752693325');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=233493752693325&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MagicCutAI - Professional AI Video & Image Creation Platform</title>
+<meta name="description" content="Create professional videos, images, and logos with advanced AI technology. Join thousands of content creators transforming their workflow.">
+<style>
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+line-height: 1.6;
+color: #333;
+overflow-x: hidden;
+background: #000;
+}
+
+/* ANNOUNCEMENT BAR */
+.announcement-bar {
+background: linear-gradient(90deg, #ff006e, #8338ec);
+color: white;
+text-align: center;
+padding: 12px 20px;
+font-weight: 700;
+font-size: 0.9rem;
+position: fixed;
+top: 0;
+left: 0;
+right: 0;
+z-index: 10001;
+letter-spacing: 1px;
+box-shadow: 0 5px 20px rgba(255, 0, 110, 0.3);
+}
+
+.announcement-content {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 15px;
+flex-wrap: wrap;
+}
+
+.announcement-text {
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.announcement-cta {
+background: rgba(255, 255, 255, 0.2);
+padding: 6px 15px;
+border-radius: 20px;
+font-size: 0.8rem;
+font-weight: 900;
+text-decoration: none;
+color: white;
+transition: all 0.3s ease;
+border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.announcement-cta:hover {
+background: rgba(255, 255, 255, 0.3);
+transform: scale(1.05);
+}
+
+/* Enhanced Navbar */
+.navbar {
+position: fixed;
+top: 50px;
+left: 0;
+right: 0;
+background: rgba(0, 0, 0, 0.95);
+backdrop-filter: blur(20px);
+padding: 15px 20px;
+z-index: 10000;
+transition: all 0.4s ease;
+border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.navbar.scrolled {
+background: rgba(0, 0, 0, 0.98);
+padding: 12px 20px;
+box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+.nav-content {
+max-width: 1400px;
+margin: 0 auto;
+display: flex;
+justify-content: space-between;
+align-items: center;
+position: relative;
+}
+
+.logo {
+font-size: 1.5rem;
+font-weight: 800;
+background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+display: flex;
+align-items: center;
+gap: 8px;
+position: relative;
+z-index: 1001;
+}
+
+.logo-icon {
+width: 35px;
+height: 35px;
+background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 1rem;
+animation: logoFloat 6s ease-in-out infinite;
+box-shadow: 0 0 30px rgba(255, 0, 110, 0.4);
+}
+
+@keyframes logoFloat {
+0%, 100% { transform: translateY(0px) rotate(0deg); box-shadow: 0 0 30px rgba(255, 0, 110, 0.4); }
+50% { transform: translateY(-5px) rotate(5deg); box-shadow: 0 0 50px rgba(131, 56, 236, 0.6); }
+}
+
+/* Hamburger Menu */
+.hamburger {
+display: none;
+flex-direction: column;
+cursor: pointer;
+z-index: 1001;
+padding: 5px;
+}
+
+.hamburger span {
+width: 25px;
+height: 3px;
+background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+margin: 3px 0;
+transition: 0.3s;
+border-radius: 2px;
+}
+
+.hamburger.active span:nth-child(1) {
+transform: rotate(-45deg) translate(-5px, 6px);
+}
+
+.hamburger.active span:nth-child(2) {
+opacity: 0;
+}
+
+.hamburger.active span:nth-child(3) {
+transform: rotate(45deg) translate(-5px, -6px);
+}
+
+/* Desktop Navigation */
+.nav-buttons {
+display: flex;
+gap: 20px;
+align-items: center;
+}
+
+/* Mobile Navigation */
+.mobile-nav {
+position: fixed;
+top: 0;
+right: -100%;
+width: 100%;
+height: 100vh;
+background: rgba(0, 0, 0, 0.95);
+backdrop-filter: blur(20px);
+display: flex;
+flex-direction: column;
+padding: 80px 30px 30px;
+transition: right 0.3s ease;
+z-index: 1000;
+justify-content: center;
+align-items: center;
+gap: 30px;
+}
+
+.mobile-nav.active {
+right: 0;
+}
+
+.mobile-nav .btn {
+width: 80%;
+max-width: 300px;
+text-align: center;
+padding: 18px 24px;
+font-size: 1.1rem;
+}
+
+.btn {
+padding: 12px 24px;
+border: none;
+border-radius: 50px;
+font-size: 14px;
+font-weight: 700;
+cursor: pointer;
+text-decoration: none;
+display: inline-block;
+transition: all 0.4s ease;
+text-transform: uppercase;
+letter-spacing: 1px;
+position: relative;
+overflow: hidden;
+}
+
+.btn-small {
+padding: 10px 20px;
+font-size: 13px;
+}
+
+.btn-primary {
+background: linear-gradient(135deg, #ff006e, #8338ec);
+color: white;
+box-shadow: 0 10px 30px rgba(255, 0, 110, 0.5);
+animation: btnGlow 4s ease-in-out infinite;
+}
+
+@keyframes btnGlow {
+0%, 100% { 
+    box-shadow: 0 10px 30px rgba(255, 0, 110, 0.5);
+    transform: translateY(0);
+}
+50% { 
+    box-shadow: 0 15px 40px rgba(255, 0, 110, 0.7);
+    transform: translateY(-2px);
+}
+}
+
+.btn-primary::before {
+content: '';
+position: absolute;
+top: 0;
+left: -100%;
+width: 100%;
+height: 100%;
+background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+transition: left 0.6s;
+}
+
+.btn-primary:hover::before {
+left: 100%;
+}
+
+.btn-primary:hover {
+transform: translateY(-3px) scale(1.05);
+box-shadow: 0 20px 50px rgba(255, 0, 110, 0.8);
+}
+
+.btn-secondary {
+background: rgba(255, 255, 255, 0.1);
+color: white;
+border: 2px solid rgba(255, 255, 255, 0.3);
+backdrop-filter: blur(10px);
+}
+
+.btn-secondary:hover {
+background: rgba(255, 255, 255, 0.2);
+transform: translateY(-3px);
+border-color: rgba(255, 255, 255, 0.5);
+}
+
+/* HERO SECTION - AD COMPLIANT */
+.hero {
+min-height: 100vh;
+position: relative;
+display: flex;
+align-items: center;
+justify-content: center;
+overflow: hidden;
+background: linear-gradient(135deg, #0a0a0a 0%, #1a0b2e 25%, #16213e 75%, #0f3460 100%);
+padding-top: 50px;
+}
+
+.hero-bg {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: 
+    radial-gradient(circle at 20% 30%, rgba(255, 0, 110, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(131, 56, 236, 0.3) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(58, 134, 255, 0.2) 0%, transparent 70%);
+pointer-events: none;
+animation: backgroundShift 20s ease-in-out infinite;
+}
+
+@keyframes backgroundShift {
+0%, 100% { opacity: 1; }
+50% { opacity: 0.8; }
+}
+
+.hero-particles {
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+pointer-events: none;
+overflow: hidden;
+}
+
+.particle {
+position: absolute;
+width: 3px;
+height: 3px;
+background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+border-radius: 50%;
+animation: particleFloat 8s ease-in-out infinite;
+opacity: 0;
+}
+
+@keyframes particleFloat {
+0%, 100% { 
+    transform: translateY(100vh) translateX(0px) rotate(0deg) scale(0); 
+    opacity: 0; 
+}
+10% { 
+    opacity: 1; 
+    transform: translateY(90vh) translateX(20px) rotate(45deg) scale(1); 
+}
+90% { 
+    opacity: 1; 
+    transform: translateY(-10vh) translateX(-20px) rotate(315deg) scale(1); 
+}
+}
+
+.hero-content {
+position: relative;
+z-index: 5;
+max-width: 1000px;
+margin: 0 auto;
+padding: 100px 30px 40px;
+text-align: center;
+color: white;
+}
+
+/* TRUST BADGE */
+.trust-badge {
+background: rgba(0, 255, 0, 0.15);
+border: 2px solid #00ff00;
+color: #00ff00;
+padding: 12px 25px;
+border-radius: 50px;
+font-size: 0.9rem;
+font-weight: 700;
+margin-bottom: 25px;
+animation: trustGlow 3s ease-in-out infinite;
+display: inline-block;
+text-transform: uppercase;
+letter-spacing: 1px;
+}
+
+@keyframes trustGlow {
+0%, 100% { 
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.4);
+}
+50% { 
+    box-shadow: 0 0 40px rgba(0, 255, 0, 0.6);
+}
+}
+
+.hero h1 {
+font-size: clamp(2.5rem, 6vw, 5rem);
+font-weight: 900;
+margin-bottom: 2rem;
+background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+line-height: 1.1;
+animation: titleReveal 2s ease-out;
+text-shadow: 0 0 60px rgba(255, 0, 110, 0.5);
+}
+
+@keyframes titleReveal {
+0% { 
+    opacity: 0; 
+    transform: translateY(50px) scale(0.8); 
+    filter: blur(10px);
+}
+100% { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+    filter: blur(0px);
+}
+}
+
+.hero p {
+font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+margin-bottom: 2.5rem;
+opacity: 0.95;
+max-width: 800px;
+margin-left: auto;
+margin-right: auto;
+animation: subtitleReveal 2s ease-out 0.5s both;
+line-height: 1.5;
+font-weight: 600;
+}
+
+@keyframes subtitleReveal {
+0% { 
+    opacity: 0; 
+    transform: translateY(30px); 
+    filter: blur(5px);
+}
+100% { 
+    opacity: 0.95; 
+    transform: translateY(0); 
+    filter: blur(0px);
+}
+}
+
+/* VALUE PROPOSITION */
+.value-prop {
+background: rgba(255, 255, 255, 0.1);
+backdrop-filter: blur(20px);
+border: 2px solid rgba(255, 0, 110, 0.4);
+border-radius: 20px;
+padding: 25px;
+margin-bottom: 2.5rem;
+animation: valueGlow 4s ease-in-out infinite;
+position: relative;
+}
+
+@keyframes valueGlow {
+0%, 100% { 
+    box-shadow: 0 0 30px rgba(255, 0, 110, 0.3);
+    transform: scale(1);
+}
+50% { 
+    box-shadow: 0 0 50px rgba(255, 0, 110, 0.5);
+    transform: scale(1.02);
+}
+}
+
+.value-title {
+font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+font-weight: 900;
+color: #ff006e;
+margin-bottom: 15px;
+text-transform: uppercase;
+letter-spacing: 1px;
+}
+
+.value-items {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+gap: 15px;
+margin-bottom: 20px;
+}
+
+.value-item {
+display: flex;
+align-items: center;
+gap: 12px;
+font-size: 1rem;
+font-weight: 600;
+}
+
+.value-item span:first-child {
+font-size: 1.3rem;
+}
+
+.trusted-by {
+text-align: center;
+font-size: 1.1rem;
+font-weight: 700;
+background: linear-gradient(135deg, #00ff00, #00dd00);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+margin-top: 20px;
+}
+
+.cta-buttons {
+display: flex;
+gap: 25px;
+justify-content: center;
+flex-wrap: wrap;
+margin-bottom: 3rem;
+animation: ctaReveal 2s ease-out 1s both;
+}
+
+@keyframes ctaReveal {
+0% { 
+    opacity: 0; 
+    transform: translateY(20px) scale(0.9); 
+}
+100% { 
+    opacity: 1; 
+    transform: translateY(0) scale(1); 
+}
+}
+
+.btn-hero {
+padding: 22px 45px;
+font-size: 18px;
+border-radius: 50px;
+font-weight: 900;
+position: relative;
+overflow: hidden;
+text-transform: uppercase;
+letter-spacing: 2px;
+}
+
+.btn-hero.btn-primary {
+background: linear-gradient(135deg, #ff006e, #8338ec);
+box-shadow: 0 15px 40px rgba(255, 0, 110, 0.6);
+animation: heroBtnPulse 3s ease-in-out infinite;
+}
+
+@keyframes heroBtnPulse {
+0%, 100% { 
+    transform: translateY(0) scale(1);
+    box-shadow: 0 15px 40px rgba(255, 0, 110, 0.6);
+}
+50% { 
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 25px 60px rgba(255, 0, 110, 0.8);
+}
+}
+
+.btn-hero.btn-primary:hover {
+transform: translateY(-5px) scale(1.05);
+box-shadow: 0 30px 70px rgba(255, 0, 110, 1);
+}
+
+.benefits-indicators {
+display: flex;
+justify-content: center;
+gap: 40px;
+flex-wrap: wrap;
+animation: benefitsReveal 2s ease-out 1.5s both;
+}
+
+@keyframes benefitsReveal {
+0% { 
+    opacity: 0; 
+    transform: translateY(20px); 
+}
+100% { 
+    opacity: 1; 
+    transform: translateY(0); 
+}
+}
+
+.benefit-item {
+display: flex;
+align-items: center;
+gap: 12px;
+font-size: 0.95rem;
+font-weight: 700;
+transition: all 0.3s ease;
+padding: 12px 25px;
+background: rgba(255, 255, 255, 0.1);
+border-radius: 50px;
+backdrop-filter: blur(10px);
+border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.benefit-item:hover {
+transform: translateY(-3px);
+background: rgba(255, 255, 255, 0.15);
+border-color: rgba(255, 0, 110, 0.4);
+}
+
+.benefit-item span:first-child {
+font-size: 1.3rem;
+filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+}
+
+/* SOCIAL PROOF SECTION */
+.social-proof {
+padding: 60px 30px;
+background: linear-gradient(135deg, rgba(0, 255, 0, 0.08), rgba(0, 200, 0, 0.08));
+border-top: 2px solid rgba(0, 255, 0, 0.3);
+border-bottom: 2px solid rgba(0, 255, 0, 0.3);
+text-align: center;
+}
+
+.social-proof-content {
+max-width: 1200px;
+margin: 0 auto;
+}
+
+.social-title {
+font-size: clamp(2rem, 4vw, 3rem);
+font-weight: 900;
+background: linear-gradient(135deg, #00ff00, #00dd00);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+margin-bottom: 40px;
+}
+
+.stats-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+gap: 30px;
+margin-bottom: 40px;
+}
+
+.stat-item {
+background: rgba(0, 255, 0, 0.1);
+backdrop-filter: blur(20px);
+border: 2px solid rgba(0, 255, 0, 0.3);
+border-radius: 20px;
+padding: 30px;
+transition: all 0.3s ease;
+animation: statGlow 4s ease-in-out infinite;
+}
+
+@keyframes statGlow {
+0%, 100% { 
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+    transform: scale(1);
+}
+50% { 
+    box-shadow: 0 0 40px rgba(0, 255, 0, 0.4);
+    transform: scale(1.02);
+}
+}
+
+.stat-item:hover {
+transform: translateY(-10px) scale(1.05);
+border-color: rgba(0, 255, 0, 0.6);
+box-shadow: 0 20px 60px rgba(0, 255, 0, 0.4);
+}
+
+.stat-number {
+font-size: clamp(2.5rem, 4vw, 3.5rem);
+font-weight: 900;
+background: linear-gradient(135deg, #00ff00, #00dd00);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+margin-bottom: 15px;
+}
+
+.stat-label {
+color: white;
+font-size: 1.1rem;
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 1px;
+}
+
+/* PRICING SECTION - COMPLIANT */
+.pricing-section {
+padding: 80px 30px;
+background: linear-gradient(180deg, #000 0%, #1a0a2e 50%, #000 100%);
+position: relative;
+}
+
+.pricing-section::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: radial-gradient(circle at 50% 50%, rgba(255, 0, 110, 0.1) 0%, transparent 70%);
+pointer-events: none;
+}
+
+.pricing-content {
+max-width: 1200px;
+margin: 0 auto;
+text-align: center;
+position: relative;
+z-index: 2;
+}
+
+.pricing-title {
+font-size: clamp(2.5rem, 5vw, 4rem);
+font-weight: 900;
+margin-bottom: 20px;
+background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+
+.pricing-subtitle {
+font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+color: rgba(255, 255, 255, 0.9);
+max-width: 700px;
+margin: 0 auto 30px;
+font-weight: 600;
+}
+
+.discount-banner {
+background: linear-gradient(135deg, #ff006e, #8338ec);
+color: white;
+padding: 15px 30px;
+border-radius: 50px;
+font-size: clamp(1rem, 2vw, 1.3rem);
+font-weight: 900;
+margin: 0 auto 40px;
+display: inline-block;
+text-transform: uppercase;
+letter-spacing: 1px;
+animation: discountGlow 3s ease-in-out infinite;
+border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+@keyframes discountGlow {
+0%, 100% { 
+    box-shadow: 0 0 30px rgba(255, 0, 110, 0.5);
+    transform: scale(1);
+}
+50% { 
+    box-shadow: 0 0 50px rgba(255, 0, 110, 0.8);
+    transform: scale(1.02);
+}
+}
+
+.price-container {
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 15px;
+margin-bottom: 15px;
+}
+
+.original-price {
+font-size: clamp(1.5rem, 3vw, 2rem);
+font-weight: 700;
+color: rgba(255, 255, 255, 0.5);
+text-decoration: line-through;
+position: relative;
+}
+
+.discount-badge {
+background: linear-gradient(135deg, #00ff00, #00dd00);
+color: #000;
+padding: 5px 15px;
+border-radius: 20px;
+font-size: 0.8rem;
+font-weight: 900;
+text-transform: uppercase;
+letter-spacing: 1px;
+animation: badgePulse 2s ease-in-out infinite;
+}
+
+@keyframes badgePulse {
+0%, 100% { transform: scale(1); }
+50% { transform: scale(1.1); }
+}
+
+.pricing-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+gap: 40px;
+margin-top: 60px;
+}
+
+.pricing-card {
+background: rgba(255, 255, 255, 0.05);
+backdrop-filter: blur(30px);
+border-radius: 30px;
+padding: 40px;
+border: 3px solid rgba(255, 255, 255, 0.1);
+transition: all 0.5s ease;
+position: relative;
+color: white;
+overflow: hidden;
+}
+
+.pricing-card::before {
+content: '';
+position: absolute;
+top: -50%;
+left: -50%;
+width: 200%;
+height: 200%;
+background: linear-gradient(45deg, transparent, rgba(255, 0, 110, 0.1), transparent);
+transform: rotate(45deg);
+animation: cardShine 6s ease-in-out infinite;
+}
+
+@keyframes cardShine {
+0%, 100% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+50% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+}
+
+.pricing-card.featured {
+border-color: rgba(255, 0, 110, 0.6);
+background: rgba(255, 0, 110, 0.08);
+transform: scale(1.05);
+box-shadow: 0 30px 100px rgba(255, 0, 110, 0.3);
+}
+
+.pricing-card.featured::after {
+content: '🔥 MOST POPULAR';
+position: absolute;
+top: -10px;
+left: 50%;
+transform: translateX(-50%);
+background: linear-gradient(135deg, #ff006e, #8338ec);
+color: white;
+padding: 10px 30px;
+border-radius: 50px;
+font-size: 0.9rem;
+font-weight: 900;
+letter-spacing: 2px;
+z-index: 3;
+}
+
+.pricing-card:hover {
+transform: translateY(-15px) scale(1.02);
+border-color: rgba(255, 0, 110, 0.5);
+box-shadow: 0 40px 120px rgba(255, 0, 110, 0.3);
+}
+
+.pricing-card.featured:hover {
+transform: scale(1.08) translateY(-15px);
+box-shadow: 0 50px 150px rgba(255, 0, 110, 0.5);
+}
+
+.plan-name {
+font-size: clamp(1.5rem, 2.5vw, 2rem);
+font-weight: 900;
+margin-bottom: 15px;
+text-transform: uppercase;
+letter-spacing: 2px;
+position: relative;
+z-index: 2;
+}
+
+.plan-price {
+font-size: clamp(3rem, 5vw, 4.5rem);
+font-weight: 900;
+background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+margin-bottom: 15px;
+position: relative;
+z-index: 2;
+}
+
+.plan-billing {
+color: rgba(255, 255, 255, 0.7);
+margin-bottom: 30px;
+font-size: 1.1rem;
+font-weight: 600;
+position: relative;
+z-index: 2;
+}
+
+.plan-features {
+list-style: none;
+margin-bottom: 40px;
+text-align: left;
+position: relative;
+z-index: 2;
+padding: 0 10px;
+}
+
+.plan-features li {
+color: rgba(255, 255, 255, 0.9);
+margin-bottom: 15px;
+padding: 0;
+position: relative;
+font-size: 1rem;
+font-weight: 600;
+display: flex;
+align-items: flex-start;
+justify-content: flex-start;
+gap: 12px;
+text-align: left;
+}
+
+.plan-features li::before {
+content: '✅';
+font-size: 1.2rem;
+flex-shrink: 0;
+margin-top: 2px;
+}
+
+.pricing-cta {
+position: relative;
+z-index: 2;
+}
+
+/* GUARANTEE SECTION */
+.guarantee-section {
+padding: 60px 30px;
+background: linear-gradient(135deg, #00ff00, #00dd00);
+text-align: center;
+color: #000;
+font-weight: 900;
+}
+
+.guarantee-content {
+max-width: 800px;
+margin: 0 auto;
+}
+
+.guarantee-title {
+font-size: clamp(2rem, 4vw, 3rem);
+margin-bottom: 20px;
+text-transform: uppercase;
+letter-spacing: 2px;
+}
+
+.guarantee-badge {
+background: #000;
+color: #00ff00;
+padding: 25px;
+border-radius: 20px;
+margin-bottom: 20px;
+border: 3px solid #00ff00;
+animation: guaranteeBadgeGlow 4s ease-in-out infinite;
+}
+
+@keyframes guaranteeBadgeGlow {
+0%, 100% { 
+    box-shadow: 0 0 30px rgba(0, 255, 0, 0.5);
+}
+50% { 
+    box-shadow: 0 0 60px rgba(0, 255, 0, 0.8);
+}
+}
+
+.guarantee-text {
+font-size: clamp(1.2rem, 2vw, 1.6rem);
+line-height: 1.5;
+font-weight: 700;
+}
+
+/* VIDEO SHOWCASE SECTION */
+.video-showcase {
+padding: 60px 30px;
+background: linear-gradient(180deg, #000 0%, #0a0a0a 50%, #000 100%);
+position: relative;
+}
+
+.showcase-header {
+text-align: center;
+margin-bottom: 40px;
+color: white;
+}
+
+.showcase-title {
+font-size: clamp(2rem, 4vw, 3rem);
+font-weight: 800;
+margin-bottom: 15px;
+background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+
+.showcase-subtitle {
+font-size: clamp(1rem, 2vw, 1.2rem);
+color: rgba(255, 255, 255, 0.8);
+max-width: 500px;
+margin: 0 auto;
+}
+
+/* Enhanced Video Slider */
+.video-slider-container {
+position: relative;
+max-width: 1400px;
+margin: 0 auto;
+border-radius: 30px;
+overflow: hidden;
+background: rgba(255, 255, 255, 0.05);
+backdrop-filter: blur(20px);
+border: 2px solid rgba(255, 255, 255, 0.1);
+box-shadow: 0 30px 80px rgba(0, 0, 0, 0.3);
+}
+
+.video-slider {
+display: flex;
+transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+height: clamp(350px, 50vh, 500px);
+}
+
+.video-slide {
+min-width: 100%;
+height: 100%;
+position: relative;
+display: flex;
+align-items: center;
+justify-content: center;
+overflow: hidden;
+}
+
+.slide-video {
+width: 100%;
+height: 100%;
+object-fit: cover;
+position: absolute;
+top: 0;
+left: 0;
+z-index: 1;
+display: none;
+cursor: pointer;
+}
+
+.video-play-button {
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+width: clamp(60px, 8vw, 80px);
+height: clamp(60px, 8vw, 80px);
+background: rgba(255, 0, 110, 0.9);
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+color: white;
+font-size: clamp(1.5rem, 2.5vw, 2rem);
+cursor: pointer;
+z-index: 5;
+transition: all 0.3s ease;
+backdrop-filter: blur(10px);
+border: 2px solid rgba(255, 255, 255, 0.3);
+animation: playButtonPulse 3s ease-in-out infinite;
+}
+
+@keyframes playButtonPulse {
+0%, 100% { 
+    transform: translate(-50%, -50%) scale(1);
+    box-shadow: 0 0 0 0 rgba(255, 0, 110, 0.7);
+}
+50% { 
+    transform: translate(-50%, -50%) scale(1.05);
+    box-shadow: 0 0 0 10px rgba(255, 0, 110, 0);
+}
+}
+
+.slide-overlay {
+position: absolute;
+bottom: 0;
+left: 0;
+right: 0;
+background: linear-gradient(transparent, rgba(0,0,0,0.8), rgba(0,0,0,0.9));
+padding: 30px 25px;
+color: white;
+z-index: 3;
+display: none;
+}
+
+.slide-title {
+font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+font-weight: 800;
+margin-bottom: 10px;
+background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+line-height: 1.2;
+}
+
+.slide-description {
+font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+color: rgba(255, 255, 255, 0.9);
+max-width: 500px;
+line-height: 1.4;
+}
+
+.slide-placeholder {
+width: 100%;
+height: 100%;
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: center;
+background: linear-gradient(135deg, rgba(255, 0, 110, 0.2), rgba(131, 56, 236, 0.2));
+color: white;
+text-align: center;
+padding: 25px;
+z-index: 2;
+}
+
+.placeholder-icon {
+width: clamp(70px, 8vw, 100px);
+height: clamp(70px, 8vw, 100px);
+background: linear-gradient(135deg, #ff006e, #8338ec);
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: clamp(2rem, 3vw, 3rem);
+margin-bottom: 20px;
+animation: iconPulse 4s ease-in-out infinite;
+box-shadow: 0 15px 40px rgba(255, 0, 110, 0.4);
+}
+
+@keyframes iconPulse {
+0%, 100% { transform: scale(1) rotate(0deg); }
+50% { transform: scale(1.1) rotate(5deg); }
+}
+
+.placeholder-title {
+font-size: clamp(1.5rem, 2.5vw, 2rem);
+font-weight: 700;
+margin-bottom: 15px;
+background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+
+.placeholder-description {
+font-size: clamp(0.9rem, 1.2vw, 1rem);
+color: rgba(255, 255, 255, 0.8);
+line-height: 1.5;
+max-width: 400px;
+}
+
+/* Slider Controls */
+.slider-controls {
+position: absolute;
+bottom: 20px;
+left: 50%;
+transform: translateX(-50%);
+display: flex;
+gap: 10px;
+z-index: 10;
+flex-wrap: wrap;
+justify-content: center;
+}
+
+.slider-dot {
+width: 10px;
+height: 10px;
+border-radius: 50%;
+background: rgba(255, 255, 255, 0.3);
+cursor: pointer;
+transition: all 0.4s ease;
+border: 2px solid transparent;
+position: relative;
+}
+
+.slider-dot.active {
+background: linear-gradient(135deg, #ff006e, #8338ec);
+transform: scale(1.2);
+box-shadow: 0 0 15px rgba(255, 0, 110, 0.6);
+}
+
+.slider-arrows {
+position: absolute;
+top: 50%;
+transform: translateY(-50%);
+background: rgba(255, 255, 255, 0.1);
+backdrop-filter: blur(15px);
+border: 1px solid rgba(255, 255, 255, 0.2);
+border-radius: 50%;
+width: clamp(45px, 5vw, 60px);
+height: clamp(45px, 5vw, 60px);
+display: flex;
+align-items: center;
+justify-content: center;
+cursor: pointer;
+transition: all 0.4s ease;
+font-size: clamp(1rem, 1.5vw, 1.5rem);
+color: white;
+z-index: 10;
+}
+
+.slider-arrows:hover {
+background: rgba(255, 0, 110, 0.3);
+border-color: rgba(255, 0, 110, 0.5);
+transform: translateY(-50%) scale(1.1);
+box-shadow: 0 8px 25px rgba(255, 0, 110, 0.3);
+}
+
+.arrow-prev {
+left: 15px;
+}
+
+.arrow-next {
+right: 15px;
+}
+
+/* TESTIMONIALS - COMPLIANT SOCIAL PROOF */
+.testimonials {
+padding: 80px 30px;
+background: linear-gradient(135deg, rgba(0, 255, 0, 0.05), rgba(0, 200, 0, 0.05));
+border-top: 2px solid rgba(0, 255, 0, 0.2);
+border-bottom: 2px solid rgba(0, 255, 0, 0.2);
+}
+
+.testimonials-content {
+max-width: 1400px;
+margin: 0 auto;
+text-align: center;
+}
+
+.testimonials-title {
+font-size: clamp(2.5rem, 5vw, 4rem);
+font-weight: 900;
+background: linear-gradient(135deg, #00ff00, #00dd00);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+margin-bottom: 20px;
+}
+
+.testimonials-subtitle {
+font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+color: white;
+margin-bottom: 60px;
+font-weight: 700;
+}
+
+.testimonials-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+gap: 40px;
+margin-top: 60px;
+}
+
+.testimonial-card {
+background: rgba(255, 255, 255, 0.05);
+backdrop-filter: blur(30px);
+border-radius: 30px;
+padding: 40px;
+border: 2px solid rgba(255, 255, 255, 0.1);
+transition: all 0.5s ease;
+color: white;
+position: relative;
+}
+
+.testimonial-card:hover {
+transform: translateY(-15px) scale(1.02);
+border-color: rgba(0, 255, 0, 0.4);
+box-shadow: 0 30px 80px rgba(0, 255, 0, 0.2);
+}
+
+.experience-badge {
+background: linear-gradient(135deg, #00ff00, #00dd00);
+color: #000;
+padding: 10px 20px;
+border-radius: 15px;
+margin-bottom: 25px;
+font-weight: 900;
+font-size: 0.9rem;
+text-transform: uppercase;
+letter-spacing: 1px;
+display: inline-block;
+}
+
+.testimonial-text {
+font-size: clamp(1.1rem, 1.5vw, 1.3rem);
+line-height: 1.6;
+margin-bottom: 30px;
+color: rgba(255, 255, 255, 0.95);
+font-weight: 600;
+font-style: italic;
+}
+
+.testimonial-author {
+display: flex;
+align-items: center;
+gap: 20px;
+}
+
+.testimonial-avatar {
+width: 60px;
+height: 60px;
+background: linear-gradient(135deg, #00ff00, #00dd00);
+border-radius: 50%;
+display: flex;
+align-items: center;
+justify-content: center;
+font-size: 1.5rem;
+font-weight: 900;
+color: #000;
+border: 3px solid rgba(255, 255, 255, 0.2);
+}
+
+.author-info h4 {
+font-size: 1.2rem;
+font-weight: 900;
+margin-bottom: 5px;
+color: #00ff00;
+}
+
+.author-info p {
+color: rgba(255, 255, 255, 0.8);
+font-size: 1rem;
+font-weight: 600;
+}
+
+/* FINAL CTA SECTION */
+.final-cta {
+padding: 80px 30px;
+background: linear-gradient(135deg, #1a0b2e 0%, #16213e 50%, #0f3460 100%);
+text-align: center;
+position: relative;
+overflow: hidden;
+}
+
+.final-cta::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background: 
+    radial-gradient(circle at 30% 70%, rgba(255, 0, 110, 0.2) 0%, transparent 50%),
+    radial-gradient(circle at 70% 30%, rgba(131, 56, 236, 0.2) 0%, transparent 50%);
+pointer-events: none;
+}
+
+.final-cta-content {
+max-width: 900px;
+margin: 0 auto;
+position: relative;
+z-index: 2;
+color: white;
+}
+
+.final-cta h2 {
+font-size: clamp(2.5rem, 5vw, 4rem);
+font-weight: 900;
+margin-bottom: 30px;
+background: linear-gradient(135deg, #ff006e, #8338ec, #3a86ff);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+background-clip: text;
+}
+
+.final-cta p {
+font-size: clamp(1.3rem, 2.5vw, 2rem);
+margin-bottom: 40px;
+color: white;
+font-weight: 700;
+line-height: 1.4;
+}
+
+.final-cta-buttons {
+display: flex;
+gap: 30px;
+justify-content: center;
+flex-wrap: wrap;
+}
+
+.btn-final {
+padding: 25px 50px;
+font-size: 20px;
+border-radius: 50px;
+font-weight: 900;
+text-transform: uppercase;
+letter-spacing: 2px;
+position: relative;
+overflow: hidden;
+animation: finalBtnPulse 3s ease-in-out infinite;
+}
+
+@keyframes finalBtnPulse {
+0%, 100% { 
+    transform: scale(1);
+    box-shadow: 0 15px 50px rgba(255, 0, 110, 0.5);
+}
+50% { 
+    transform: scale(1.05);
+    box-shadow: 0 25px 70px rgba(255, 0, 110, 0.8);
+}
+}
+
+.btn-final.btn-primary {
+background: linear-gradient(135deg, #ff006e, #8338ec);
+color: white;
+}
+
+.btn-final.btn-primary:hover {
+transform: scale(1.1);
+box-shadow: 0 30px 90px rgba(255, 0, 110, 1);
+}
+
+/* Footer - MINIMAL */
+.footer {
+background: #000;
+padding: 30px 20px 15px;
+color: rgba(255, 255, 255, 0.6);
+text-align: center;
+border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-content {
+max-width: 800px;
+margin: 0 auto;
+display: flex;
+justify-content: center;
+gap: 30px;
+flex-wrap: wrap;
+margin-bottom: 20px;
+}
+
+.footer-link {
+color: rgba(255, 255, 255, 0.6);
+text-decoration: none;
+font-size: 0.9rem;
+transition: color 0.3s ease;
+}
+
+.footer-link:hover {
+color: #ff006e;
+}
+
+.footer-bottom {
+font-size: 0.8rem;
+opacity: 0.5;
+}
+
+.disclaimer {
+max-width: 800px;
+margin: 20px auto 0;
+font-size: 0.75rem;
+color: rgba(255, 255, 255, 0.4);
+line-height: 1.4;
+text-align: left;
+}
+
+/* Fade in animations */
+.fade-in {
+opacity: 0;
+transform: translateY(30px);
+transition: all 1s ease;
+}
+
+.fade-in.visible {
+opacity: 1;
+transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+.announcement-bar {
+    padding: 10px 15px;
+    font-size: 0.8rem;
+}
+
+.announcement-content {
+    flex-direction: column;
+    gap: 10px;
+}
+
+.announcement-cta {
+    padding: 5px 12px;
+    font-size: 0.75rem;
+}
+
+.navbar {
+    top: 40px;
+    padding: 10px 15px;
+}
+
+.hamburger {
+    display: flex;
+}
+
+.nav-buttons {
+    display: none;
+}
+
+.logo {
+    font-size: 1.3rem;
+}
+
+.logo-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 0.9rem;
+}
+
+.hero-content {
+    padding: 80px 20px 30px;
+}
+
+.trust-badge {
+    padding: 10px 20px;
+    font-size: 0.8rem;
+}
+
+.value-prop {
+    padding: 20px;
+}
+
+.value-items {
+    grid-template-columns: 1fr;
+    gap: 10px;
+}
+
+.cta-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.btn-hero {
+    width: 100%;
+    max-width: 300px;
+    padding: 18px 35px;
+    font-size: 16px;
+}
+
+.benefits-indicators {
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+}
+
+.benefit-item {
+    font-size: 0.9rem;
+    padding: 10px 20px;
+}
+
+.stats-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+}
+
+.stat-item {
+    padding: 25px;
+}
+
+.pricing-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+
+.pricing-card {
+    padding: 30px;
+}
+
+.pricing-card.featured {
+    margin-top: 20px;
+    transform: none;
+}
+
+.pricing-card.featured .plan-name {
+    margin-top: 25px;
+}
+
+.pricing-card.featured:hover {
+    transform: scale(1.02) translateY(-10px);
+}
+
+.testimonials-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+}
+
+.testimonial-card {
+    padding: 30px;
+}
+
+.video-showcase {
+    padding: 40px 15px;
+}
+
+.video-slider-container {
+    border-radius: 20px;
+}
+
+.slide-overlay {
+    padding: 20px 15px;
+}
+
+.arrow-prev {
+    left: 10px;
+}
+
+.arrow-next {
+    right: 10px;
+}
+
+.final-cta {
+    padding: 60px 20px;
+}
+
+.final-cta-buttons {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.btn-final {
+    width: 100%;
+    max-width: 300px;
+    padding: 20px 40px;
+    font-size: 18px;
+}
+
+.slider-controls {
+    bottom: 15px;
+    gap: 8px;
+}
+
+.slider-dot {
+    width: 8px;
+    height: 8px;
+}
+
+.footer-content {
+    flex-direction: column;
+    gap: 15px;
+}
+}
+
+@media (max-width: 480px) {
+.announcement-bar {
+    padding: 8px 10px;
+    font-size: 0.75rem;
+}
+
+.hero-content {
+    padding: 70px 15px 25px;
+}
+
+.trust-badge {
+    padding: 8px 15px;
+    font-size: 0.75rem;
+}
+
+.benefits-indicators {
+    margin-bottom: 2.5rem;
+}
+
+.benefit-item {
+    width: 100%;
+    max-width: 250px;
+    justify-content: center;
+}
+
+.stat-item {
+    padding: 20px;
+}
+
+.slider-arrows {
+    display: none;
+}
+
+.video-slider-container {
+    border-radius: 15px;
+}
+
+.pricing-card {
+    padding: 25px;
+}
+
+.pricing-card.featured .plan-name {
+    margin-top: 30px;
+}
+
+.plan-features {
+    padding: 0 5px;
+}
+
+.plan-features li {
+    font-size: 0.95rem;
+    gap: 10px;
+}
+
+.testimonial-card {
+    padding: 25px;
+}
+
+.final-cta {
+    padding: 40px 15px;
+}
+
+.cta-buttons .btn-hero {
+    max-width: 100%;
+}
+
+.slider-controls {
+    bottom: 12px;
+    gap: 6px;
+}
+
+.slider-dot {
+    width: 7px;
+    height: 7px;
+}
+}
+
+@media (max-width: 360px) {
+.logo {
+    font-size: 1.1rem;
+}
+
+.logo-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 0.8rem;
+}
+
+.placeholder-description,
+.slide-description {
+    font-size: 0.85rem;
+}
+}
+
+@keyframes fadeInUp {
+from {
+    opacity: 0;
+    transform: translateY(30px);
+}
+to {
+    opacity: 1;
+    transform: translateY(0);
+}
+}
+</style>
+
+</head>
+<body>
+<!-- ANNOUNCEMENT BAR - COMPLIANT -->
+<div class="announcement-bar">
+<div class="announcement-content">
+<div class="announcement-text">
+    <span>🔥</span>
+    <span>Early Access Special: 40% OFF - Launch Week Only</span>
+</div>
+<a href="#pricing" class="announcement-cta">Claim Discount</a>
+</div>
+</div>
+
+<!-- Enhanced Navigation -->
+<nav class="navbar" id="navbar">
+<div class="nav-content">
+<a href="/" class="logo" style="text-decoration: none; cursor: pointer;">
+    <div class="logo-icon">🎬</div>
+    MagicCutAI
+</a>
+
+<!-- Desktop Navigation -->
+<div class="nav-buttons" id="navButtons">
+    <a href="login.html" class="btn btn-secondary btn-small" id="loginBtn">Login</a>
+    <a href="register.html" class="btn btn-primary btn-small" id="registerBtn">Get Started</a>
+    <a href="/app" class="btn btn-secondary btn-small" id="dashboardBtn" style="display: none;">Dashboard</a>
+    <button class="btn btn-danger btn-small" id="logoutBtn" onclick="logout()" style="display: none;">Logout</button>
+</div>
+
+<!-- Hamburger Menu -->
+<div class="hamburger" onclick="toggleMobileMenu()">
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+</div>
+
+<!-- Mobile Navigation -->
+<div class="mobile-nav" id="mobileNav">
+<a href="login.html" class="btn btn-secondary" id="mobileLoginBtn">🔐 Login</a>
+<a href="register.html" class="btn btn-primary" id="mobileRegisterBtn">🚀 Get Started</a>
+<a href="/app" class="btn btn-secondary" id="mobileDashboardBtn" style="display: none;">📊 Dashboard</a>
+<button class="btn btn-danger" id="mobileLogoutBtn" onclick="logout()" style="display: none;">🚪 Logout</button>
+</div>
+</nav>
+
+<!-- HERO SECTION - AD COMPLIANT -->
+<section class="hero">
+<div class="hero-bg"></div>
+<div class="hero-particles" id="heroParticles"></div>
+<div class="hero-content">
+<div class="trust-badge">✅ Trusted by 20,000+ Creators</div>
+
+<h1>Professional AI Video & Image Creation</h1>
+<p>Create stunning videos, images, and logos with advanced AI technology. Transform your content workflow in minutes.</p>
+
+<div class="value-prop">
+    <div class="value-title">🎯 Complete Creative Suite:</div>
+    <div class="value-items">
+        <div class="value-item">
+            <span>🎬</span>
+            <span>AI Video Generation with Character Consistency</span>
+        </div>
+        <div class="value-item">
+            <span>🎨</span>
+            <span>High-Resolution AI Image Creation (4K)</span>
+        </div>
+        <div class="value-item">
+            <span>⚡</span>
+            <span>Professional Logo Design in Minutes</span>
+        </div>
+        <div class="value-item">
+            <span>🔥</span>
+            <span>Advanced Character Analysis Technology</span>
+        </div>
+        <div class="value-item">
+            <span>💎</span>
+            <span>Commercial License Included</span>
+        </div>
+        <div class="value-item">
+            <span>🚀</span>
+            <span>12 Languages Supported</span>
+        </div>
+    </div>
+    <div class="trusted-by">Streamline Your Creative Process</div>
+</div>
+
+<div class="cta-buttons">
+    <a href="#pricing" class="btn btn-primary btn-hero">🚀 Start Creating Now</a>
+    <a href="#showcase" class="btn btn-secondary btn-hero">👀 See Examples</a>
+</div>
+
+<div class="benefits-indicators">
+    <div class="benefit-item">
+        <span>⚡</span>
+        <span>10x Faster Creation</span>
+    </div>
+    <div class="benefit-item">
+        <span>💰</span>
+        <span>95% Cost Reduction</span>
+    </div>
+    <div class="benefit-item">
+        <span>🎯</span>
+        <span>Professional Quality</span>
+    </div>
+</div>
+</div>
+</section>
+
+<!-- SOCIAL PROOF SECTION -->
+<section class="social-proof fade-in">
+<div class="social-proof-content">
+<h2 class="social-title">Trusted by Creators Worldwide</h2>
+
+<div class="stats-grid">
+    <div class="stat-item">
+        <div class="stat-number">20K+</div>
+        <div class="stat-label">Active Users</div>
+    </div>
+    
+    <div class="stat-item">
+        <div class="stat-number">500K+</div>
+        <div class="stat-label">Videos Created</div>
+    </div>
+    
+    <div class="stat-item">
+        <div class="stat-number">4.9/5</div>
+        <div class="stat-label">User Rating</div>
+    </div>
+    
+    <div class="stat-item">
+        <div class="stat-number">99.2%</div>
+        <div class="stat-label">Uptime</div>
+    </div>
+</div>
+</div>
+</section>
+
+<!-- PRICING SECTION - COMPLIANT -->
+<section class="pricing-section fade-in" id="pricing">
+<div class="pricing-content">
+<h2 class="pricing-title">Early Access Pricing</h2>
+<p class="pricing-subtitle">Limited-time launch pricing - Lock in these rates today</p>
+
+<div class="discount-banner">
+    🔥 40% OFF Launch Special - Only This Week
+</div>
+
+<div class="pricing-grid">
+    <!-- Starter Plan -->
+    <div class="pricing-card">
+        <h3 class="plan-name">Starter</h3>
+        <div class="price-container">
+            <div class="original-price">€75</div>
+            <div class="discount-badge">40% OFF</div>
+        </div>
+        <div class="plan-price">€45</div>
+        <p class="plan-billing">per month</p>
+        <ul class="plan-features">
+            <li>5 AI video generations</li>
+            <li>Unlimited AI images</li>
+            <li>HD quality (1080p)</li>
+            <li>Commercial license</li>
+            <li>Email support</li>
+            <li>12 languages</li>
+        </ul>
+        <div class="pricing-cta">
+            <a href="register.html" class="btn btn-secondary btn-hero">Start Now</a>
+        </div>
+    </div>
+
+    <!-- Pro Plan (Most Popular) -->
+    <div class="pricing-card featured">
+        <h3 class="plan-name">Pro</h3>
+        <div class="price-container">
+            <div class="original-price">€225</div>
+            <div class="discount-badge">40% OFF</div>
+        </div>
+        <div class="plan-price">€135</div>
+        <p class="plan-billing">per month</p>
+        <ul class="plan-features">
+            <li>15 AI video generations</li>
+            <li>Unlimited AI images & logos</li>
+            <li>4K quality + character consistency</li>
+            <li>Priority processing</li>
+            <li>VIP support</li>
+            <li>API access</li>
+            <li>Advanced features</li>
+        </ul>
+        <div class="pricing-cta">
+            <a href="register.html" class="btn btn-primary btn-hero">🔥 Get Pro</a>
+        </div>
+    </div>
+
+    <!-- Business Plan -->
+    <div class="pricing-card">
+        <h3 class="plan-name">Business</h3>
+        <div class="price-container">
+            <div class="original-price">€450</div>
+            <div class="discount-badge">40% OFF</div>
+        </div>
+        <div class="plan-price">€270</div>
+        <p class="plan-billing">per month</p>
+        <ul class="plan-features">
+            <li>30 AI video generations</li>
+            <li>Everything unlimited</li>
+            <li>Custom AI characters</li>
+            <li>White-label options</li>
+            <li>Dedicated account manager</li>
+            <li>Team collaboration</li>
+            <li>Enterprise support</li>
+        </ul>
+        <div class="pricing-cta">
+            <a href="register.html" class="btn btn-secondary btn-hero">Scale Up</a>
+        </div>
+    </div>
+</div>
+</div>
+</section>
+
+<!-- INSTANT ACCESS SECTION -->
+<section class="guarantee-section">
+<div class="guarantee-content">
+<h2 class="guarantee-title">🚀 Instant Access - Start Creating Now</h2>
+<div class="guarantee-badge">
+    <h3 style="font-size: 2rem; margin-bottom: 10px;">IMMEDIATE ACTIVATION</h3>
+    <p class="guarantee-text">
+        Get instant access to all features the moment you sign up. No waiting, no setup fees, 
+        no complicated onboarding. Start creating professional content in under 60 seconds.
+    </p>
+</div>
+<div style="display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; margin-top: 30px;">
+    <div style="text-align: center;">
+        <div style="font-size: 2rem; margin-bottom: 10px;">⚡</div>
+        <div style="font-weight: 700; font-size: 1.1rem;">Instant Setup</div>
+    </div>
+    <div style="text-align: center;">
+        <div style="font-size: 2rem; margin-bottom: 10px;">🔄</div>
+        <div style="font-weight: 700; font-size: 1.1rem;">Cancel Anytime</div>
+    </div>
+    <div style="text-align: center;">
+        <div style="font-size: 2rem; margin-bottom: 10px;">💳</div>
+        <div style="font-weight: 700; font-size: 1.1rem;">No Setup Fees</div>
+    </div>
+</div>
+</div>
+</section>
+
+<!-- Video Showcase Section -->
+<section class="video-showcase" id="showcase">
+<div class="showcase-header fade-in">
+<h2 class="showcase-title">🎬 See Our AI in Action</h2>
+<p class="showcase-subtitle">Real examples created with MagicCutAI</p>
+</div>
+
+<div class="video-slider-container fade-in">
+<div class="video-slider" id="videoSlider">
+    <!-- Video Slide 1 -->
+    <div class="video-slide">
+        <video class="slide-video" muted loop playsinline>
+            <source src="videos/Billion-dollar-ad-TWO.mp4" type="video/mp4">
+        </video>
+        
+        <div class="slide-placeholder">
+            <div class="placeholder-icon">🎭</div>
+            <h3 class="placeholder-title">Character Consistency</h3>
+            <p class="placeholder-description">Advanced AI maintains character appearance across scenes</p>
+        </div>
+        
+        <div class="slide-overlay">
+            <h3 class="slide-title">Character Consistency</h3>
+            <p class="slide-description">Advanced AI maintains character appearance across scenes</p>
+        </div>
+    </div>
+    
+    <!-- Video Slide 2 -->
+    <div class="video-slide">
+        <video class="slide-video" muted loop playsinline>
+            <source src="videos/cinematic-storytelling.mp4" type="video/mp4">
+        </video>
+        
+        <div class="slide-placeholder">
+            <div class="placeholder-icon">🎬</div>
+            <h3 class="placeholder-title">Cinematic Quality</h3>
+            <p class="placeholder-description">Professional cinematography and storytelling</p>
+        </div>
+        
+        <div class="slide-overlay">
+            <h3 class="slide-title">Cinematic Quality</h3>
+            <p class="slide-description">Professional cinematography and storytelling</p>
+        </div>
+    </div>
+    
+    <!-- Video Slide 3 -->
+    <div class="video-slide">
+        <video class="slide-video" muted loop playsinline>
+            <source src="videos/download-2025-07-14T195720.615.mp4" type="video/mp4">
+        </video>
+        
+        <div class="slide-placeholder">
+            <div class="placeholder-icon">🌟</div>
+            <h3 class="placeholder-title">Creative Versatility</h3>
+            <p class="placeholder-description">Transform any concept into stunning visuals</p>
+        </div>
+        
+        <div class="slide-overlay">
+            <h3 class="slide-title">Creative Versatility</h3>
+            <p class="slide-description">Transform any concept into stunning visuals</p>
+        </div>
+    </div>
+    
+   <!-- Video Slide 4 -->
+   <div class="video-slide">
+        <video class="slide-video" muted loop playsinline>
+            <source src="videos/download-2025-07-14T200106.082.mp4" type="video/mp4">
+        </video>
+        
+        <div class="slide-placeholder">
+            <div class="placeholder-icon">⚡</div>
+            <h3 class="placeholder-title">Rapid Generation</h3>
+            <p class="placeholder-description">Create professional content in minutes</p>
+        </div>
+        
+        <div class="slide-overlay">
+            <h3 class="slide-title">Rapid Generation</h3>
+            <p class="slide-description">Create professional content in minutes</p>
+        </div>
+    </div>
+
+    <!-- Video Slide 5 -->
+    <div class="video-slide">
+        <video class="slide-video" muted loop playsinline>
+            <source src="videos/download(43).mp4" type="video/mp4">
+        </video>
+        
+        <div class="slide-placeholder">
+            <div class="placeholder-icon">💎</div>
+            <h3 class="placeholder-title">Premium Output</h3>
+            <p class="placeholder-description">High-quality results every time</p>
+        </div>
+        
+        <div class="slide-overlay">
+            <h3 class="slide-title">Premium Output</h3>
+            <p class="slide-description">High-quality results every time</p>
+        </div>
+    </div>
+
+    <!-- Video Slide 6 -->
+    <div class="video-slide">
+        <video class="slide-video" muted loop playsinline>
+            <source src="videos/FirstBillionDollarAd.mp4" type="video/mp4">
+        </video>
+        
+        <div class="slide-placeholder">
+            <div class="placeholder-icon">🎯</div>
+            <h3 class="placeholder-title">Marketing Ready</h3>
+            <p class="placeholder-description">Content optimized for engagement</p>
+        </div>
+        
+        <div class="slide-overlay">
+            <h3 class="slide-title">Marketing Ready</h3>
+            <p class="slide-description">Content optimized for engagement</p>
+        </div>
+    </div>
+
+    <!-- Video Slide 7 -->
+    <div class="video-slide">
+        <video class="slide-video" muted loop playsinline>
+            <source src="videos/Gotoad3.mp4" type="video/mp4">
+        </video>
+        
+        <div class="slide-placeholder">
+            <div class="placeholder-icon">📈</div>
+            <h3 class="placeholder-title">Performance Focused</h3>
+            <p class="placeholder-description">Built for maximum impact</p>
+        </div>
+        
+        <div class="slide-overlay">
+            <h3 class="slide-title">Performance Focused</h3>
+            <p class="slide-description">Built for maximum impact</p>
+        </div>
+    </div>
+
+    <!-- Video Slide 8 -->
+    <div class="video-slide">
+        <video class="slide-video" muted loop playsinline>
+            <source src="videos/Billion-dollar-ad-TWO.mp4" type="video/mp4">
+        </video>
+        
+        <div class="slide-placeholder">
+            <div class="placeholder-icon">🔥</div>
+            <h3 class="placeholder-title">Engagement Optimized</h3>
+            <p class="placeholder-description">Designed to capture and hold attention</p>
+        </div>
+        
+        <div class="slide-overlay">
+            <h3 class="slide-title">Engagement Optimized</h3>
+            <p class="slide-description">Designed to capture and hold attention</p>
+        </div>
+    </div>
+</div>
+
+<!-- Slider Controls -->
+<div class="slider-arrows arrow-prev" onclick="previousSlide()">‹</div>
+<div class="slider-arrows arrow-next" onclick="nextSlide()">›</div>
+
+<div class="slider-controls">
+    <div class="slider-dot active" onclick="goToSlide(0)"></div>
+    <div class="slider-dot" onclick="goToSlide(1)"></div>
+    <div class="slider-dot" onclick="goToSlide(2)"></div>
+    <div class="slider-dot" onclick="goToSlide(3)"></div>
+    <div class="slider-dot" onclick="goToSlide(4)"></div>
+    <div class="slider-dot" onclick="goToSlide(5)"></div>
+    <div class="slider-dot" onclick="goToSlide(6)"></div>
+    <div class="slider-dot" onclick="goToSlide(7)"></div>
+</div>
+</div>
+</section>
+
+<!-- TESTIMONIALS - COMPLIANT SOCIAL PROOF -->
+<section class="testimonials fade-in">
+<div class="testimonials-content">
+<h2 class="testimonials-title">💬 What Our Users Say</h2>
+<p class="testimonials-subtitle">Real feedback from content creators</p>
+
+<div class="testimonials-grid">
+    <div class="testimonial-card">
+        <div class="experience-badge">Time Saver</div>
+        <p class="testimonial-text">"This platform has completely transformed my content creation workflow. What used to take me hours now takes minutes, and the quality is consistently impressive."</p>
+        <div class="testimonial-author">
+            <div class="testimonial-avatar">SJ</div>
+            <div class="author-info">
+                <h4>Sarah Johnson</h4>
+                <p>Content Creator</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="testimonial-card">
+        <div class="experience-badge">Game Changer</div>
+        <p class="testimonial-text">"The AI video generation is incredible. The character consistency feature alone has saved me countless hours of editing. Highly recommend for any serious creator."</p>
+        <div class="testimonial-author">
+            <div class="testimonial-avatar">MC</div>
+            <div class="author-info">
+                <h4>Mike Chen</h4>
+                <p>Video Producer</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="testimonial-card">
+        <div class="experience-badge">Professional Quality</div>
+        <p class="testimonial-text">"As an agency owner, I need tools that deliver professional results consistently. MagicCutAI has become an essential part of our creative process."</p>
+        <div class="testimonial-author">
+            <div class="testimonial-avatar">ER</div>
+            <div class="author-info">
+                <h4>Emma Rodriguez</h4>
+                <p>Agency Owner</p>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</section>
+
+<!-- FINAL CTA SECTION -->
+<section class="final-cta">
+<div class="final-cta-content">
+<h2>Lock In Your Early Access Pricing</h2>
+<p>
+    Join thousands of creators who are already using AI to produce professional content. 
+    This special launch pricing won't last forever - secure your access today.
+</p>
+
+<div class="final-cta-buttons">
+    <a href="register.html" class="btn btn-final btn-primary">🔥 Claim 40% Discount</a>
+</div>
+
+<p style="margin-top: 30px; font-size: 1.1rem; opacity: 0.9;">
+    ⚡ Instant access • Cancel anytime • No setup fees
+</p>
+</div>
+</section>
+
+<!-- Footer - MINIMAL -->
+<footer class="footer">
+<div class="footer-content">
+<a href="/privacy" class="footer-link">Privacy Policy</a>
+<a href="/terms" class="footer-link">Terms of Service</a>
+<a href="/contact" class="footer-link">Contact Support</a>
+<a href="/refund" class="footer-link">Refund Policy</a>
+</div>
+
+<div class="footer-bottom">
+<p>&copy; 2025 MagicCutAI. All rights reserved.</p>
+</div>
+
+<div class="disclaimer">
+<strong>Disclaimer:</strong> Individual results may vary. The examples shown are for demonstration purposes and do not guarantee specific outcomes. MagicCutAI is a software tool that requires user input and creativity to generate content. Success depends on various factors including user skill, market conditions, and content quality. We make no claims about specific earnings or business results from using our platform.
+</div>
+</footer>
+
+<script>
+// AD COMPLIANT JAVASCRIPT
+
+// Toggle mobile menu
+function toggleMobileMenu() {
+const hamburger = document.querySelector('.hamburger');
+const mobileNav = document.getElementById('mobileNav');
+
+hamburger.classList.toggle('active');
+mobileNav.classList.toggle('active');
+
+document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+}
+
+function closeMobileMenu() {
+const hamburger = document.querySelector('.hamburger');
+const mobileNav = document.getElementById('mobileNav');
+
+hamburger.classList.remove('active');
+mobileNav.classList.remove('active');
+document.body.style.overflow = '';
+}
+
+// Enhanced Particle System
+function createParticles() {
+const particlesContainer = document.getElementById('heroParticles');
+const particleCount = window.innerWidth < 768 ? 30 : 50;
+
+for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.animationDelay = Math.random() * 8 + 's';
+    particle.style.animationDuration = (Math.random() * 6 + 6) + 's';
+    particlesContainer.appendChild(particle);
+}
+}
+
+// VIDEO SLIDER SYSTEM
+let currentSlide = 0;
+const totalSlides = 8;
+const slider = document.getElementById('videoSlider');
+const dots = document.querySelectorAll('.slider-dot');
+let videosInitialized = false;
+
+function initializeVideos() {
+if (videosInitialized) return;
+
+const allVideos = document.querySelectorAll('.slide-video');
+
+allVideos.forEach((video, index) => {
+    const slide = video.closest('.video-slide');
+    const placeholder = slide.querySelector('.slide-placeholder');
+    const overlay = slide.querySelector('.slide-overlay');
+    
+    video.muted = true;
+    video.playsInline = true;
+    video.loop = true;
+    video.preload = 'metadata';
+    
+    video.removeEventListener('click', handleVideoClick);
+    showVideo(placeholder, video, overlay);
+    video.addEventListener('click', handleVideoClick);
+});
+
+videosInitialized = true;
+setTimeout(() => playCurrentVideo(), 500);
+}
+
+function handleVideoClick(event) {
+event.preventDefault();
+event.stopPropagation();
+
+const video = event.target;
+const slideIndex = Array.from(document.querySelectorAll('.slide-video')).indexOf(video);
+
+if (video.paused) {
+    playVideo(video, slideIndex + 1);
+} else {
+    pauseVideo(video, slideIndex + 1);
+}
+}
+
+function playVideo(video, slideNumber) {
+if (!video) return;
+
+video.muted = true;
+video.currentTime = 0;
+
+const playPromise = video.play();
+
+if (playPromise !== undefined) {
+    playPromise
+        .then(() => {
+            removePlayButton(video);
+        })
+        .catch(error => {
+            addPlayButton(video);
+        });
+} else {
+    addPlayButton(video);
+}
+}
+
+function pauseVideo(video, slideNumber) {
+if (!video) return;
+
+try {
+    video.pause();
+    addPlayButton(video);
+} catch (error) {
+    console.error(`Error pausing video ${slideNumber}:`, error);
+}
+}
+
+function playCurrentVideo() {
+const currentVideo = document.querySelectorAll('.slide-video')[currentSlide];
+if (currentVideo) {
+    playVideo(currentVideo, currentSlide + 1);
+}
+}
+
+function pauseAllVideos() {
+const allVideos = document.querySelectorAll('.slide-video');
+allVideos.forEach((video, index) => {
+    if (!video.paused) {
+        try {
+            video.pause();
+            video.currentTime = 0;
+        } catch (error) {
+            console.warn(`Error pausing video ${index + 1}:`, error);
+        }
+    }
+    removePlayButton(video);
+});
+}
+
+function addPlayButton(video) {
+if (!video || !video.parentElement) return;
+
+removePlayButton(video);
+
+const playButton = document.createElement('div');
+playButton.className = 'video-play-button';
+playButton.innerHTML = '▶';
+
+playButton.addEventListener('click', (e) => {
+    e.stopPropagation();
+    e.preventDefault();
+    const slideIndex = Array.from(document.querySelectorAll('.slide-video')).indexOf(video);
+    playVideo(video, slideIndex + 1);
+});
+
+video.parentElement.appendChild(playButton);
+}
+
+function removePlayButton(video) {
+if (!video || !video.parentElement) return;
+
+const existingButton = video.parentElement.querySelector('.video-play-button');
+if (existingButton) {
+    existingButton.remove();
+}
+}
+
+function showVideo(placeholder, video, overlay) {
+if (placeholder) placeholder.style.display = 'none';
+if (video) video.style.display = 'block';
+if (overlay) overlay.style.display = 'block';
+}
+
+function updateSlider() {
+const translateX = -currentSlide * 100;
+slider.style.transform = `translateX(${translateX}%)`;
+
+dots.forEach((dot, index) => {
+    dot.classList.toggle('active', index === currentSlide);
+});
+
+pauseAllVideos();
+setTimeout(() => playCurrentVideo(), 300);
+}
+
+function nextSlide() {
+currentSlide = (currentSlide + 1) % totalSlides;
+updateSlider();
+}
+
+function previousSlide() {
+currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+updateSlider();
+}
+
+function goToSlide(slideIndex) {
+if (slideIndex >= 0 && slideIndex < totalSlides) {
+    currentSlide = slideIndex;
+    updateSlider();
+}
+}
+
+// Auto-play slider
+let autoplayInterval;
+let isAutoplayActive = false;
+
+function startAutoplay() {
+if (isAutoplayActive) return;
+
+autoplayInterval = setInterval(() => {
+    nextSlide();
+}, 8000);
+isAutoplayActive = true;
+}
+
+function stopAutoplay() {
+if (!isAutoplayActive) return;
+
+clearInterval(autoplayInterval);
+isAutoplayActive = false;
+}
+
+const sliderContainer = document.querySelector('.video-slider-container');
+if (sliderContainer) {
+sliderContainer.addEventListener('mouseenter', stopAutoplay);
+sliderContainer.addEventListener('mouseleave', startAutoplay);
+
+let startX = 0;
+let endX = 0;
+
+sliderContainer.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX;
+    stopAutoplay();
+});
+
+sliderContainer.addEventListener('touchend', (e) => {
+    endX = e.changedTouches[0].clientX;
+    const diff = startX - endX;
+    
+    if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+            nextSlide();
+        } else {
+            previousSlide();
+        }
+    }
+    
+    setTimeout(startAutoplay, 3000);
+});
+}
+
+// SCROLL ANIMATIONS
+function handleScrollAnimations() {
+const elements = document.querySelectorAll('.fade-in');
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+});
+
+elements.forEach(el => observer.observe(el));
+}
+
+// NAVBAR SCROLL EFFECT
+function handleNavbarScroll() {
+const navbar = document.getElementById('navbar');
+const scrolled = window.scrollY > 100;
+
+navbar.classList.toggle('scrolled', scrolled);
+}
+
+// SMOOTH SCROLLING
+function initSmoothScrolling() {
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+            });
+        }
+    });
+});
+}
+
+// Close mobile menu when clicking nav links
+document.addEventListener('click', function(e) {
+if (e.target.classList.contains('btn') && window.innerWidth <= 768) {
+    closeMobileMenu();
+}
+});
+
+// Handle window resize
+window.addEventListener('resize', function() {
+if (window.innerWidth > 768) {
+    closeMobileMenu();
+}
+});
+
+// Check authentication status
+function checkAuthStatus() {
+    const token = localStorage.getItem('token');
+    
+    // Desktop elements
+    const loginBtn = document.getElementById('loginBtn');
+    const registerBtn = document.getElementById('registerBtn');
+    const dashboardBtn = document.getElementById('dashboardBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
+    
+    // Mobile elements
+    const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+    const mobileRegisterBtn = document.getElementById('mobileRegisterBtn');
+    const mobileDashboardBtn = document.getElementById('mobileDashboardBtn');
+    const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
+    
+    if (token) {
+        // User is logged in
+        if (loginBtn) loginBtn.style.display = 'none';
+        if (registerBtn) registerBtn.style.display = 'none';
+        if (dashboardBtn) dashboardBtn.style.display = 'inline-block';
+        if (logoutBtn) logoutBtn.style.display = 'inline-block';
+        
+        if (mobileLoginBtn) mobileLoginBtn.style.display = 'none';
+        if (mobileRegisterBtn) mobileRegisterBtn.style.display = 'none';
+        if (mobileDashboardBtn) mobileDashboardBtn.style.display = 'block';
+        if (mobileLogoutBtn) mobileLogoutBtn.style.display = 'block';
+    } else {
+        // User is not logged in
+        if (loginBtn) loginBtn.style.display = 'inline-block';
+        if (registerBtn) registerBtn.style.display = 'inline-block';
+        if (dashboardBtn) dashboardBtn.style.display = 'none';
+        if (logoutBtn) logoutBtn.style.display = 'none';
+        
+        if (mobileLoginBtn) mobileLoginBtn.style.display = 'block';
+        if (mobileRegisterBtn) mobileRegisterBtn.style.display = 'block';
+        if (mobileDashboardBtn) mobileDashboardBtn.style.display = 'none';
+        if (mobileLogoutBtn) mobileLogoutBtn.style.display = 'none';
+    }
+}
+
+// Logout function
+function logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    checkAuthStatus();
+    window.location.href = '/';
+}
+
+// INITIALIZE EVERYTHING
+document.addEventListener('DOMContentLoaded', function() {
+console.log('🚀 MagicCutAI - AD COMPLIANT VERSION - Initializing...');
+
+checkAuthStatus();
+createParticles();
+handleScrollAnimations();
+initSmoothScrolling();
+initializeVideos();
+updateSlider();
+
+// Start autoplay after 3 seconds
+setTimeout(startAutoplay, 3000);
+
+console.log('✅ AD COMPLIANT VERSION READY!');
+});
+
+// Event listeners
+window.addEventListener('scroll', handleNavbarScroll);
+
+// Make functions globally available
+window.toggleMobileMenu = toggleMobileMenu;
+window.nextSlide = nextSlide;
+window.previousSlide = previousSlide;
+window.goToSlide = goToSlide;
+
+// CONVERSION TRACKING - COMPLIANT
+function trackConversion(action) {
+// Google Analytics
+if (typeof gtag !== 'undefined') {
+    gtag('event', 'conversion', {
+        'event_category': 'engagement',
+        'event_label': action
+    });
+}
+
+// Facebook Pixel
+if (typeof fbq !== 'undefined') {
+    if (action === 'signup') {
+        fbq('track', 'Lead');
+    } else {
+        fbq('track', 'ViewContent');
+    }
+}
+
+// TikTok Pixel
+if (typeof ttq !== 'undefined') {
+    if (action === 'signup') {
+        ttq.track('SubmitForm');
+    } else {
+        ttq.track('ClickButton');
+    }
+}
+}
+
+// Add conversion tracking to CTA buttons
+document.addEventListener('click', function(e) {
+if (e.target.classList.contains('btn-primary') || 
+    e.target.classList.contains('btn-hero') ||
+    e.target.href && e.target.href.includes('register')) {
+    trackConversion('cta_click');
+}
+});
+
+// Error handling for videos
+window.addEventListener('error', function(e) {
+if (e.target && e.target.tagName === 'VIDEO') {
+    const slide = e.target.closest('.video-slide');
+    if (slide) {
+        const placeholder = slide.querySelector('.slide-placeholder');
+        const overlay = slide.querySelector('.slide-overlay');
+        if (placeholder) placeholder.style.display = 'flex';
+        if (e.target) e.target.style.display = 'none';
+        if (overlay) overlay.style.display = 'none';
+    }
+}
+}, true);
+
+// Performance optimization
+let videosPreloaded = false;
+function preloadVideos() {
+if (videosPreloaded) return;
+
+const videos = document.querySelectorAll('.slide-video');
+videos.forEach((video) => {
+    const source = video.querySelector('source');
+    if (source && source.src) {
+        video.preload = 'metadata';
+    }
+});
+
+videosPreloaded = true;
+}
+
+['click', 'touchstart', 'keydown'].forEach(event => {
+document.addEventListener(event, preloadVideos, { once: true });
+});
+</script>
+
+</body>
+</html>

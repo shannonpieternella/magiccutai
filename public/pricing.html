@@ -148,6 +148,8 @@
             align-items: center;
             gap: 8px;
             z-index: 1001;
+            text-decoration: none;
+            cursor: pointer;
         }
 
         .logo-icon {
@@ -1090,15 +1092,16 @@
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-content">
-            <div class="logo">
-                <div class="logo-icon" onclick="window.location.href='index.html'" style="cursor: pointer;">🎬</div>
+            <a href="/index.html" class="logo">
+                <div class="logo-icon">🎬</div>
                 MagicCutAI
-            </div>
+            </a>
 
             <!-- Desktop Navigation -->
             <div class="nav-buttons">
                 <a href="index.html" class="btn btn-secondary">Home</a>
                 <a href="#" class="btn btn-primary" onclick="checkAppAccess()">Dashboard</a>
+                <button class="btn btn-danger" id="desktopLogoutBtn" onclick="logout()" style="display: none;">Logout</button>
             </div>
 
             <!-- Hamburger Menu -->
@@ -1440,6 +1443,10 @@
             // Show logout button, hide auth buttons
             if (mobileLogoutBtn) mobileLogoutBtn.style.display = 'block';
             if (mobileAuthButtons) mobileAuthButtons.style.display = 'none';
+            
+            // Also show desktop logout button
+            const desktopLogoutBtn = document.getElementById('desktopLogoutBtn');
+            if (desktopLogoutBtn) desktopLogoutBtn.style.display = 'inline-block';
         }
 
         // NEW: Update mobile menu for logged out users
@@ -1448,10 +1455,12 @@
             const mobileUserInfo = document.getElementById('mobileUserInfo');
             const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
             const mobileAuthButtons = document.getElementById('mobileAuthButtons');
+            const desktopLogoutBtn = document.getElementById('desktopLogoutBtn');
             
             if (mobileUserInfo) mobileUserInfo.style.display = 'none';
             if (mobileLogoutBtn) mobileLogoutBtn.style.display = 'none';
             if (mobileAuthButtons) mobileAuthButtons.style.display = 'block';
+            if (desktopLogoutBtn) desktopLogoutBtn.style.display = 'none';
         }
 
         // Check app access

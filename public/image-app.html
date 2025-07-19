@@ -150,6 +150,8 @@
             gap: 10px;
             position: relative;
             z-index: 10001;
+            text-decoration: none;
+            cursor: pointer;
         }
 
         .logo-icon {
@@ -1381,13 +1383,15 @@
         <!-- Enhanced Mobile-First Navigation -->
         <nav class="navbar">
             <div class="nav-content">
-                <div class="logo">
+                <a href="/index.html" class="logo">
                     <div class="logo-icon">🎨</div>
                     MagicCut AI
-                </div>
+                </a>
                 
                 <!-- Desktop Navigation -->
                 <div class="nav-links">
+                    <a href="/app" class="nav-link">🎬 Create Videos</a>
+                    <a href="/templates" class="nav-link" id="templatesLink">🎬 Templates</a>
                     <a href="/image-studio" class="nav-link active">Create Images</a>
                     <a href="/image-gallery" class="nav-link">🖼️ Gallery</a>
                     <a href="/image-credits" class="nav-link">💳 Credits</a>
@@ -1421,6 +1425,12 @@
                     </div>
                 </div>
                 <div class="mobile-nav-item">
+                    <a href="/app" class="nav-link" onclick="closeMobileMenu()">🎬 Create Videos</a>
+                </div>
+                <div class="mobile-nav-item">
+                    <a href="/templates" class="nav-link" id="mobileTemplatesLink" onclick="closeMobileMenu()">🎬 Templates</a>
+                </div>
+                <div class="mobile-nav-item">
                     <a href="/image-studio" class="nav-link active" onclick="closeMobileMenu()">🎨 Create Images</a>
                 </div>
                 <div class="mobile-nav-item">
@@ -1428,9 +1438,6 @@
                 </div>
                 <div class="mobile-nav-item">
                     <a href="/image-credits" class="nav-link" onclick="closeMobileMenu()">💳 Credits</a>
-                </div>
-                <div class="mobile-nav-item">
-                    <a href="/app" class="btn btn-secondary" onclick="closeMobileMenu()">🎬 Create Videos</a>
                 </div>
                 <div class="mobile-nav-item">
                     <button class="btn btn-secondary" onclick="logout()">Logout</button>
@@ -1842,6 +1849,21 @@
             const mobileUserInfo = document.getElementById('mobileUserInfo');
             if (mobileUserInfo) {
                 mobileUserInfo.textContent = `${currentUser.firstName} ${currentUser.lastName} - ${currentUser.credits.available} Credits`;
+            }
+            
+            // Check subscription status for templates access
+            const isSubscribed = currentUser.subscription?.status === 'active' && currentUser.subscription?.plan !== 'free';
+            const templatesLink = document.getElementById('templatesLink');
+            const mobileTemplatesLink = document.getElementById('mobileTemplatesLink');
+            
+            if (!isSubscribed) {
+                // Hide templates links for non-subscribed users
+                if (templatesLink) templatesLink.style.display = 'none';
+                if (mobileTemplatesLink) mobileTemplatesLink.style.display = 'none';
+            } else {
+                // Show templates links for subscribed users
+                if (templatesLink) templatesLink.style.display = 'inline-block';
+                if (mobileTemplatesLink) mobileTemplatesLink.style.display = 'block';
             }
             
             document.getElementById('creditsAvailable').textContent = currentUser.credits.available;

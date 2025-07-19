@@ -2745,6 +2745,374 @@ app.get('/api/videos/:filename', customAuth, async (req, res) => {
 });
 
 // ═══════════════════════════════════════════════════════════════════════════════════════
+// 🎬 EDITOR API ROUTES
+// ═══════════════════════════════════════════════════════════════════════════════════════
+
+// Render video with Creatomate template
+app.post('/api/editor/render', customAuth, async (req, res) => {
+  try {
+    const { templateId, modifications } = req.body;
+    
+    if (!templateId || !modifications) {
+      return res.status(400).json({ error: 'Template ID and modifications are required' });
+    }
+
+    console.log('🎬 Starting video render with template:', templateId);
+    
+    // Call Creatomate API
+    const creatomateResponse = await axios.post(
+      'https://api.creatomate.com/v1/renders',
+      {
+        template_id: templateId,
+        modifications: modifications
+      },
+      {
+        headers: {
+          'Authorization': `Bearer ${process.env.CREATOMATE_API_KEY || '4b06566ae5cf4aca838a4c8db4a57d300015ee8f7895f3bfa314797e813f328bfd64520666dbdf9d9a45ee139cd76ec1'}`,
+          'Content-Type': 'application/json'
+        }
+      }
+    );
+
+    console.log('🎬 Creatomate Response:', creatomateResponse.data);
+    
+    // Handle array response from Creatomate
+    let renderData;
+    if (Array.isArray(creatomateResponse.data) && creatomateResponse.data.length > 0) {
+      renderData = creatomateResponse.data[0];
+    } else {
+      renderData = creatomateResponse.data;
+    }
+    
+    // Get render ID
+    const renderId = renderData.id || renderData.render_id || renderData.uuid;
+    
+    if (!renderId) {
+      console.error('❌ No render ID in response:', renderData);
+      throw new Error('No render ID received from Creatomate');
+    }
+    
+    console.log('🎥 Render started with ID:', renderId);
+    
+    // Validate UUID format
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!uuidRegex.test(renderId)) {
+      console.error('❌ Invalid render ID format:', renderId);
+      throw new Error(`Invalid render ID format: ${renderId}. Expected UUID format.`);
+    }
+
+    // Poll for render completion
+    let renderComplete = false;
+    let attempts = 0;
+    const maxAttempts = 60; // 5 minutes max
+
+    while (!renderComplete && attempts < maxAttempts) {
+      await new Promise(resolve => setTimeout(resolve, 5000)); // Wait 5 seconds
+      
+      try {
+        const statusResponse = await axios.get(
+          `https://api.creatomate.com/v1/renders/${renderId}`,
+          {
+            headers: {
+              'Authorization': `Bearer ${process.env.CREATOMATE_API_KEY || '4b06566ae5cf4aca838a4c8db4a57d300015ee8f7895f3bfa314797e813f328bfd64520666dbdf9d9a45ee139cd76ec1'}`
+            }
+          }
+        );
+
+        // Update renderData with the latest status
+        if (Array.isArray(statusResponse.data)) {
+          renderData = statusResponse.data[0];
+        } else {
+          renderData = statusResponse.data;
+        }
+      } catch (pollError) {
+        console.error(`❌ Polling error (attempt ${attempts + 1}/${maxAttempts}):`, pollError.message);
+        if (pollError.response) {
+          console.error('Poll response:', pollError.response.data);
+        }
+        attempts++;
+        continue;
+      }
+      
+      console.log(`🔄 Render status: ${renderData.status} (attempt ${attempts + 1}/${maxAttempts})`);
+      
+      if (renderData.status === 'succeeded' || renderData.status === 'done') {
+        renderComplete = true;
+      } else if (renderData.status === 'failed' || renderData.status === 'error') {
+        throw new Error('Render failed: ' + (renderData.error || 'Unknown error'));
+      }
+      
+      attempts++;
+    }
+
+    if (!renderComplete) {
+      throw new Error('Render timeout - took too long to complete');
+    }
+    
+    // If the video is already available in the initial response, use it
+    if (!renderData.url && renderData.status === 'planned') {
+      // The URL might already be available even if status is 'planned'
+      const initialData = Array.isArray(creatomateResponse.data) ? creatomateResponse.data[0] : creatomateResponse.data;
+      if (initialData.url) {
+        renderData.url = initialData.url;
+        console.log('✅ Using URL from initial response:', renderData.url);
+      }
+    }
+
+    // Use the video URL directly from Creatomate/Backblaze
+    const videoUrl = renderData.url;
+    const publicUrl = videoUrl;
+    const storageUrl = videoUrl;
+    
+    console.log('✅ Video ready at Backblaze URL:', videoUrl);
+    
+    // Wait a bit to ensure video is fully processed
+    await new Promise(resolve => setTimeout(resolve, 2000));
+
+    // Save to user's edits collection
+    const User = mongoose.model('User');
+    const user = await User.findById(req.user.id);
+    
+    if (!user.editedVideos) {
+      user.editedVideos = [];
+    }
+    
+    user.editedVideos.push({
+      templateId: templateId,
+      modifications: modifications,
+      publicUrl: publicUrl,
+      storageUrl: storageUrl,
+      createdAt: new Date(),
+      duration: renderData.duration || 30, // Default to 30 seconds if not provided
+      fileSize: renderData.file_size || 0 // Use Creatomate's file size if available
+    });
+    
+    await user.save();
+
+    res.json({
+      success: true,
+      videoUrl: publicUrl,
+      renderId: renderId,
+      duration: renderData.duration
+    });
+
+  } catch (error) {
+    console.error('❌ Editor render error:', error);
+    
+    // More detailed error logging
+    if (error.response) {
+      console.error('Creatomate API Response Error:', {
+        status: error.response.status,
+        data: error.response.data,
+        headers: error.response.headers
+      });
+      
+      return res.status(error.response.status).json({
+        error: 'Creatomate API Error',
+        details: error.response.data?.message || error.response.data || error.message,
+        status: error.response.status
+      });
+    }
+    
+    res.status(500).json({
+      error: 'Failed to render video',
+      details: error.message
+    });
+  }
+});
+
+// Get user's edited videos
+app.get('/api/editor/edits', customAuth, async (req, res) => {
+  try {
+    const User = mongoose.model('User');
+    const user = await User.findById(req.user.id).select('editedVideos').lean();
+    
+    const edits = user.editedVideos || [];
+    
+    // Sort by most recent first
+    edits.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    
+    res.json({
+      success: true,
+      edits: edits,
+      total: edits.length
+    });
+    
+  } catch (error) {
+    console.error('❌ Error fetching edits:', error);
+    res.status(500).json({
+      error: 'Failed to fetch edits',
+      details: error.message
+    });
+  }
+});
+
+// Delete an edited video
+app.delete('/api/editor/edits/:editId', customAuth, async (req, res) => {
+  try {
+    const { editId } = req.params;
+    const User = mongoose.model('User');
+    const user = await User.findById(req.user.id);
+    
+    if (!user.editedVideos) {
+      return res.status(404).json({ error: 'No edits found' });
+    }
+    
+    const editIndex = user.editedVideos.findIndex(edit => edit._id.toString() === editId);
+    
+    if (editIndex === -1) {
+      return res.status(404).json({ error: 'Edit not found' });
+    }
+    
+    // Remove from array
+    user.editedVideos.splice(editIndex, 1);
+    await user.save();
+    
+    res.json({
+      success: true,
+      message: 'Edit deleted successfully'
+    });
+    
+  } catch (error) {
+    console.error('❌ Error deleting edit:', error);
+    res.status(500).json({
+      error: 'Failed to delete edit',
+      details: error.message
+    });
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════════════════════════════
+// 📝 TEMPLATE API ROUTES
+// ═══════════════════════════════════════════════════════════════════════════════════════
+
+const Template = require('./models/Template');
+
+// Get all templates
+app.get('/api/templates', customAuth, async (req, res) => {
+  try {
+    const templates = await Template.find({ isActive: true })
+      .sort({ createdAt: -1 })
+      .lean();
+    
+    res.json({
+      success: true,
+      templates: templates
+    });
+  } catch (error) {
+    console.error('❌ Error fetching templates:', error);
+    res.status(500).json({
+      error: 'Failed to fetch templates',
+      details: error.message
+    });
+  }
+});
+
+// Get single template
+app.get('/api/templates/:id', customAuth, async (req, res) => {
+  try {
+    const template = await Template.findById(req.params.id).lean();
+    
+    if (!template) {
+      return res.status(404).json({ error: 'Template not found' });
+    }
+    
+    res.json({
+      success: true,
+      template: template
+    });
+  } catch (error) {
+    console.error('❌ Error fetching template:', error);
+    res.status(500).json({
+      error: 'Failed to fetch template',
+      details: error.message
+    });
+  }
+});
+
+// Create new template (admin only - you can add admin check later)
+app.post('/api/templates', customAuth, async (req, res) => {
+  try {
+    const templateData = {
+      ...req.body,
+      createdBy: req.user.id
+    };
+    
+    // Check if template ID already exists
+    const existing = await Template.findOne({ templateId: templateData.templateId });
+    if (existing) {
+      return res.status(400).json({ error: 'Template ID already exists' });
+    }
+    
+    const template = new Template(templateData);
+    await template.save();
+    
+    res.json({
+      success: true,
+      template: template
+    });
+  } catch (error) {
+    console.error('❌ Error creating template:', error);
+    res.status(500).json({
+      error: 'Failed to create template',
+      details: error.message
+    });
+  }
+});
+
+// Update template
+app.put('/api/templates/:id', customAuth, async (req, res) => {
+  try {
+    const template = await Template.findByIdAndUpdate(
+      req.params.id,
+      req.body,
+      { new: true, runValidators: true }
+    );
+    
+    if (!template) {
+      return res.status(404).json({ error: 'Template not found' });
+    }
+    
+    res.json({
+      success: true,
+      template: template
+    });
+  } catch (error) {
+    console.error('❌ Error updating template:', error);
+    res.status(500).json({
+      error: 'Failed to update template',
+      details: error.message
+    });
+  }
+});
+
+// Delete template
+app.delete('/api/templates/:id', customAuth, async (req, res) => {
+  try {
+    const template = await Template.findByIdAndUpdate(
+      req.params.id,
+      { isActive: false },
+      { new: true }
+    );
+    
+    if (!template) {
+      return res.status(404).json({ error: 'Template not found' });
+    }
+    
+    res.json({
+      success: true,
+      message: 'Template deleted successfully'
+    });
+  } catch (error) {
+    console.error('❌ Error deleting template:', error);
+    res.status(500).json({
+      error: 'Failed to delete template',
+      details: error.message
+    });
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════════════════════════════
 // 🌐 HTML ROUTES FOR COMPLETE APPLICATION
 // ═══════════════════════════════════════════════════════════════════════════════════════
 
@@ -2775,6 +3143,18 @@ app.get('/image-credits', serveHtmlFile('image-credits.html'));
 app.get('/image-gallery', serveHtmlFile('image-gallery.html'));
 app.get('/image-success', serveHtmlFile('image-credits.html'));
 app.get('/image-app', serveHtmlFile('image-app.html'));
+
+// Editor pages
+app.get('/editor', serveHtmlFile('editor.html'));
+app.get('/edits', serveHtmlFile('edits.html'));
+
+// Template pages
+app.get('/templates', serveHtmlFile('templates.html'));
+app.get('/template-dashboard', serveHtmlFile('template-dashboard.html'));
+
+// Dashboard and library pages
+app.get('/dashboard', serveHtmlFile('dashboard.html'));
+app.get('/library', serveHtmlFile('library.html'));
 
 // Legal pages
 app.get('/about', serveHtmlFile('about.html'));

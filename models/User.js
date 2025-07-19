@@ -190,6 +190,35 @@ const userSchema = new mongoose.Schema({
     }
   }],
   
+  // 🎥 Edited Videos Storage
+  editedVideos: [{
+    templateId: {
+      type: String,
+      required: true
+    },
+    modifications: {
+      type: Object,
+      default: {}
+    },
+    publicUrl: {
+      type: String,
+      required: true
+    },
+    storageUrl: String,
+    duration: {
+      type: Number,
+      default: 0
+    },
+    fileSize: {
+      type: Number,
+      default: 0
+    },
+    createdAt: {
+      type: Date,
+      default: Date.now
+    }
+  }],
+  
   resetPasswordToken: String,
   resetPasswordExpires: Date
 }, {

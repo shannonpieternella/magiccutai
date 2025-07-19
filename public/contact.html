@@ -148,6 +148,17 @@
             transform: translateY(-3px);
         }
         
+        .btn-danger {
+            background: #dc3545;
+            color: white;
+            border: none;
+        }
+        
+        .btn-danger:hover {
+            background: #c82333;
+            transform: translateY(-3px);
+        }
+        
         .main-content {
             padding-top: 120px;
             min-height: 100vh;
@@ -388,6 +399,10 @@
             <div class="nav-buttons">
                 <a href="/" class="btn btn-secondary">Home</a>
                 <a href="/about" class="btn btn-secondary">About</a>
+                <a href="login.html" class="btn btn-secondary" id="loginBtn">Login</a>
+                <a href="register.html" class="btn btn-primary" id="registerBtn">Get Started</a>
+                <a href="/app" class="btn btn-secondary" id="dashboardBtn" style="display: none;">Dashboard</a>
+                <button class="btn btn-danger" id="logoutBtn" onclick="logout()" style="display: none;">Logout</button>
             </div>
         </div>
     </nav>
@@ -517,6 +532,45 @@
     </footer>
 
     <script>
+        // Check authentication status
+        function checkAuthStatus() {
+            const token = localStorage.getItem('token');
+            
+            // Desktop elements
+            const loginBtn = document.getElementById('loginBtn');
+            const registerBtn = document.getElementById('registerBtn');
+            const dashboardBtn = document.getElementById('dashboardBtn');
+            const logoutBtn = document.getElementById('logoutBtn');
+            
+            if (token) {
+                // User is logged in
+                if (loginBtn) loginBtn.style.display = 'none';
+                if (registerBtn) registerBtn.style.display = 'none';
+                if (dashboardBtn) dashboardBtn.style.display = 'inline-block';
+                if (logoutBtn) logoutBtn.style.display = 'inline-block';
+            } else {
+                // User is not logged in
+                if (loginBtn) loginBtn.style.display = 'inline-block';
+                if (registerBtn) registerBtn.style.display = 'inline-block';
+                if (dashboardBtn) dashboardBtn.style.display = 'none';
+                if (logoutBtn) logoutBtn.style.display = 'none';
+            }
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('token');
+            localStorage.removeItem('user');
+            checkAuthStatus();
+            window.location.href = '/';
+        }
+
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthStatus();
+        });
+
+        // Contact form handler
         document.getElementById('contactForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
