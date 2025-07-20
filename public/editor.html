@@ -423,6 +423,11 @@
             opacity: 1;
         }
         
+        .delete-media-btn:hover {
+            background: #cc0055 !important;
+            transform: scale(1.05);
+        }
+        
         /* Music Section */
         .music-section {
             margin-top: 40px;
@@ -696,6 +701,9 @@
                 <a href="/editor" class="active">Editor</a>
                 <a href="/edits">My Edits</a>
                 <a href="/videos">My Videos</a>
+                <span id="creditDisplay" style="padding: 0.5rem 1rem; background: rgba(131, 56, 236, 0.2); border-radius: 20px; margin: 0 1rem;">
+                    💳 <span id="creditCount">0</span> Credits
+                </span>
                 <a href="#" id="logoutBtn">Logout</a>
             </div>
             <div class="hamburger" id="hamburger">
@@ -761,9 +769,10 @@
                 <button class="media-tab" data-type="images">Images</button>
             </div>
 
-            <div class="scenes-grid" id="scenesGrid">
-                <!-- Scene cards will be dynamically generated here -->
-
+            <div id="scenesContainer">
+                <div class="scenes-grid" id="scenesGrid">
+                    <!-- Scene cards will be dynamically generated here -->
+                </div>
             </div>
 
             <div class="music-section">
@@ -791,7 +800,7 @@
                 </button>
                 <button class="btn btn-primary" onclick="renderVideo()">
                     <span>✨</span>
-                    <span>Create Video</span>
+                    <span>Create Video (4 Credits)</span>
                 </button>
             </div>
         </div>
@@ -804,6 +813,26 @@
                 <h3>Select Media for Scene <span id="currentScene">1</span></h3>
                 <span class="close-modal" onclick="closeMediaModal()">&times;</span>
             </div>
+            
+            <!-- Upload Section -->
+            <div class="upload-section" style="padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                <h4 style="margin-bottom: 15px;">Upload Your Own Media</h4>
+                <div class="upload-container" style="display: flex; gap: 15px; align-items: center;">
+                    <input type="file" id="fileInput" accept="image/*,video/*" style="display: none;" onchange="handleFileSelect(event)">
+                    <button class="btn btn-secondary" onclick="document.getElementById('fileInput').click()" style="display: flex; align-items: center; gap: 10px;">
+                        <span>📤</span>
+                        <span>Choose File</span>
+                    </button>
+                    <span id="selectedFileName" style="color: rgba(255,255,255,0.7); font-size: 14px;"></span>
+                </div>
+                <div id="uploadProgress" style="display: none; margin-top: 15px;">
+                    <div style="background: rgba(255,255,255,0.1); border-radius: 5px; height: 8px; overflow: hidden;">
+                        <div id="progressBar" style="background: linear-gradient(45deg, #ff006e, #8338ec); height: 100%; width: 0%; transition: width 0.3s;"></div>
+                    </div>
+                    <span id="uploadStatus" style="font-size: 14px; color: rgba(255,255,255,0.7); margin-top: 5px; display: block;"></span>
+                </div>
+            </div>
+            
             <div class="media-grid" id="mediaGrid">
                 <!-- Media will be loaded here -->
             </div>
@@ -823,11 +852,13 @@
         // Constants
         let TEMPLATE_ID = "ef99b063-c6f5-4e9f-bd70-ba4c3758b2ac"; // Default template
         const token = localStorage.getItem('token');
+        const CREDITS_PER_VIDEO = 4;
         
         // State
         let currentTemplate = null;
         let currentSceneNumber = null;
         let selectedMedia = {};
+        let userCredits = 0;
         let mediaLibrary = {
             videos: [],
             images: []
@@ -875,6 +906,10 @@
                 const data = await response.json();
                 const user = data.user;
                 
+                // Update credits display
+                userCredits = user.credits?.available || 0;
+                document.getElementById('creditCount').textContent = userCredits;
+                
                 // Check if user is subscribed
                 const isSubscribed = user.subscription?.status === 'active' && user.subscription?.plan !== 'free';
                 
@@ -901,8 +936,14 @@
                 if (response.ok) {
                     const data = await response.json();
                     currentTemplate = data.template;
-                    TEMPLATE_ID = currentTemplate.templateId;
-                    setupTemplateUI();
+                    
+                    // Check template type
+                    if (currentTemplate.templateType === 'creatomate') {
+                        setupCreatomateTemplate();
+                    } else {
+                        TEMPLATE_ID = currentTemplate.templateId;
+                        setupTemplateUI();
+                    }
                 } else {
                     console.error('Failed to load template, using default');
                     setupDefaultTemplate();
@@ -964,37 +1005,119 @@
             // Generate scene cards dynamically
             generateSceneCards();
         }
+        
+        // Setup Creatomate template
+        function setupCreatomateTemplate() {
+            // Use the same UI as JSON templates
+            document.querySelector('.template-title').textContent = currentTemplate.name;
+            const templateDesc = document.querySelector('.template-info p');
+            if (templateDesc) {
+                templateDesc.textContent = currentTemplate.description || 'Create amazing videos with this template';
+            }
+            
+            // Use scenes count for Creatomate templates
+            // Scenes should be based on media slots, not text fields
+            // Multiple text fields can be in one scene
+            const scenesCount = currentTemplate.scenes || 
+                              (currentTemplate.mediaSlots ? currentTemplate.mediaSlots.length : 1);
+            currentTemplate.scenes = scenesCount; // Set scenes for consistency
+            
+            // Update requirements to match JSON template style
+            const requirementsContainer = document.querySelector('.template-requirements');
+            if (requirementsContainer) {
+                requirementsContainer.innerHTML = `
+                    <div class="requirement-card">
+                        <div class="requirement-icon">🎬</div>
+                        <div class="requirement-number">${scenesCount}</div>
+                        <div class="requirement-label">Videos or Images</div>
+                    </div>
+                    <div class="requirement-card">
+                        <div class="requirement-icon">💬</div>
+                        <div class="requirement-number">${currentTemplate.fields?.filter(f => f.type === 'text').length || scenesCount}</div>
+                        <div class="requirement-label">Text Overlays</div>
+                    </div>
+                    <div class="requirement-card">
+                        <div class="requirement-icon">🎵</div>
+                        <div class="requirement-number">1</div>
+                        <div class="requirement-label">Background Music</div>
+                    </div>
+                    <div class="requirement-card">
+                        <div class="requirement-icon">⏱️</div>
+                        <div class="requirement-number">${currentTemplate.duration || 30}s</div>
+                        <div class="requirement-label">Total Duration</div>
+                    </div>
+                `;
+            }
+            
+            // Initialize selected media based on scenes (like JSON templates)
+            selectedMedia = {};
+            for (let i = 1; i <= scenesCount; i++) {
+                selectedMedia[i] = null;
+            }
+            
+            // Generate scene cards using the same UI as JSON templates
+            generateSceneCards();
+        }
+        
 
         // Load user media
         async function loadUserMedia() {
             try {
-                // Load videos
-                const videosResponse = await fetch('/api/videos/library', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
+                // Reset media library
+                mediaLibrary = {
+                    videos: [],
+                    images: []
+                };
                 
+                // Load all data in parallel for better performance
+                const [videosResponse, imagesResponse] = await Promise.all([
+                    fetch('/api/videos/library?limit=1000', {  // Get all videos, not just 20
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    }),
+                    fetch('/api/image-gallery?limit=1000', {  // Get all images too
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+                ]);
+                
+                // Process videos
                 if (videosResponse.ok) {
                     const videosData = await videosResponse.json();
                     mediaLibrary.videos = videosData.videos || [];
-                    console.log('Loaded videos:', mediaLibrary.videos);
+                    console.log('Loaded videos:', mediaLibrary.videos.length);
+                    console.log('Video data:', videosData);
+                    // Log any uploaded videos
+                    const uploadedVideos = mediaLibrary.videos.filter(v => v.isUploaded);
+                    console.log('Uploaded videos found:', uploadedVideos.length, uploadedVideos);
                 }
 
-                // Load images
-                const imagesResponse = await fetch('/api/image-gallery', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                
+                // Process images
                 if (imagesResponse.ok) {
                     const imagesData = await imagesResponse.json();
                     mediaLibrary.images = imagesData.images || [];
-                    console.log('Loaded images:', mediaLibrary.images);
+                    console.log('Loaded images:', mediaLibrary.images.length);
                 }
+                
+                // We don't need to load uploaded media from /api/auth/me anymore
+                // because it's now included in the image-gallery and videos/library responses
             } catch (error) {
                 console.error('Error loading media:', error);
+            }
+            
+            // If media modal is open, refresh the display
+            if (document.getElementById('mediaModal').style.display === 'flex') {
+                displayMediaGrid();
+            }
+        }
+
+        // Update credits display
+        function updateCreditsDisplay() {
+            const creditElement = document.getElementById('creditCount');
+            if (creditElement) {
+                creditElement.textContent = userCredits;
             }
         }
 
@@ -1049,17 +1172,76 @@
             
             grid.innerHTML = '';
             
+            // Get all text fields and media slots
+            const textFields = currentTemplate.fields ? currentTemplate.fields.filter(f => f.type === 'text') : [];
+            const mediaSlots = currentTemplate.mediaSlots || [];
+            
             for (let i = 1; i <= currentTemplate.scenes; i++) {
-                // Find text field for this scene
-                const textField = currentTemplate.fields ? currentTemplate.fields.find(f => 
-                    f.name.includes(`Text-${i}`) || (f.scene === i && f.type === 'text')
-                ) : null;
+                // Find text field for this scene - more flexible matching
+                let textField = textFields.find(f => 
+                    f.name.includes(`Text-${i}`) || 
+                    f.name.includes(`Text ${i}`) ||
+                    (f.scene === i && f.type === 'text')
+                );
                 
-                const mediaSlot = currentTemplate.mediaSlots ? currentTemplate.mediaSlots.find(m => m.scene === i) : null;
+                // If no field found and we have unassigned text fields, use them in order
+                if (!textField && textFields.length > 0) {
+                    const unassignedFields = textFields.filter(f => !f.scene || f.scene === 1);
+                    if (unassignedFields[i - 1]) {
+                        textField = unassignedFields[i - 1];
+                    }
+                }
+                
+                // Find media slot for this scene - more flexible matching
+                let mediaSlot = mediaSlots.find(m => 
+                    m.scene === i ||
+                    m.name.includes(`${i}`) ||
+                    m.name.includes(`Video`) && mediaSlots.length === 1 // If only one video slot, use it for all scenes
+                );
+                
+                // If no slot found and we have unassigned slots, use them in order
+                if (!mediaSlot && mediaSlots.length > 0) {
+                    const unassignedSlots = mediaSlots.filter(m => !m.scene || m.scene === 1);
+                    if (unassignedSlots[i - 1]) {
+                        mediaSlot = unassignedSlots[i - 1];
+                    }
+                }
                 
                 const sceneCard = document.createElement('div');
                 sceneCard.className = 'scene-card';
                 sceneCard.dataset.scene = i;
+                
+                // For templates with 1 scene and multiple text fields, show all text fields
+                let textInputsHTML = '';
+                if (currentTemplate.scenes === 1 && textFields.length > 1) {
+                    // Show all text fields for single scene templates
+                    textFields.forEach((field, index) => {
+                        textInputsHTML += `
+                            <div class="text-input-box" style="margin-bottom: 15px;">
+                                <label for="text_${field.name}">${field.label}</label>
+                                <textarea 
+                                    class="text-input" 
+                                    id="text_${field.name}" 
+                                    data-field-name="${field.name}"
+                                    placeholder="${field.placeholder || `Enter ${field.label}...`}"
+                                >${field.defaultValue || ''}</textarea>
+                            </div>
+                        `;
+                    });
+                } else {
+                    // Show single text field per scene
+                    textInputsHTML = `
+                        <div class="text-input-box">
+                            <label for="text${i}">${textField ? textField.label : `Scene ${i} Text`}</label>
+                            <textarea 
+                                class="text-input" 
+                                id="text${i}" 
+                                data-field-name="${textField ? textField.name : `Text-${i}.text`}"
+                                placeholder="${textField ? textField.placeholder || `Enter text for scene ${i}...` : `Enter text for scene ${i}...`}"
+                            >${textField && textField.defaultValue ? textField.defaultValue : ''}</textarea>
+                        </div>
+                    `;
+                }
                 
                 sceneCard.innerHTML = `
                     <div class="scene-header">
@@ -1072,15 +1254,7 @@
                             </div>
                             <p style="margin-top: 10px; font-size: 14px; color: rgba(255,255,255,0.6);">${mediaSlot ? mediaSlot.label || 'Video or Image' : 'Video or Image'}</p>
                         </div>
-                        <div class="text-input-box">
-                            <label for="text${i}">${textField ? textField.label : `Scene ${i} Text`}</label>
-                            <textarea 
-                                class="text-input" 
-                                id="text${i}" 
-                                data-field-name="${textField ? textField.name : `Text-${i}.text`}"
-                                placeholder="${textField ? textField.placeholder || `Enter text for scene ${i}...` : `Enter text for scene ${i}...`}"
-                            >${textField && textField.defaultValue ? textField.defaultValue : ''}</textarea>
-                        </div>
+                        ${textInputsHTML}
                     </div>
                 `;
                 
@@ -1095,9 +1269,11 @@
         }
         
         // Open media selector
-        function openMediaSelector(sceneNumber) {
+        async function openMediaSelector(sceneNumber) {
             currentSceneNumber = sceneNumber;
             document.getElementById('currentScene').textContent = sceneNumber;
+            // Reload media library to get latest uploads
+            await loadUserMedia();
             displayMediaGrid();
             document.getElementById('mediaModal').style.display = 'flex';
         }
@@ -1117,7 +1293,20 @@
         // Display media grid
         function displayMediaGrid() {
             const grid = document.getElementById('mediaGrid');
+            
+            // Show loading state if library is still loading
+            if (!mediaLibrary || (!mediaLibrary.videos && !mediaLibrary.images)) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1/-1;">
+                        <div style="font-size: 48px; margin-bottom: 20px;">⏳</div>
+                        <p>Loading media library...</p>
+                    </div>
+                `;
+                return;
+            }
+            
             let media = mediaLibrary[currentMediaType];
+            console.log(`[displayMediaGrid] Showing ${currentMediaType}:`, media);
             
             // Filter images to only show those with public URLs
             if (currentMediaType === 'images') {
@@ -1151,15 +1340,49 @@
                 mediaItem.className = 'media-item';
                 mediaItem.onclick = () => selectMedia(item, currentMediaType);
                 
+                // Add upload badge and delete button if this is user-uploaded media
+                const uploadBadge = item.isUploaded ? `
+                    <div class="upload-badge" style="
+                        position: absolute;
+                        top: 8px;
+                        right: 8px;
+                        background: #00c9ff;
+                        color: white;
+                        padding: 4px 8px;
+                        border-radius: 4px;
+                        font-size: 11px;
+                        font-weight: 600;
+                        z-index: 10;
+                        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+                    ">UPLOADED</div>
+                    <button class="delete-media-btn" onclick="event.stopPropagation(); deleteUploadedMedia('${currentMediaType === 'videos' ? (item.publicUrl || item.googleStorageUrl) : item.url}', '${currentMediaType === 'videos' ? 'video' : 'image'}')" style="
+                        position: absolute;
+                        top: 8px;
+                        left: 8px;
+                        background: #ff006e;
+                        color: white;
+                        border: none;
+                        padding: 6px 10px;
+                        border-radius: 4px;
+                        font-size: 11px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        z-index: 10;
+                        box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+                    ">Delete</button>
+                ` : '';
+                
                 if (currentMediaType === 'videos') {
                     mediaItem.innerHTML = `
                         <video src="${item.publicUrl || item.googleStorageUrl}" muted preload="metadata"></video>
                         <div class="media-item-overlay">${item.title || 'Video ' + (index + 1)}</div>
+                        ${uploadBadge}
                     `;
                 } else {
                     mediaItem.innerHTML = `
                         <img src="${item.generatedImageUrl || item.url || item.imageUrl}" alt="${item.originalPrompt || item.prompt || 'Generated image'}">
                         <div class="media-item-overlay">${(item.originalPrompt || item.prompt) ? (item.originalPrompt || item.prompt).substring(0, 50) + '...' : 'Image ' + (index + 1)}</div>
+                        ${uploadBadge}
                     `;
                 }
                 
@@ -1212,44 +1435,68 @@
 
         // Render video
         async function renderVideo() {
-            // Validate all scenes have media
-            for (let i = 1; i <= currentTemplate.scenes; i++) {
-                if (!selectedMedia[i]) {
-                    alert(`Please select media for Scene ${i}`);
+            // Check if this is a Creatomate template
+            const isCreatomate = currentTemplate.templateType === 'creatomate';
+            
+            // Validate all media slots have media
+            if (isCreatomate) {
+                // For Creatomate templates, check media slots
+                let missingSlots = [];
+                for (let i = 1; i <= (currentTemplate.mediaSlots?.length || 0); i++) {
+                    if (!selectedMedia[i]) {
+                        missingSlots.push(i);
+                    }
+                }
+                if (missingSlots.length > 0) {
+                    alert(`Please select media for slot(s): ${missingSlots.join(', ')}`);
                     return;
+                }
+            } else {
+                // For JSON templates, check scenes
+                for (let i = 1; i <= currentTemplate.scenes; i++) {
+                    if (!selectedMedia[i]) {
+                        alert(`Please select media for Scene ${i}`);
+                        return;
+                    }
                 }
             }
 
             // Build modifications object
             const modifications = {};
             
-            // Add music if available
-            if (currentTemplate.fields) {
-                const musicField = currentTemplate.fields.find(f => f.type === 'music');
-                if (musicField && musicField.defaultValue) {
-                    modifications[musicField.name] = musicField.defaultValue;
+            // Add music from the music input field
+            const musicInput = document.getElementById('musicUrl');
+            if (musicInput && musicInput.value) {
+                modifications["Music.source"] = musicInput.value;
+            } else {
+                // Use template default music if available
+                if (currentTemplate.fields) {
+                    const musicField = currentTemplate.fields.find(f => f.type === 'music');
+                    if (musicField && musicField.defaultValue) {
+                        modifications[musicField.name] = musicField.defaultValue;
+                    }
+                }
+                
+                // Fallback music URL if not in template and no user input
+                if (!modifications["Music.source"]) {
+                    modifications["Music.source"] = "https://creatomate.com/files/assets/b5dc815e-dcc9-4c62-9405-f94913936bf5";
                 }
             }
             
-            // Fallback music URL if not in template
-            if (!modifications["Music.source"]) {
-                modifications["Music.source"] = "https://creatomate.com/files/assets/b5dc815e-dcc9-4c62-9405-f94913936bf5";
-            }
-            
-            // Add text modifications
-            for (let i = 1; i <= currentTemplate.scenes; i++) {
-                const textInput = document.getElementById(`text${i}`);
-                if (textInput && textInput.value) {
-                    const fieldName = textInput.dataset.fieldName || `Text-${i}.text`;
-                    modifications[fieldName] = textInput.value;
+            // Add text modifications - get all text fields with data-field-name
+            const textFields = document.querySelectorAll('[data-field-name]');
+            textFields.forEach(field => {
+                if (field.value && field.dataset.fieldName) {
+                    modifications[field.dataset.fieldName] = field.value;
                 }
-            }
+            });
             
             // Add media modifications
             if (currentTemplate.mediaSlots) {
-                currentTemplate.mediaSlots.forEach(slot => {
-                    if (selectedMedia[slot.scene]) {
-                        modifications[slot.name] = selectedMedia[slot.scene].url;
+                currentTemplate.mediaSlots.forEach((slot, index) => {
+                    const mediaIndex = isCreatomate ? (index + 1) : slot.scene;
+                    if (selectedMedia[mediaIndex]) {
+                        modifications[slot.name] = selectedMedia[mediaIndex].url;
                     }
                 });
             } else {
@@ -1262,26 +1509,46 @@
             }
             
             console.log('Sending modifications:', modifications);
+            console.log('Template type:', isCreatomate ? 'Creatomate' : 'JSON');
+            
+            // Check credits before proceeding
+            if (userCredits < CREDITS_PER_VIDEO) {
+                alert(`You need ${CREDITS_PER_VIDEO} credits to generate a video. You have ${userCredits} credits.\n\nClick OK to go to the credits page to purchase more.`);
+                window.location.href = '/image-credits';
+                return;
+            }
 
             // Show loading
             document.getElementById('loadingOverlay').style.display = 'flex';
 
             try {
+                const requestBody = isCreatomate ? {
+                    templateId: currentTemplate.creatomateTemplateId,
+                    modifications: modifications,
+                    isCreatomate: true
+                } : {
+                    templateId: TEMPLATE_ID,
+                    modifications: modifications
+                };
+
                 const response = await fetch('/api/editor/render', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                         'Authorization': `Bearer ${token}`
                     },
-                    body: JSON.stringify({
-                        templateId: TEMPLATE_ID,
-                        modifications: modifications
-                    })
+                    body: JSON.stringify(requestBody)
                 });
 
                 const data = await response.json();
 
                 if (response.ok && data.videoUrl) {
+                    // Update credits display after successful generation
+                    if (data.creditsRemaining !== undefined) {
+                        userCredits = data.creditsRemaining;
+                        updateCreditsDisplay();
+                    }
+                    
                     // Show preview
                     const previewSection = document.getElementById('previewSection');
                     const previewVideo = document.getElementById('previewVideo');
@@ -1292,12 +1559,23 @@
                     // Scroll to preview
                     previewSection.scrollIntoView({ behavior: 'smooth' });
                     
-                    // Success message
-                    alert('✅ Video created successfully! You can view it in "My Edits"');
+                    // Success message with credit info
+                    alert(`✅ Video created successfully! \n\n${CREDITS_PER_VIDEO} credits used. You have ${userCredits} credits remaining.\n\nYou can view your video in "My Edits"`);
+                } else if (response.status === 402) {
+                    // Insufficient credits
+                    console.error('Insufficient credits:', data);
+                    if (data.redirectTo) {
+                        alert(data.message || `You need ${data.creditsNeeded} credits to generate a video. You have ${data.creditsAvailable} credits.\n\nClick OK to go to the credits page to purchase more.`);
+                        window.location.href = data.redirectTo;
+                    } else {
+                        alert(data.message || 'Insufficient credits. Please purchase more credits to continue.');
+                    }
                 } else {
                     console.error('API Error:', data);
                     let errorMessage = '❌ Failed to create video\n\n';
-                    if (data.details) {
+                    if (data.error) {
+                        errorMessage += data.error;
+                    } else if (data.details) {
                         errorMessage += 'Details: ' + (typeof data.details === 'object' ? JSON.stringify(data.details, null, 2) : data.details);
                     }
                     if (data.status) {
@@ -1312,6 +1590,161 @@
                 document.getElementById('loadingOverlay').style.display = 'none';
             }
         }
+
+        // File Upload Functions
+        async function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            
+            // Check file size (max 100MB)
+            const maxSize = 100 * 1024 * 1024; // 100MB
+            if (file.size > maxSize) {
+                showNotification('File too large. Maximum size is 100MB.', 'error');
+                return;
+            }
+            
+            // Show selected filename
+            document.getElementById('selectedFileName').textContent = file.name;
+            
+            // Upload file
+            await uploadFile(file);
+        }
+        
+        async function uploadFile(file) {
+            const progressDiv = document.getElementById('uploadProgress');
+            const progressBar = document.getElementById('progressBar');
+            const uploadStatus = document.getElementById('uploadStatus');
+            
+            progressDiv.style.display = 'block';
+            uploadStatus.textContent = 'Uploading...';
+            
+            const formData = new FormData();
+            formData.append('media', file);
+            
+            try {
+                const xhr = new XMLHttpRequest();
+                
+                // Track upload progress
+                xhr.upload.addEventListener('progress', (e) => {
+                    if (e.lengthComputable) {
+                        const percentComplete = (e.loaded / e.total) * 100;
+                        progressBar.style.width = percentComplete + '%';
+                        uploadStatus.textContent = `Uploading... ${Math.round(percentComplete)}%`;
+                    }
+                });
+                
+                // Handle completion
+                xhr.addEventListener('load', async () => {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        uploadStatus.textContent = 'Upload complete!';
+                        progressBar.style.width = '100%';
+                        
+                        // Refresh media library
+                        setTimeout(() => {
+                            loadUserMedia();
+                            progressDiv.style.display = 'none';
+                            progressBar.style.width = '0%';
+                            document.getElementById('selectedFileName').textContent = '';
+                            document.getElementById('fileInput').value = '';
+                        }, 1500);
+                        
+                        showNotification('File uploaded successfully!', 'success');
+                    } else {
+                        const error = JSON.parse(xhr.responseText);
+                        uploadStatus.textContent = 'Upload failed!';
+                        showNotification(error.error || 'Upload failed', 'error');
+                    }
+                });
+                
+                // Handle errors
+                xhr.addEventListener('error', () => {
+                    uploadStatus.textContent = 'Upload failed!';
+                    showNotification('Network error during upload', 'error');
+                });
+                
+                // Send request
+                xhr.open('POST', '/api/media/upload');
+                xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+                xhr.send(formData);
+                
+            } catch (error) {
+                console.error('Upload error:', error);
+                uploadStatus.textContent = 'Upload failed!';
+                showNotification('Failed to upload file', 'error');
+            }
+        }
+        
+        function showNotification(message, type = 'info') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'notification ' + type;
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 15px 25px;
+                background: ${type === 'error' ? '#ff006e' : '#00c9ff'};
+                color: white;
+                border-radius: 8px;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+                z-index: 1000;
+                animation: slideIn 0.3s ease-out;
+            `;
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease-out';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+        
+        // Delete uploaded media
+        async function deleteUploadedMedia(url, type) {
+            if (!confirm(`Are you sure you want to delete this ${type}?`)) {
+                return;
+            }
+            
+            try {
+                const encodedUrl = encodeURIComponent(url);
+                const response = await fetch(`/api/media/upload/${type}/${encodedUrl}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    showNotification(`${type} deleted successfully`, 'success');
+                    // Reload media library
+                    await loadUserMedia();
+                    displayMediaGrid();
+                } else {
+                    const error = await response.json();
+                    showNotification(error.error || 'Failed to delete media', 'error');
+                }
+            } catch (error) {
+                console.error('Delete error:', error);
+                showNotification('Failed to delete media', 'error');
+            }
+        }
+        
+        // Add animation styles
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
     </script>
 </body>
 </html>

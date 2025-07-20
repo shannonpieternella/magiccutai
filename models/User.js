@@ -219,6 +219,29 @@ const userSchema = new mongoose.Schema({
     }
   }],
   
+  // 📤 User Uploaded Media
+  uploadedImages: [{
+    url: String,
+    originalName: String,
+    uploadedAt: {
+      type: Date,
+      default: Date.now
+    },
+    size: Number,
+    mimeType: String
+  }],
+  
+  uploadedVideos: [{
+    url: String,
+    originalName: String,
+    uploadedAt: {
+      type: Date,
+      default: Date.now
+    },
+    size: Number,
+    mimeType: String
+  }],
+  
   resetPasswordToken: String,
   resetPasswordExpires: Date
 }, {

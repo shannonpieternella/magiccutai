@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Upload Feature</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
+        }
+        .container {
+            background: #2a2a2a;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #8338EC;
+            margin-bottom: 30px;
+        }
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: #333;
+            border-radius: 8px;
+        }
+        button {
+            background: #8338EC;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #6a2bb8;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            background: #444;
+            border-radius: 5px;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        .media-item {
+            position: relative;
+            aspect-ratio: 16/9;
+            background: #555;
+            border-radius: 8px;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .media-item:hover {
+            transform: scale(1.05);
+        }
+        .media-item img,
+        .media-item video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .upload-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: #00c9ff;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        input[type="file"] {
+            margin: 10px 0;
+            padding: 10px;
+            background: #444;
+            border: 1px solid #666;
+            border-radius: 5px;
+            color: white;
+            width: 100%;
+            max-width: 400px;
+        }
+        .progress {
+            margin-top: 10px;
+            width: 100%;
+            max-width: 400px;
+            height: 20px;
+            background: #444;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .progress-bar {
+            height: 100%;
+            background: #8338EC;
+            width: 0%;
+            transition: width 0.3s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test Upload & Media Selection</h1>
+        
+        <div class="section">
+            <h2>1. Upload Media</h2>
+            <input type="file" id="fileInput" accept="image/*,video/*">
+            <button onclick="uploadFile()">Upload to Google Cloud</button>
+            <div class="progress" id="progress" style="display: none;">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+            <div id="uploadResult" class="result" style="display: none;"></div>
+        </div>
+        
+        <div class="section">
+            <h2>2. View User Media</h2>
+            <button onclick="loadUserMedia()">Load My Media</button>
+            <div id="userMediaGrid" class="media-grid"></div>
+        </div>
+        
+        <div class="section">
+            <h2>3. Test Video Creation</h2>
+            <button onclick="testVideoCreation()">Create Video with Uploaded Media</button>
+            <div id="videoResult" class="result" style="display: none;"></div>
+        </div>
+    </div>
+
+    <script>
+        const token = localStorage.getItem('token');
+        
+        if (!token) {
+            alert('Please log in first');
+            window.location.href = '/login';
+        }
+        
+        async function uploadFile() {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Please select a file');
+                return;
+            }
+            
+            const progress = document.getElementById('progress');
+            const progressBar = document.getElementById('progressBar');
+            const result = document.getElementById('uploadResult');
+            
+            progress.style.display = 'block';
+            result.style.display = 'none';
+            
+            const formData = new FormData();
+            formData.append('media', file);
+            
+            try {
+                const xhr = new XMLHttpRequest();
+                
+                xhr.upload.addEventListener('progress', (e) => {
+                    if (e.lengthComputable) {
+                        const percentComplete = (e.loaded / e.total) * 100;
+                        progressBar.style.width = percentComplete + '%';
+                    }
+                });
+                
+                xhr.addEventListener('load', () => {
+                    if (xhr.status === 200) {
+                        const response = JSON.parse(xhr.responseText);
+                        result.style.display = 'block';
+                        result.textContent = 'Upload successful!\n\n' + JSON.stringify(response, null, 2);
+                        fileInput.value = '';
+                        loadUserMedia();
+                    } else {
+                        result.style.display = 'block';
+                        result.textContent = 'Upload failed: ' + xhr.responseText;
+                    }
+                    progress.style.display = 'none';
+                    progressBar.style.width = '0%';
+                });
+                
+                xhr.open('POST', '/api/media/upload');
+                xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+                xhr.send(formData);
+                
+            } catch (error) {
+                result.style.display = 'block';
+                result.textContent = 'Error: ' + error.message;
+                progress.style.display = 'none';
+            }
+        }
+        
+        async function loadUserMedia() {
+            try {
+                const response = await fetch('/api/auth/me', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    const uploadedImages = data.uploadedImages || [];
+                    const uploadedVideos = data.uploadedVideos || [];
+                    
+                    const grid = document.getElementById('userMediaGrid');
+                    grid.innerHTML = '';
+                    
+                    // Display images
+                    uploadedImages.forEach(img => {
+                        const item = document.createElement('div');
+                        item.className = 'media-item';
+                        item.innerHTML = `
+                            <img src="${img.url}" alt="${img.originalName}">
+                            <div class="upload-badge">IMAGE</div>
+                        `;
+                        grid.appendChild(item);
+                    });
+                    
+                    // Display videos
+                    uploadedVideos.forEach(vid => {
+                        const item = document.createElement('div');
+                        item.className = 'media-item';
+                        item.innerHTML = `
+                            <video src="${vid.url}" muted></video>
+                            <div class="upload-badge">VIDEO</div>
+                        `;
+                        grid.appendChild(item);
+                    });
+                    
+                    if (uploadedImages.length === 0 && uploadedVideos.length === 0) {
+                        grid.innerHTML = '<p>No uploaded media found</p>';
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading user media:', error);
+            }
+        }
+        
+        async function testVideoCreation() {
+            const result = document.getElementById('videoResult');
+            result.style.display = 'block';
+            result.textContent = 'Testing video creation with uploaded media...';
+            
+            try {
+                // First get user's uploaded media
+                const userResponse = await fetch('/api/auth/me', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (!userResponse.ok) {
+                    throw new Error('Failed to get user data');
+                }
+                
+                const userData = await userResponse.json();
+                const uploadedVideos = userData.uploadedVideos || [];
+                const uploadedImages = userData.uploadedImages || [];
+                
+                if (uploadedVideos.length === 0 && uploadedImages.length === 0) {
+                    result.textContent = 'No uploaded media found. Please upload some media first.';
+                    return;
+                }
+                
+                // Prepare media URLs for template
+                const mediaUrls = {};
+                if (uploadedVideos.length > 0) {
+                    mediaUrls.reveal_media = uploadedVideos[0].url;
+                }
+                if (uploadedImages.length > 0) {
+                    mediaUrls.countdown_bg = uploadedImages[0].url;
+                }
+                
+                // Test with countdown template
+                const response = await fetch('/api/editor/render', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        templateId: 'countdown-timer-launch',
+                        modifications: {
+                            'event_name': 'Test with Uploaded Media',
+                            'countdown_from': '3',
+                            'reveal_text': 'Success!',
+                            'teaser_media': 'https://storage.googleapis.com/veo3-system-shannon-2024-veo-videos/veo3-fast-scenes/veo3_fast_veo3_94141055_lfuh_scene_1_1752294215380.mp4',
+                            ...mediaUrls
+                        }
+                    })
+                });
+                
+                const data = await response.json();
+                result.textContent = 'Response:\n\n' + JSON.stringify(data, null, 2);
+                
+            } catch (error) {
+                result.textContent = 'Error: ' + error.message;
+            }
+        }
+        
+        // Load media on page load
+        loadUserMedia();
+    </script>
+</body>
+</html>

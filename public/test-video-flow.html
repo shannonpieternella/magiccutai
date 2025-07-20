@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Video Flow</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
+        }
+        .section {
+            background: #2a2a2a;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        button {
+            background: #8338EC;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        pre {
+            background: #333;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .success { color: #4CAF50; }
+        .error { color: #ff006e; }
+    </style>
+</head>
+<body>
+    <h1>Test Video Upload and Display Flow</h1>
+    
+    <div class="section">
+        <h2>1. Check User's Generated Videos</h2>
+        <button onclick="checkGeneratedVideos()">Check Generated Videos</button>
+        <pre id="generatedVideosOutput"></pre>
+    </div>
+    
+    <div class="section">
+        <h2>2. Check Videos Library API</h2>
+        <button onclick="checkVideosLibrary()">Check /api/videos/library</button>
+        <pre id="videosLibraryOutput"></pre>
+    </div>
+    
+    <div class="section">
+        <h2>3. Upload Test Video</h2>
+        <input type="file" id="videoFile" accept="video/*">
+        <button onclick="uploadVideo()">Upload Video</button>
+        <pre id="uploadOutput"></pre>
+    </div>
+
+    <script>
+        const token = localStorage.getItem('token');
+        
+        async function checkGeneratedVideos() {
+            try {
+                const response = await fetch('/api/auth/me', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+                
+                const output = {
+                    totalGeneratedVideos: data.generatedVideos ? data.generatedVideos.length : 0,
+                    uploadedVideos: data.generatedVideos ? data.generatedVideos.filter(v => v.isUploaded) : [],
+                    lastThreeVideos: data.generatedVideos ? data.generatedVideos.slice(-3) : []
+                };
+                
+                document.getElementById('generatedVideosOutput').textContent = JSON.stringify(output, null, 2);
+            } catch (error) {
+                document.getElementById('generatedVideosOutput').innerHTML = `<span class="error">Error: ${error.message}</span>`;
+            }
+        }
+        
+        async function checkVideosLibrary() {
+            try {
+                const response = await fetch('/api/videos/library', {
+                    headers: { 'Authorization': `Bearer ${token}` }
+                });
+                const data = await response.json();
+                
+                const output = {
+                    totalVideos: data.videos ? data.videos.length : 0,
+                    uploadedVideos: data.videos ? data.videos.filter(v => v.isUploaded) : [],
+                    firstThreeVideos: data.videos ? data.videos.slice(0, 3) : []
+                };
+                
+                document.getElementById('videosLibraryOutput').textContent = JSON.stringify(output, null, 2);
+            } catch (error) {
+                document.getElementById('videosLibraryOutput').innerHTML = `<span class="error">Error: ${error.message}</span>`;
+            }
+        }
+        
+        async function uploadVideo() {
+            const fileInput = document.getElementById('videoFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                alert('Please select a video file');
+                return;
+            }
+            
+            const formData = new FormData();
+            formData.append('media', file);
+            
+            try {
+                const response = await fetch('/api/media/upload', {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${token}` },
+                    body: formData
+                });
+                
+                const data = await response.json();
+                document.getElementById('uploadOutput').innerHTML = `<span class="success">Upload Response:</span>\n${JSON.stringify(data, null, 2)}`;
+                
+                // Check videos again after upload
+                setTimeout(() => {
+                    checkGeneratedVideos();
+                    checkVideosLibrary();
+                }, 2000);
+                
+            } catch (error) {
+                document.getElementById('uploadOutput').innerHTML = `<span class="error">Error: ${error.message}</span>`;
+            }
+        }
+        
+        // Check on load
+        checkGeneratedVideos();
+        checkVideosLibrary();
+    </script>
+</body>
+</html>

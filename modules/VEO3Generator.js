@@ -14,8 +14,8 @@ class VEO3Generator {
     this.modelId = 'veo-3.0-fast-generate-preview'; // VEO3 FAST!
     this.outputDir = options.outputDir || './generated-videos';
     
-    // Google Cloud Storage setup
-    this.bucketName = options.bucketName || `${this.projectId}-veo3-videos`;
+    // Google Cloud Storage setup - use the same bucket as images
+    this.bucketName = options.bucketName || 'glossy-infinity-413804-ai-images';
     this.storage = new Storage({ projectId: this.projectId });
     this.bucket = this.storage.bucket(this.bucketName);
     
@@ -455,9 +455,9 @@ class VEO3Generator {
       const fileSizeMB = (binaryData.length / 1024 / 1024).toFixed(1);
       console.log(`💾 Video saved locally: ${filePath} (${fileSizeMB}MB)`);
       
-      // Upload to GCS
-      const bucketName = `${this.projectId}-veo-videos`;
-      const gcsFileName = `veo3-fast-scenes/${fileName}`;
+      // Upload to GCS - use the configured bucket
+      const bucketName = this.bucketName;
+      const gcsFileName = `veo3-videos/${fileName}`;
       
       console.log(`☁️ Uploading to GCS bucket: ${bucketName}/${gcsFileName}`);
       
@@ -636,7 +636,7 @@ class VEO3Generator {
     console.log(`   ⏳ Generating: ${generating}`);
     console.log(`   ❌ Failed: ${failed}`);
     console.log(`   📁 Local storage: ${this.outputDir}`);
-    console.log(`   ☁️ Cloud storage: gs://${this.projectId}-veo-videos/veo3-fast-scenes/`);
+    console.log(`   ☁️ Cloud storage: gs://${this.bucketName}/veo3-videos/`);
     
     // Google Storage URLs for Creatomate
     if (googleStorageUrls.length > 0) {

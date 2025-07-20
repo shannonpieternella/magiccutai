@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Media Upload</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: white;
+        }
+        .container {
+            background: #2a2a2a;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        button {
+            background: #8338EC;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #6a2bb8;
+        }
+        .debug-output {
+            background: #333;
+            border: 1px solid #555;
+            border-radius: 5px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+            overflow-x: auto;
+        }
+        .success {
+            color: #4CAF50;
+        }
+        .error {
+            color: #ff006e;
+        }
+        .info {
+            color: #00c9ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Debug Media Upload System</h1>
+        
+        <div>
+            <h2>1. Check Authentication</h2>
+            <button onclick="checkAuth()">Check Auth Status</button>
+            <div id="authOutput" class="debug-output"></div>
+        </div>
+        
+        <div>
+            <h2>2. Check Uploaded Media</h2>
+            <button onclick="checkUploadedMedia()">Get Uploaded Media</button>
+            <div id="mediaOutput" class="debug-output"></div>
+        </div>
+        
+        <div>
+            <h2>3. Check Auth/Me Response</h2>
+            <button onclick="checkAuthMe()">Check /api/auth/me</button>
+            <div id="authMeOutput" class="debug-output"></div>
+        </div>
+        
+        <div>
+            <h2>4. Test Upload</h2>
+            <input type="file" id="testFile" accept="image/*,video/*">
+            <button onclick="testUpload()">Test Upload</button>
+            <div id="uploadOutput" class="debug-output"></div>
+        </div>
+    </div>
+
+    <script>
+        const token = localStorage.getItem('token');
+        
+        function log(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            const timestamp = new Date().toISOString();
+            const colorClass = type === 'error' ? 'error' : type === 'success' ? 'success' : 'info';
+            element.innerHTML += `<span class="${colorClass}">[${timestamp}] ${message}</span>\n`;
+        }
+        
+        async function checkAuth() {
+            log('authOutput', 'Checking authentication...', 'info');
+            
+            if (!token) {
+                log('authOutput', 'No token found in localStorage!', 'error');
+                return;
+            }
+            
+            log('authOutput', `Token found: ${token.substring(0, 20)}...`, 'success');
+            
+            try {
+                const response = await fetch('/api/auth/me', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    log('authOutput', 'Authentication successful!', 'success');
+                    log('authOutput', `User: ${data.email}`, 'info');
+                } else {
+                    log('authOutput', `Authentication failed: ${response.status} ${response.statusText}`, 'error');
+                }
+            } catch (error) {
+                log('authOutput', `Error: ${error.message}`, 'error');
+            }
+        }
+        
+        async function checkUploadedMedia() {
+            log('mediaOutput', 'Fetching uploaded media from debug endpoint...', 'info');
+            
+            try {
+                const response = await fetch('/api/media/debug', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    log('mediaOutput', 'Debug endpoint response:', 'success');
+                    log('mediaOutput', JSON.stringify(data, null, 2), 'info');
+                    
+                    if (data.uploadedImages.length > 0) {
+                        log('mediaOutput', '\nUploaded Images:', 'success');
+                        data.uploadedImages.forEach((img, i) => {
+                            log('mediaOutput', `  [${i}] URL: ${img.url}`, 'info');
+                            log('mediaOutput', `       Name: ${img.originalName}`, 'info');
+                        });
+                    }
+                    
+                    if (data.uploadedVideos.length > 0) {
+                        log('mediaOutput', '\nUploaded Videos:', 'success');
+                        data.uploadedVideos.forEach((vid, i) => {
+                            log('mediaOutput', `  [${i}] URL: ${vid.url}`, 'info');
+                            log('mediaOutput', `       Name: ${vid.originalName}`, 'info');
+                        });
+                    }
+                } else {
+                    log('mediaOutput', `Failed to fetch: ${response.status} ${response.statusText}`, 'error');
+                }
+            } catch (error) {
+                log('mediaOutput', `Error: ${error.message}`, 'error');
+            }
+        }
+        
+        async function checkAuthMe() {
+            log('authMeOutput', 'Fetching /api/auth/me...', 'info');
+            
+            try {
+                const response = await fetch('/api/auth/me', {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    log('authMeOutput', 'Full response:', 'success');
+                    log('authMeOutput', JSON.stringify(data, null, 2), 'info');
+                    
+                    // Check specific fields
+                    log('authMeOutput', '\nChecking uploaded media fields:', 'info');
+                    log('authMeOutput', `uploadedImages: ${data.uploadedImages ? `Found (${data.uploadedImages.length} items)` : 'NOT FOUND'}`, data.uploadedImages ? 'success' : 'error');
+                    log('authMeOutput', `uploadedVideos: ${data.uploadedVideos ? `Found (${data.uploadedVideos.length} items)` : 'NOT FOUND'}`, data.uploadedVideos ? 'success' : 'error');
+                } else {
+                    log('authMeOutput', `Failed: ${response.status} ${response.statusText}`, 'error');
+                    const text = await response.text();
+                    log('authMeOutput', `Response: ${text}`, 'error');
+                }
+            } catch (error) {
+                log('authMeOutput', `Error: ${error.message}`, 'error');
+            }
+        }
+        
+        async function testUpload() {
+            const fileInput = document.getElementById('testFile');
+            const file = fileInput.files[0];
+            
+            if (!file) {
+                log('uploadOutput', 'Please select a file first!', 'error');
+                return;
+            }
+            
+            log('uploadOutput', `Uploading ${file.name} (${file.type}, ${(file.size/1024/1024).toFixed(2)}MB)...`, 'info');
+            
+            const formData = new FormData();
+            formData.append('media', file);
+            
+            try {
+                const response = await fetch('/api/media/upload', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: formData
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    log('uploadOutput', 'Upload successful!', 'success');
+                    log('uploadOutput', JSON.stringify(data, null, 2), 'info');
+                    
+                    // Check if URL is a proper Google Cloud Storage URL
+                    if (data.url && data.url.includes('storage.googleapis.com')) {
+                        log('uploadOutput', '✅ URL is a valid Google Cloud Storage URL', 'success');
+                    } else {
+                        log('uploadOutput', '❌ URL is NOT a Google Cloud Storage URL!', 'error');
+                    }
+                    
+                    // Wait a bit then check if it's in the database
+                    setTimeout(() => {
+                        log('uploadOutput', '\nChecking if saved in database...', 'info');
+                        checkUploadedMedia();
+                    }, 2000);
+                } else {
+                    log('uploadOutput', `Upload failed: ${response.status}`, 'error');
+                    log('uploadOutput', JSON.stringify(data, null, 2), 'error');
+                }
+            } catch (error) {
+                log('uploadOutput', `Error: ${error.message}`, 'error');
+            }
+        }
+        
+        // Auto-check auth on load
+        checkAuth();
+    </script>
+</body>
+</html>

@@ -24,10 +24,28 @@ const templateSchema = new mongoose.Schema({
   },
   thumbnailUrl: String,
   
+  // Template Type
+  templateType: {
+    type: String,
+    required: true,
+    enum: ['json', 'creatomate'],
+    default: 'json'
+  },
+  
+  // For Creatomate templates - store the actual template ID
+  creatomateTemplateId: {
+    type: String,
+    required: function() {
+      return this.templateType === 'creatomate';
+    }
+  },
+  
   // Template Configuration
   scenes: {
     type: Number,
-    required: true,
+    required: function() {
+      return this.templateType === 'json';
+    },
     min: 1,
     max: 20
   },
@@ -82,6 +100,12 @@ const templateSchema = new mongoose.Schema({
   creatomateConfig: {
     type: Object,
     default: {}
+  },
+  
+  // Base Creatomate template UUID (optional)
+  baseTemplateId: {
+    type: String,
+    default: null
   },
   
   // Metadata

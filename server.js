@@ -227,9 +227,16 @@ class ImageGCSUploader {
       'jpeg': 'image/jpeg',
       'jpg': 'image/jpeg',
       'webp': 'image/webp',
-      'gif': 'image/gif'
+      'gif': 'image/gif',
+      // Video formats
+      'mp4': 'video/mp4',
+      'mov': 'video/quicktime',
+      'avi': 'video/x-msvideo',
+      'webm': 'video/webm',
+      'mkv': 'video/x-matroska',
+      'flv': 'video/x-flv'
     };
-    return contentTypes[format.toLowerCase()] || 'image/png';
+    return contentTypes[format.toLowerCase()] || 'application/octet-stream';
   }
 
   // Delete image from GCS
@@ -323,7 +330,7 @@ try {
   if (CharacterAnalyzer) characterAnalyzer = new CharacterAnalyzer();
   if (ProductAnalyzer) productAnalyzer = new ProductAnalyzer();
   if (PromptGenerator) promptGenerator = new PromptGenerator();
-  if (VEO3Generator) veo3Generator = new VEO3Generator();
+  if (VEO3Generator) veo3Generator = new VEO3Generator({ bucketName: 'glossy-infinity-413804-ai-images' });
   if (CreatomateEditor) creatomateEditor = new CreatomateEditor();
   console.log('✅ All VEO3 modules initialized successfully');
 } catch (error) {
@@ -1863,7 +1870,7 @@ app.get('/api/image-gallery', requireAuth, async (req, res) => {
     const { page = 1, limit = 20 } = req.query;
     
     const user = await User.findById(req.user.id)
-      .select('generatedImages credits')
+      .select('generatedImages uploadedImages credits')
       .lean();
     
     if (!user) {
@@ -1873,10 +1880,34 @@ app.get('/api/image-gallery', requireAuth, async (req, res) => {
       });
     }
     
-    // Sort images by creation date (newest first)
-    const images = user.generatedImages?.sort((a, b) => 
+    // Combine generated and uploaded images
+    let allImages = [];
+    
+    // Add generated images
+    if (user.generatedImages) {
+      allImages = allImages.concat(user.generatedImages);
+    }
+    
+    // Add uploaded images with proper format
+    if (user.uploadedImages) {
+      const formattedUploaded = user.uploadedImages.map(img => ({
+        imageId: `upload_${img._id}`,
+        generatedImageUrl: img.url,
+        url: img.url,
+        originalPrompt: 'Uploaded by user',
+        createdAt: img.uploadedAt || img.createdAt,
+        originalName: img.originalName,
+        isUploaded: true,
+        size: img.size,
+        mimeType: img.mimeType
+      }));
+      allImages = allImages.concat(formattedUploaded);
+    }
+    
+    // Sort all images by creation date (newest first)
+    const images = allImages.sort((a, b) => 
       new Date(b.createdAt) - new Date(a.createdAt)
-    ) || [];
+    );
     
     // Pagination
     const startIndex = (page - 1) * limit;
@@ -1969,7 +2000,7 @@ app.get('/api/auth/me', customAuth, async (req, res) => {
   try {
     const User = mongoose.model('User');
     const freshUser = await User.findById(req.user.id)
-      .select('firstName lastName email subscription usage hasActiveSubscription createdAt generatedVideos generatedImages credits')
+      .select('firstName lastName email subscription usage hasActiveSubscription createdAt generatedVideos generatedImages credits uploadedImages uploadedVideos')
       .lean();
     
     if (!freshUser) {
@@ -2410,7 +2441,7 @@ app.get('/api/videos/library', customAuth, async (req, res) => {
     const { page = 1, limit = 20, sortBy = 'createdAt', order = 'desc' } = req.query;
     
     const user = await User.findById(req.user.id)
-      .select('generatedVideos')
+      .select('generatedVideos uploadedVideos')
       .lean();
     
     if (!user) {
@@ -2420,7 +2451,18 @@ app.get('/api/videos/library', customAuth, async (req, res) => {
       });
     }
     
-    const videos = user.generatedVideos || [];
+    // Combine generated and uploaded videos
+    let allVideos = [];
+    
+    // Add generated videos
+    if (user.generatedVideos) {
+      allVideos = allVideos.concat(user.generatedVideos);
+    }
+    
+    // No need to add uploadedVideos separately anymore since we're saving directly to generatedVideos
+    // Uploaded videos will already be in generatedVideos with isUploaded: true flag
+    
+    const videos = allVideos;
     
     // Sort videos
     const sortOrder = order === 'desc' ? -1 : 1;
@@ -2745,27 +2787,388 @@ app.get('/api/videos/:filename', customAuth, async (req, res) => {
 });
 
 // ═══════════════════════════════════════════════════════════════════════════════════════
+// 📤 MEDIA UPLOAD ROUTES
+// ═══════════════════════════════════════════════════════════════════════════════════════
+
+// Configure multer for file uploads
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: {
+    fileSize: 100 * 1024 * 1024 // 100MB max
+  },
+  fileFilter: (req, file, cb) => {
+    // Accept images and videos
+    const allowedMimes = [
+      'image/jpeg', 'image/png', 'image/gif', 'image/webp',
+      'video/mp4', 'video/quicktime', 'video/x-msvideo', 'video/webm'
+    ];
+    
+    if (allowedMimes.includes(file.mimetype)) {
+      cb(null, true);
+    } else {
+      cb(new Error('Invalid file type. Only images and videos are allowed.'));
+    }
+  }
+});
+
+// Upload media endpoint
+app.post('/api/media/upload', customAuth, upload.single('media'), async (req, res) => {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file provided' });
+    }
+    
+    const file = req.file;
+    const userId = req.user.id;
+    const timestamp = Date.now();
+    const isVideo = file.mimetype.startsWith('video/');
+    
+    console.log(`📤 Uploading ${isVideo ? 'video' : 'image'} for user ${userId}`);
+    
+    // Determine file extension
+    const mimeToExt = {
+      'image/jpeg': 'jpg',
+      'image/png': 'png',
+      'image/gif': 'gif',
+      'image/webp': 'webp',
+      'video/mp4': 'mp4',
+      'video/quicktime': 'mov',
+      'video/x-msvideo': 'avi',
+      'video/webm': 'webm'
+    };
+    
+    const extension = mimeToExt[file.mimetype] || 'bin';
+    const fileName = `user-uploads/${userId}/upload_${timestamp}.${extension}`;
+    
+    let publicUrl;
+    
+    if (isVideo) {
+      // For videos, use the same image bucket that's already working
+      const uploadedVideo = await imageGCSUploader.uploadImageToGCS(
+        file.buffer,
+        `user_video_upload_${timestamp}`,
+        extension,
+        {
+          userId: userId,
+          uploadedAt: new Date().toISOString(),
+          originalName: file.originalname,
+          fileType: 'video'
+        }
+      );
+      publicUrl = uploadedVideo.publicUrl;
+    } else {
+      // For images, use the image uploader
+      const uploadedImage = await imageGCSUploader.uploadImageToGCS(
+        file.buffer,
+        `user_upload_${timestamp}`,
+        extension,
+        {
+          userId: userId,
+          uploadedAt: new Date().toISOString(),
+          originalName: file.originalname
+        }
+      );
+      publicUrl = uploadedImage.publicUrl;
+    }
+    
+    // Update user's document with the uploaded media URL
+    const user = await User.findById(userId);
+    
+    if (isVideo) {
+      // Save to generatedVideos so it appears in the popup
+      if (!user.generatedVideos) {
+        user.generatedVideos = [];
+      }
+      
+      const videoId = `upload_${userId}_${timestamp}`;
+      user.generatedVideos.push({
+        videoId: videoId,
+        title: file.originalname || 'Uploaded Video',
+        publicUrl: publicUrl,
+        googleStorageUrl: publicUrl,
+        localPath: '',
+        bucketName: imageGCSUploader.bucketName,
+        gcsFileName: `gpt-image-1/user_video_upload_${timestamp}.${extension}`,
+        size: file.size,
+        duration: 0,
+        prompt: 'User uploaded video',
+        model: 'user-upload',
+        aspectRatio: '16:9',
+        hasCharacter: false,
+        hasProduct: false,
+        spokenLanguage: 'en',
+        createdAt: new Date(),
+        batchId: 'user-uploads',
+        sceneNumber: 1,
+        isUploaded: true,
+        originalName: file.originalname,
+        mimeType: file.mimetype
+      });
+    } else {
+      if (!user.uploadedImages) {
+        user.uploadedImages = [];
+      }
+      user.uploadedImages.push({
+        url: publicUrl,
+        originalName: file.originalname,
+        uploadedAt: new Date(),
+        size: file.size,
+        mimeType: file.mimetype
+      });
+    }
+    
+    await user.save();
+    
+    console.log(`✅ Media uploaded successfully: ${publicUrl}`);
+    
+    // Log what was saved for debugging
+    if (isVideo) {
+      const savedVideo = user.generatedVideos[user.generatedVideos.length - 1];
+      console.log('📹 Saved video structure:', JSON.stringify(savedVideo, null, 2));
+    }
+    
+    res.json({
+      success: true,
+      url: publicUrl,
+      type: isVideo ? 'video' : 'image',
+      filename: file.originalname,
+      size: file.size
+    });
+    
+  } catch (error) {
+    console.error('❌ Upload error:', error);
+    res.status(500).json({
+      error: 'Failed to upload file',
+      details: error.message
+    });
+  }
+});
+
+// Debug endpoint to check uploaded media
+app.get('/api/media/debug', customAuth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+    res.json({
+      uploadedImages: user.uploadedImages || [],
+      uploadedVideos: user.uploadedVideos || [],
+      totalImages: (user.uploadedImages || []).length,
+      totalVideos: (user.uploadedVideos || []).length
+    });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Delete uploaded media endpoint
+app.delete('/api/media/upload/:type/:url', customAuth, async (req, res) => {
+  try {
+    const { type, url } = req.params;
+    const userId = req.user.id;
+    
+    console.log(`🗑️ Deleting ${type} for user ${userId}`);
+    
+    // Decode the URL
+    const decodedUrl = decodeURIComponent(url);
+    
+    // Find user and remove the media from their array
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    
+    let removed = false;
+    
+    if (type === 'image') {
+      const originalLength = user.uploadedImages.length;
+      user.uploadedImages = user.uploadedImages.filter(img => img.url !== decodedUrl);
+      removed = user.uploadedImages.length < originalLength;
+      
+      if (removed) {
+        // Delete from Google Cloud Storage
+        const fileName = decodedUrl.split('/').pop();
+        try {
+          await imageGCSUploader.deleteImageFromGCS(`gpt-image-1/${fileName}`);
+          console.log('✅ Image deleted from GCS');
+        } catch (gcsError) {
+          console.error('Failed to delete from GCS:', gcsError);
+        }
+      }
+    } else if (type === 'video') {
+      // Check in generatedVideos (where uploaded videos are now stored)
+      const originalLength = user.generatedVideos ? user.generatedVideos.length : 0;
+      if (user.generatedVideos) {
+        user.generatedVideos = user.generatedVideos.filter(vid => 
+          vid.publicUrl !== decodedUrl && vid.googleStorageUrl !== decodedUrl
+        );
+        removed = user.generatedVideos.length < originalLength;
+      }
+      
+      if (removed) {
+        // Delete from Google Cloud Storage (videos are in the image bucket)
+        const pathMatch = decodedUrl.match(/storage\.googleapis\.com\/[^\/]+\/(.*)/);
+        if (pathMatch) {
+          const filePath = pathMatch[1];
+          try {
+            await imageGCSUploader.deleteImageFromGCS(filePath);
+            console.log('✅ Video deleted from GCS');
+          } catch (gcsError) {
+            console.error('Failed to delete from GCS:', gcsError);
+          }
+        }
+      }
+    }
+    
+    if (!removed) {
+      return res.status(404).json({ error: 'Media not found' });
+    }
+    
+    await user.save();
+    console.log(`✅ ${type} removed from user's uploaded media`);
+    
+    res.json({ 
+      success: true, 
+      message: `${type} deleted successfully` 
+    });
+    
+  } catch (error) {
+    console.error('❌ Delete error:', error);
+    res.status(500).json({
+      error: 'Failed to delete media',
+      details: error.message
+    });
+  }
+});
+
+// ═══════════════════════════════════════════════════════════════════════════════════════
 // 🎬 EDITOR API ROUTES
 // ═══════════════════════════════════════════════════════════════════════════════════════
 
 // Render video with Creatomate template
 app.post('/api/editor/render', customAuth, async (req, res) => {
   try {
-    const { templateId, modifications } = req.body;
+    const { templateId, modifications, isCreatomate } = req.body;
     
     if (!templateId || !modifications) {
       return res.status(400).json({ error: 'Template ID and modifications are required' });
     }
-
+    
+    // Check credits - 4 credits per video
+    const CREDITS_PER_VIDEO = 4;
+    if (req.user.credits.available < CREDITS_PER_VIDEO) {
+      return res.status(402).json({
+        success: false,
+        error: 'Insufficient credits',
+        message: `You need ${CREDITS_PER_VIDEO} credits to generate a video. You have ${req.user.credits.available} credits.`,
+        creditsNeeded: CREDITS_PER_VIDEO,
+        creditsAvailable: req.user.credits.available,
+        redirectTo: '/image-credits'
+      });
+    }
+    
+    console.log(`💳 Credits check passed. User has ${req.user.credits.available} credits, need ${CREDITS_PER_VIDEO}`);
     console.log('🎬 Starting video render with template:', templateId);
+    
+    // Check if this is one of our custom templates
+    const isCustomTemplate = !templateId.match(/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i);
+    
+    let requestBody;
+    let templateName = null;
+    let dbTemplate = null;
+    
+    // First check if this is a Creatomate template from our database
+    if (isCreatomate) {
+      dbTemplate = await Template.findOne({ creatomateTemplateId: templateId }).lean();
+      if (dbTemplate) {
+        templateName = dbTemplate.name;
+        console.log('🎨 Using Creatomate template from database:', templateName);
+      }
+    }
+    
+    if (isCustomTemplate) {
+      // Try to find our custom template
+      const template = await Template.findOne({ templateId }).lean();
+      if (template) {
+        templateName = template.name;
+        // Build template configuration for custom templates
+        console.log('🎨 Using custom template:', templateId);
+        const TemplateRenderer = require('./services/templateRenderer');
+        const renderer = new TemplateRenderer();
+        
+        // Parse modifications to separate media and text
+        const userInputs = {
+          media: {},
+          text: {}
+        };
+        
+        Object.entries(modifications).forEach(([key, value]) => {
+          if (typeof value === 'string' && value.startsWith('http')) {
+            userInputs.media[key] = value;
+          } else {
+            userInputs.text[key] = value;
+          }
+        });
+        
+        // Always build the complete template configuration from JSON
+        const templateConfig = renderer.buildCreatomateConfig(template, userInputs);
+        console.log('📋 Template config generated');
+        
+        requestBody = {
+          source: templateConfig
+        };
+      } else {
+        return res.status(404).json({ error: 'Custom template not found' });
+      }
+    } else {
+      // Standard Creatomate template
+      // Add audio_volume: 0 to all video sources to mute them
+      const modifiedModifications = { ...modifications };
+      
+      // Look for any video source fields and add mute parameter
+      Object.keys(modifiedModifications).forEach(key => {
+        if (key.endsWith('.source') && !key.includes('Music')) {
+          const sourceValue = modifiedModifications[key];
+          // Check if it's likely a video file
+          if (typeof sourceValue === 'string' && 
+              (sourceValue.includes('.mp4') || 
+               sourceValue.includes('.mov') || 
+               sourceValue.includes('.avi') ||
+               sourceValue.includes('.webm') ||
+               sourceValue.includes('video'))) {
+            // Add corresponding volume field (Creatomate uses .volume)
+            const volumeKey = key.replace('.source', '.volume');
+            modifiedModifications[volumeKey] = 0;
+            
+            // Also try audio_volume in case that works
+            const audioVolumeKey = key.replace('.source', '.audio_volume');
+            modifiedModifications[audioVolumeKey] = 0;
+          }
+        }
+      });
+      
+      // Also add volume = 0 for common video element names
+      Object.keys(modifiedModifications).forEach(key => {
+        // Look for common video element patterns
+        if ((key.includes('Background') || key.includes('Video') || key.includes('Media')) && 
+            !key.includes('Music') && 
+            !key.includes('.')) {
+          // Try to mute the element directly
+          modifiedModifications[`${key}.volume`] = 0;
+          modifiedModifications[`${key}.audio_volume`] = 0;
+        }
+      });
+      
+      console.log('📝 Modified modifications for Creatomate:', modifiedModifications);
+      
+      requestBody = {
+        template_id: templateId,
+        modifications: modifiedModifications
+      };
+    }
     
     // Call Creatomate API
     const creatomateResponse = await axios.post(
       'https://api.creatomate.com/v1/renders',
-      {
-        template_id: templateId,
-        modifications: modifications
-      },
+      requestBody,
       {
         headers: {
           'Authorization': `Bearer ${process.env.CREATOMATE_API_KEY || '4b06566ae5cf4aca838a4c8db4a57d300015ee8f7895f3bfa314797e813f328bfd64520666dbdf9d9a45ee139cd76ec1'}`,
@@ -2879,6 +3282,7 @@ app.post('/api/editor/render', customAuth, async (req, res) => {
     
     user.editedVideos.push({
       templateId: templateId,
+      templateName: templateName || templateId, // Use template name if available, otherwise use ID
       modifications: modifications,
       publicUrl: publicUrl,
       storageUrl: storageUrl,
@@ -2888,12 +3292,36 @@ app.post('/api/editor/render', customAuth, async (req, res) => {
     });
     
     await user.save();
+    
+    // Deduct credits after successful video generation
+    console.log('💰 Deducting credits for video generation...');
+    const updatedUser = await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        $inc: { 
+          'credits.available': -CREDITS_PER_VIDEO,
+          'credits.used': CREDITS_PER_VIDEO
+        },
+        $set: { updatedAt: new Date() }
+      },
+      { new: true }
+    );
+    
+    if (!updatedUser) {
+      console.error('❌ Failed to update user credits, but video was generated');
+    } else {
+      console.log(`✅ Credits deducted. Remaining credits: ${updatedUser.credits.available}`);
+    }
 
     res.json({
       success: true,
       videoUrl: publicUrl,
       renderId: renderId,
-      duration: renderData.duration
+      duration: renderData.duration,
+      credits: {
+        charged: CREDITS_PER_VIDEO,
+        remaining: updatedUser ? updatedUser.credits.available : req.user.credits.available - CREDITS_PER_VIDEO
+      }
     });
 
   } catch (error) {
@@ -3060,54 +3488,97 @@ app.post('/api/templates', customAuth, async (req, res) => {
   }
 });
 
-// Update template
-app.put('/api/templates/:id', customAuth, async (req, res) => {
-  try {
-    const template = await Template.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true, runValidators: true }
-    );
-    
-    if (!template) {
-      return res.status(404).json({ error: 'Template not found' });
-    }
-    
-    res.json({
-      success: true,
-      template: template
-    });
-  } catch (error) {
-    console.error('❌ Error updating template:', error);
-    res.status(500).json({
-      error: 'Failed to update template',
-      details: error.message
-    });
-  }
-});
+// Update template (commented out - using templateId-based endpoint instead)
+// app.put('/api/templates/:id', customAuth, async (req, res) => {
+//   try {
+//     const template = await Template.findByIdAndUpdate(
+//       req.params.id,
+//       req.body,
+//       { new: true, runValidators: true }
+//     );
+//     
+//     if (!template) {
+//       return res.status(404).json({ error: 'Template not found' });
+//     }
+//     
+//     res.json({
+//       success: true,
+//       template: template
+//     });
+//   } catch (error) {
+//     console.error('❌ Error updating template:', error);
+//     res.status(500).json({
+//       error: 'Failed to update template',
+//       details: error.message
+//     });
+//   }
+// });
 
-// Delete template
-app.delete('/api/templates/:id', customAuth, async (req, res) => {
+// Delete template (commented out - using templateId-based endpoint instead)
+// app.delete('/api/templates/:id', customAuth, async (req, res) => {
+//   try {
+//     const template = await Template.findByIdAndUpdate(
+//       req.params.id,
+//       { isActive: false },
+//       { new: true }
+//     );
+//     
+//     if (!template) {
+//       return res.status(404).json({ error: 'Template not found' });
+//     }
+//     
+//     res.json({
+//       success: true,
+//       message: 'Template deleted successfully'
+//     });
+//   } catch (error) {
+//     console.error('❌ Error deleting template:', error);
+//     res.status(500).json({
+//       error: 'Failed to delete template',
+//       details: error.message
+//     });
+//   }
+// });
+
+// Template-based video rendering with dynamic media
+app.post('/api/templates/render', customAuth, async (req, res) => {
   try {
-    const template = await Template.findByIdAndUpdate(
-      req.params.id,
-      { isActive: false },
-      { new: true }
-    );
+    const { templateId, userInputs } = req.body;
+    const userId = req.user.id;
     
+    // Find the template
+    const template = await Template.findOne({ templateId }).lean();
     if (!template) {
       return res.status(404).json({ error: 'Template not found' });
     }
     
+    // Initialize the template renderer
+    const TemplateRenderer = require('./services/templateRenderer');
+    const renderer = new TemplateRenderer();
+    
+    // Build the complete template configuration
+    const templateConfig = renderer.buildCreatomateConfig(template, userInputs);
+    
+    console.log('🎬 Rendering template:', templateId);
+    console.log('📋 Template config:', JSON.stringify(templateConfig, null, 2));
+    
+    // Render the video using template source
+    const renderResponse = await renderer.renderVideo(templateConfig, {});
+    
+    // Increment template usage
+    await Template.findByIdAndUpdate(template._id, { $inc: { usageCount: 1 } });
+    
     res.json({
       success: true,
-      message: 'Template deleted successfully'
+      renderId: renderResponse.id || renderResponse[0]?.id,
+      message: 'Render started successfully'
     });
+    
   } catch (error) {
-    console.error('❌ Error deleting template:', error);
+    console.error('❌ Template render error:', error);
     res.status(500).json({
-      error: 'Failed to delete template',
-      details: error.message
+      error: 'Failed to render template',
+      details: error.response?.data || error.message
     });
   }
 });
@@ -3151,6 +3622,12 @@ app.get('/edits', serveHtmlFile('edits.html'));
 // Template pages
 app.get('/templates', serveHtmlFile('templates.html'));
 app.get('/template-dashboard', serveHtmlFile('template-dashboard.html'));
+app.get('/templates/template-dashboard', (req, res) => {
+  // Redirect to the correct path
+  res.redirect('/template-dashboard');
+});
+app.get('/test-template', serveHtmlFile('test-template.html'));
+app.get('/test-simple-template', serveHtmlFile('test-simple-template.html'));
 
 // Dashboard and library pages
 app.get('/dashboard', serveHtmlFile('dashboard.html'));
@@ -3462,6 +3939,166 @@ app.get('/api/health', (req, res) => {
       'Automatic image cleanup from GCS on deletion' // ✨ NEW
     ]
   });
+});
+
+// ═══════════════════════════════════════════════════════════════════════════════════════
+// 📋 TEMPLATE MANAGEMENT ENDPOINTS
+// ═══════════════════════════════════════════════════════════════════════════════════════
+
+// Get all templates
+app.get('/api/templates', requireAuth, async (req, res) => {
+  try {
+    const templates = await Template.find({ isActive: true })
+      .sort({ createdAt: -1 });
+    
+    res.json({ 
+      success: true, 
+      templates 
+    });
+  } catch (error) {
+    console.error('Error fetching templates:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Failed to fetch templates' 
+    });
+  }
+});
+
+// Get a single template by ID
+app.get('/api/templates/:templateId', requireAuth, async (req, res) => {
+  try {
+    const template = await Template.findOne({ 
+      templateId: req.params.templateId,
+      isActive: true 
+    });
+    
+    if (!template) {
+      return res.status(404).json({ 
+        success: false, 
+        error: 'Template not found' 
+      });
+    }
+    
+    // Increment usage count
+    await template.incrementUsage();
+    
+    res.json({ 
+      success: true, 
+      template 
+    });
+  } catch (error) {
+    console.error('Error fetching template:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Failed to fetch template' 
+    });
+  }
+});
+
+// Create a new template (admin only for now)
+app.post('/api/templates', requireAuth, async (req, res) => {
+  try {
+    const templateData = req.body;
+    
+    // Validate template type
+    if (!['json', 'creatomate'].includes(templateData.templateType)) {
+      return res.status(400).json({ 
+        success: false, 
+        error: 'Invalid template type. Must be "json" or "creatomate"' 
+      });
+    }
+    
+    // Validate required fields based on template type
+    if (templateData.templateType === 'creatomate' && !templateData.creatomateTemplateId) {
+      return res.status(400).json({ 
+        success: false, 
+        error: 'Creatomate template ID is required for Creatomate templates' 
+      });
+    }
+    
+    if (templateData.templateType === 'json' && !templateData.scenes) {
+      return res.status(400).json({ 
+        success: false, 
+        error: 'Scenes count is required for JSON templates' 
+      });
+    }
+    
+    const template = new Template({
+      ...templateData,
+      createdBy: req.user._id
+    });
+    
+    await template.save();
+    
+    res.status(201).json({ 
+      success: true, 
+      template 
+    });
+  } catch (error) {
+    console.error('Error creating template:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: error.message || 'Failed to create template' 
+    });
+  }
+});
+
+// Update template (admin only for now)
+app.put('/api/templates/:templateId', requireAuth, async (req, res) => {
+  try {
+    const template = await Template.findOneAndUpdate(
+      { templateId: req.params.templateId },
+      req.body,
+      { new: true, runValidators: true }
+    );
+    
+    if (!template) {
+      return res.status(404).json({ 
+        success: false, 
+        error: 'Template not found' 
+      });
+    }
+    
+    res.json({ 
+      success: true, 
+      template 
+    });
+  } catch (error) {
+    console.error('Error updating template:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Failed to update template' 
+    });
+  }
+});
+
+// Delete template (admin only for now)
+app.delete('/api/templates/:templateId', requireAuth, async (req, res) => {
+  try {
+    const template = await Template.findOneAndUpdate(
+      { templateId: req.params.templateId },
+      { isActive: false },
+      { new: true }
+    );
+    
+    if (!template) {
+      return res.status(404).json({ 
+        success: false, 
+        error: 'Template not found' 
+      });
+    }
+    
+    res.json({ 
+      success: true, 
+      message: 'Template deleted successfully' 
+    });
+  } catch (error) {
+    console.error('Error deleting template:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Failed to delete template' 
+    });
+  }
 });
 
 // ═══════════════════════════════════════════════════════════════════════════════════════

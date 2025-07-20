@@ -704,36 +704,16 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    allTemplates = data.templates;
+                    allTemplates = data.templates || [];
                     
-                    // If no templates, add the default one
+                    // If no templates in database, show a message
                     if (allTemplates.length === 0) {
-                        allTemplates = [{
-                            _id: 'default',
-                            name: 'Dynamic Story Template',
-                            description: 'Perfect for TikTok, Instagram Reels, and YouTube Shorts',
-                            templateId: 'ef99b063-c6f5-4e9f-bd70-ba4c3758b2ac',
-                            previewVideoUrl: 'https://creatomate.com/files/assets/dynamic-story-preview.mp4',
-                            scenes: 4,
-                            duration: 30,
-                            aspectRatio: '9:16',
-                            category: 'social_media',
-                            tags: ['trending', 'viral', 'engaging'],
-                            usageCount: 0,
-                            fields: [
-                                { name: 'Text-1.text', type: 'text', label: 'Scene 1 Text' },
-                                { name: 'Text-2.text', type: 'text', label: 'Scene 2 Text' },
-                                { name: 'Text-3.text', type: 'text', label: 'Scene 3 Text' },
-                                { name: 'Text-4.text', type: 'text', label: 'Scene 4 Text' },
-                                { name: 'Music.source', type: 'music', label: 'Background Music' }
-                            ],
-                            mediaSlots: [
-                                { name: 'Background-1.source', type: 'video_or_image', scene: 1 },
-                                { name: 'Background-2.source', type: 'video_or_image', scene: 2 },
-                                { name: 'Background-3.source', type: 'video_or_image', scene: 3 },
-                                { name: 'Background-4.source', type: 'video_or_image', scene: 4 }
-                            ]
-                        }];
+                        document.getElementById('templatesGrid').innerHTML = `
+                            <div style="grid-column: 1/-1; text-align: center; padding: 60px;">
+                                <p style="color: rgba(255, 255, 255, 0.7); margin-bottom: 20px;">No templates available yet</p>
+                            </div>
+                        `;
+                        return;
                     }
                     
                     displayTemplates(allTemplates);
@@ -790,7 +770,7 @@
                         <div class="template-overlay">
                             <div>
                                 <p style="color: white; margin-bottom: 5px;">Click to use this template</p>
-                                <p style="color: rgba(255,255,255,0.8); font-size: 14px;">${template.scenes} scenes • ${template.duration}s</p>
+                                <p style="color: rgba(255,255,255,0.8); font-size: 14px;">${template.scenes || (template.mediaSlots ? template.mediaSlots.length : 4)} scenes • ${template.duration || 30}s</p>
                             </div>
                         </div>
                     </div>
@@ -825,10 +805,30 @@
             `).join('');
         }
 
-        function selectTemplate(templateId) {
-            // Store selected template and redirect to editor
-            sessionStorage.setItem('selectedTemplateId', templateId);
-            window.location.href = '/editor';
+        async function selectTemplate(templateId) {
+            try {
+                // Find the template from our loaded templates
+                const template = allTemplates.find(t => t._id === templateId);
+                
+                if (!template) {
+                    throw new Error('Template not found');
+                }
+                
+                // Store template info
+                sessionStorage.setItem('selectedTemplateId', templateId);
+                sessionStorage.setItem('selectedTemplateType', template.templateType || 'json');
+                
+                // If it's a Creatomate template, store the Creatomate ID
+                if (template.templateType === 'creatomate' && template.creatomateTemplateId) {
+                    sessionStorage.setItem('creatomateTemplateId', template.creatomateTemplateId);
+                }
+                
+                // Navigate to editor
+                window.location.href = '/editor';
+            } catch (error) {
+                console.error('Error selecting template:', error);
+                alert('Failed to select template. Please try again.');
+            }
         }
 
         function playVideo(video) {

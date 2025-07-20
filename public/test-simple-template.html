@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Simple JSON Template</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #8338EC;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background: #6a2bb8;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f8f8;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 12px;
+        }
+        .json-preview {
+            background: #263238;
+            color: #aed581;
+            padding: 20px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test Simple JSON Template</h1>
+        <p>Test different JSON template configurations to ensure they work with Creatomate.</p>
+        
+        <div>
+            <button onclick="testSimpleText()">Test Simple Text</button>
+            <button onclick="testMediaWithText()">Test Media + Text</button>
+            <button onclick="testCountdownTemplate()">Test Full Countdown</button>
+            <button onclick="testDirectAPI()">Test Direct API Call</button>
+        </div>
+        
+        <div id="jsonPreview" class="json-preview" style="display: none; margin-top: 20px;">
+            <h3>JSON Being Sent:</h3>
+            <pre id="jsonContent"></pre>
+        </div>
+        
+        <div id="result" class="result" style="display: none;">
+            <h3>Result:</h3>
+            <pre id="resultContent"></pre>
+        </div>
+    </div>
+
+    <script>
+        const token = localStorage.getItem('token');
+        const apiKey = '4b06566ae5cf4aca838a4c8db4a57d300015ee8f7895f3bfa314797e813f328bfd64520666dbdf9d9a45ee139cd76ec1';
+        
+        function showJson(json) {
+            document.getElementById('jsonPreview').style.display = 'block';
+            document.getElementById('jsonContent').textContent = JSON.stringify(json, null, 2);
+        }
+        
+        function showResult(message) {
+            document.getElementById('result').style.display = 'block';
+            document.getElementById('resultContent').textContent = message;
+        }
+        
+        // Test 1: Simple text only
+        async function testSimpleText() {
+            const template = {
+                output_format: "mp4",
+                width: 1080,
+                height: 1920,
+                duration: 5,
+                frame_rate: 30,
+                elements: [
+                    {
+                        type: "shape",
+                        shape: "rectangle",
+                        x: "50%",
+                        y: "50%",
+                        width: "100%",
+                        height: "100%",
+                        fill_color: "#1a1a1a",
+                        track: 1
+                    },
+                    {
+                        type: "text",
+                        text: "Hello Creatomate!",
+                        x: "50%",
+                        y: "50%",
+                        width: "80%",
+                        font_family: "Montserrat",
+                        font_size: "10vmin",
+                        font_weight: "700",
+                        fill_color: "#FFFFFF",
+                        x_alignment: 50,
+                        y_alignment: 50,
+                        track: 2
+                    }
+                ]
+            };
+            
+            await sendToCreatomate(template);
+        }
+        
+        // Test 2: Media with text overlay
+        async function testMediaWithText() {
+            const template = {
+                output_format: "mp4",
+                width: 1080,
+                height: 1920,
+                duration: 5,
+                frame_rate: 30,
+                elements: [
+                    {
+                        type: "image",
+                        source: "https://storage.googleapis.com/delta-daylight-465808-h9-ai-images/gpt-image-1/gpt_img_1752519923706_dchbjfpw7_1752519957383.png",
+                        x: "50%",
+                        y: "50%",
+                        width: "100%",
+                        height: "100%",
+                        fill_mode: "cover",
+                        track: 1
+                    },
+                    {
+                        type: "text",
+                        text: "Awesome Content",
+                        x: "50%",
+                        y: "80%",
+                        width: "80%",
+                        font_family: "Montserrat",
+                        font_size: "8vmin",
+                        font_weight: "700",
+                        fill_color: "#FFFFFF",
+                        x_alignment: 50,
+                        y_alignment: 50,
+                        shadow_color: "rgba(0,0,0,0.8)",
+                        shadow_blur: "10px",
+                        track: 2,
+                        animations: [
+                            {
+                                type: "opacity",
+                                from: 0,
+                                to: 1,
+                                time: 0,
+                                duration: 1
+                            }
+                        ]
+                    }
+                ]
+            };
+            
+            await sendToCreatomate(template);
+        }
+        
+        // Test 3: Full countdown template
+        async function testCountdownTemplate() {
+            showResult('Testing countdown template...');
+            
+            try {
+                const response = await fetch('/api/editor/render', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        templateId: 'countdown-timer-launch',
+                        modifications: {
+                            'event_name': 'Test Launch',
+                            'countdown_from': '3',
+                            'reveal_text': 'Success!',
+                            'teaser_media': 'https://storage.googleapis.com/veo3-system-shannon-2024-veo-videos/veo3-fast-scenes/veo3_fast_veo3_94141055_lfuh_scene_1_1752294215380.mp4',
+                            'countdown_bg': 'https://storage.googleapis.com/delta-daylight-465808-h9-ai-images/gpt-image-1/gpt_img_1752519923706_dchbjfpw7_1752519957383.png',
+                            'reveal_media': 'https://storage.googleapis.com/delta-daylight-465808-h9-veo-videos/veo3-fast-scenes/veo3_fast_veo3_87883646_g5lh_scene_1_1752487948437.mp4'
+                        }
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult('Success!\n\n' + JSON.stringify(data, null, 2));
+                } else {
+                    showResult('Error:\n\n' + JSON.stringify(data, null, 2));
+                }
+            } catch (error) {
+                showResult('Error: ' + error.message);
+            }
+        }
+        
+        // Test 4: Direct API call
+        async function testDirectAPI() {
+            const template = {
+                output_format: "mp4",
+                width: 1080,
+                height: 1920,
+                duration: 3,
+                frame_rate: 30,
+                elements: [
+                    {
+                        type: "shape",
+                        shape: "rectangle",
+                        x: "50%",
+                        y: "50%",
+                        width: "100%",
+                        height: "100%",
+                        fill_color: "#8338EC",
+                        track: 1
+                    },
+                    {
+                        type: "text",
+                        text: "Direct API Test",
+                        x: "50%",
+                        y: "50%",
+                        font_family: "Montserrat",
+                        font_size: "10vmin",
+                        font_weight: "700",
+                        fill_color: "#FFFFFF",
+                        x_alignment: 50,
+                        y_alignment: 50,
+                        track: 2
+                    }
+                ]
+            };
+            
+            showJson(template);
+            showResult('Calling Creatomate API directly...');
+            
+            try {
+                const response = await fetch('https://api.creatomate.com/v1/renders', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        source: template
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult('Direct API Success!\n\n' + JSON.stringify(data, null, 2));
+                    
+                    // Poll for status
+                    if (data[0] && data[0].id) {
+                        setTimeout(() => checkStatus(data[0].id), 3000);
+                    }
+                } else {
+                    showResult('Direct API Error:\n\n' + JSON.stringify(data, null, 2));
+                }
+            } catch (error) {
+                showResult('Direct API Error: ' + error.message);
+            }
+        }
+        
+        async function sendToCreatomate(template) {
+            showJson(template);
+            showResult('Sending to Creatomate...');
+            
+            try {
+                const response = await fetch('https://api.creatomate.com/v1/renders', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        source: template
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showResult('Success!\n\n' + JSON.stringify(data, null, 2));
+                } else {
+                    showResult('Error:\n\n' + JSON.stringify(data, null, 2));
+                }
+            } catch (error) {
+                showResult('Error: ' + error.message);
+            }
+        }
+        
+        async function checkStatus(renderId) {
+            try {
+                const response = await fetch(`https://api.creatomate.com/v1/renders/${renderId}`, {
+                    headers: {
+                        'Authorization': `Bearer ${apiKey}`
+                    }
+                });
+                
+                const data = await response.json();
+                showResult('Status Update:\n\n' + JSON.stringify(data, null, 2));
+                
+                if (data.status === 'processing') {
+                    setTimeout(() => checkStatus(renderId), 3000);
+                }
+            } catch (error) {
+                showResult('Status check error: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>

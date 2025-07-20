@@ -753,7 +753,7 @@
                         </div>
                     </div>
                     <div class="edit-details">
-                        <div>Template: Dynamic Story</div>
+                        <div>Template: ${edit.templateName || getTemplateName(edit.templateId)}</div>
                         <div>Size: ${size}</div>
                     </div>
                     <div class="edit-actions">
@@ -862,6 +862,30 @@
             
             const mb = bytes / (1024 * 1024);
             return mb.toFixed(2) + ' MB';
+        }
+        
+        // Get template name from ID
+        function getTemplateName(templateId) {
+            const templateNames = {
+                'dynamic-zoom-transition': 'Dynamic Zoom Transition',
+                'glitch-effect-showcase': 'Glitch Effect Showcase',
+                'minimal-product-showcase': 'Minimal Product Showcase',
+                'split-screen-comparison': 'Split Screen Comparison',
+                'countdown-timer-launch': 'Countdown Timer Launch',
+                'text-message-story': 'Text Message Story',
+                'parallax-photo-motion': 'Parallax Photo Motion',
+                '3d-rotation-showcase': '3D Rotation Showcase',
+                'neon-glow-presentation': 'Neon Glow Presentation',
+                'fast-cuts-montage': 'Fast Cuts Montage',
+                // Default templates
+                '123e4567-e89b-12d3-a456-426614174000': 'Smooth Zoom (Blue)',
+                '88888888-4444-4444-4444-121212121212': 'CapCut Style',
+                '99999999-5555-5555-5555-131313131313': 'TikTok Viral',
+                '11111111-6666-6666-6666-141414141414': 'Instagram Reels',
+                '22222222-7777-7777-7777-151515151515': 'YouTube Shorts'
+            };
+            
+            return templateNames[templateId] || templateId;
         }
 
         // Setup event listeners

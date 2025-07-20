@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Template Rendering</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            background: #8338EC;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #6a2bb8;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f8f8;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Test Template Rendering</h1>
+        <p>Click the button to test rendering the countdown template with sample media.</p>
+        
+        <button onclick="testTemplate()">Test Countdown Template</button>
+        
+        <div id="result" class="result" style="display: none;">
+            <h3>Result:</h3>
+            <pre id="resultContent"></pre>
+        </div>
+    </div>
+
+    <script>
+        const token = localStorage.getItem('token');
+        
+        async function testTemplate() {
+            const resultDiv = document.getElementById('result');
+            const resultContent = document.getElementById('resultContent');
+            
+            resultDiv.style.display = 'block';
+            resultContent.textContent = 'Rendering template...';
+            
+            try {
+                const response = await fetch('/api/editor/render', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
+                    body: JSON.stringify({
+                        templateId: 'countdown-timer-launch',
+                        modifications: {
+                            'event_name': 'Big Product Launch',
+                            'countdown_from': '5',
+                            'reveal_text': 'Now Available!',
+                            'teaser_media': 'https://storage.googleapis.com/veo3-system-shannon-2024-veo-videos/veo3-fast-scenes/veo3_fast_veo3_94141055_lfuh_scene_1_1752294215380.mp4',
+                            'countdown_bg': 'https://storage.googleapis.com/delta-daylight-465808-h9-ai-images/gpt-image-1/gpt_img_1752519923706_dchbjfpw7_1752519957383.png',
+                            'reveal_media': 'https://storage.googleapis.com/delta-daylight-465808-h9-veo-videos/veo3-fast-scenes/veo3_fast_veo3_87883646_g5lh_scene_1_1752487948437.mp4'
+                        }
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    resultContent.textContent = 'Success!\n\n' + JSON.stringify(data, null, 2);
+                    
+                    // If we got a render ID, we could poll for status
+                    if (data.renderId) {
+                        resultContent.textContent += '\n\nRender ID: ' + data.renderId;
+                        resultContent.textContent += '\nYou can check the status of this render.';
+                    }
+                } else {
+                    resultContent.textContent = 'Error:\n\n' + JSON.stringify(data, null, 2);
+                }
+            } catch (error) {
+                resultContent.textContent = 'Error: ' + error.message;
+            }
+        }
+    </script>
+</body>
+</html>

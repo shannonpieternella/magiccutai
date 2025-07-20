@@ -878,7 +878,7 @@
     <div class="particles" id="particles"></div>
 
     <!-- Loading Screen -->
-    <div class="loading-screen" id="loadingScreen">
+    <div class="loading-screen" id="loadingScreen" style="display: none;">
         <div class="spinner"></div>
         <h2>Loading Credits Store...</h2>
         <p>Setting up your purchase options</p>
@@ -894,14 +894,14 @@
             
             <!-- Desktop Navigation -->
             <div class="nav-links">
+                <a href="/app" class="nav-link">Create Videos</a>
                 <a href="/image-studio" class="nav-link">Create Images</a>
-                <a href="/image-gallery" class="nav-link">🖼️ Gallery</a>
-                <a href="/image-credits" class="nav-link active">💳 Credits</a>
+                <a href="/image-credits" class="nav-link active">💳 Buy Credits</a>
             </div>
             
             <!-- Desktop Buttons -->
             <div class="nav-buttons">
-                <a href="/image-studio" class="btn btn-secondary">Back to Studio</a>
+                <a href="javascript:history.back()" class="btn btn-secondary">Go Back</a>
             </div>
             
             <!-- Mobile Hamburger Menu -->
@@ -915,23 +915,23 @@
         <!-- Mobile Navigation Menu -->
         <div class="mobile-nav-menu" id="mobileNavMenu">
             <div class="mobile-nav-item">
+                <a href="/app" class="nav-link" onclick="closeMobileMenu()">🎬 Create Videos</a>
+            </div>
+            <div class="mobile-nav-item">
                 <a href="/image-studio" class="nav-link" onclick="closeMobileMenu()">🎨 Create Images</a>
             </div>
             <div class="mobile-nav-item">
-                <a href="/image-gallery" class="nav-link" onclick="closeMobileMenu()">🖼️ Gallery</a>
+                <a href="/image-credits" class="nav-link active" onclick="closeMobileMenu()">💳 Buy Credits</a>
             </div>
             <div class="mobile-nav-item">
-                <a href="/image-credits" class="nav-link active" onclick="closeMobileMenu()">💳 Credits</a>
-            </div>
-            <div class="mobile-nav-item">
-                <a href="/image-studio" class="btn btn-secondary" onclick="closeMobileMenu()">Back to Studio</a>
+                <a href="javascript:history.back()" class="btn btn-secondary" onclick="closeMobileMenu()">Go Back</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
     <section class="hero">
-        <h1>Purchase AI Image Credits</h1>
+        <h1>Purchase AI Image/Videotemplates Credits</h1>
         <p>Buy credits to unlock unlimited AI image generation. No subscriptions, just pay for what you use.</p>
         
         <div id="userInfo" class="user-info" style="display: none;">
@@ -940,10 +940,10 @@
         </div>
         
         <div id="authRequired" class="auth-required" style="display: none;">
-            <p><strong>Please log in to purchase credits.</strong></p>
+            <p><strong>Please log in to purchase credits for AI images and videos.</strong></p>
             <div style="margin-top: 20px;">
-                <a href="image-login.html" class="btn btn-primary" style="margin: 8px;">Login</a>
-                <a href="image-register.html" class="btn btn-secondary" style="margin: 8px;">Register</a>
+                <a href="/login" class="btn btn-primary" style="margin: 8px;">Video Login</a>
+                <a href="/image-login" class="btn btn-secondary" style="margin: 8px;">Image Login</a>
             </div>
         </div>
     </section>
@@ -968,10 +968,10 @@
                     <div class="package-credits">25 Image Credits</div>
                     
                     <ul class="package-features">
-                        <li>25 AI image generations</li>
-                        <li>All editing features included</li>
-                        <li>High quality output (1024x1024)</li>
-                        <li>Image editing & variations</li>
+                        <li>25 AI images OR 6 videos</li>
+                        <li>Works for images & videos</li>
+                        <li>High quality AI generation</li>
+                        <li>All templates & features</li>
                         <li>Credits never expire</li>
                         <li>Instant processing</li>
                     </ul>
@@ -990,10 +990,10 @@
                     <div class="package-credits">50 Image Credits</div>
                     
                     <ul class="package-features">
-                        <li>50 AI image generations</li>
-                        <li>All editing features included</li>
-                        <li>High quality output (1024x1024)</li>
-                        <li>Image editing & variations</li>
+                        <li>50 AI images OR 12 videos</li>
+                        <li>Works for images & videos</li>
+                        <li>High quality AI generation</li>
+                        <li>All templates & features</li>
                         <li>Priority processing queue</li>
                         <li>Credits never expire</li>
                         <li>Bulk generation support</li>
@@ -1013,10 +1013,10 @@
                     <div class="package-credits">150 Image Credits</div>
                     
                     <ul class="package-features">
-                        <li>150 AI image generations</li>
-                        <li>All editing features included</li>
+                        <li>150 AI images OR 37 videos</li>
+                        <li>Works for images & videos</li>
                         <li>Highest quality output</li>
-                        <li>Image editing & variations</li>
+                        <li>All templates & features</li>
                         <li>Priority processing queue</li>
                         <li>Advanced model access</li>
                         <li>Bulk generation support</li>
@@ -1100,15 +1100,24 @@
         
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
-            console.log('💳 Credits page loaded - Mobile Version');
+            console.log('💳 Credits page loaded');
             initMobileMenu(); // Initialize mobile menu
+            
+            // Show loading screen while checking auth
+            document.getElementById('loadingScreen').style.display = 'flex';
+            
+            // Check auth and handle URL params
             checkAuthStatus();
             handleUrlParams();
         });
         
         // Check if user is logged in
         function checkAuthStatus() {
-            const token = localStorage.getItem('imageToken') || localStorage.getItem('token');
+            // Check both tokens - imageToken for image users, token for video users
+            const token = localStorage.getItem('token') || localStorage.getItem('imageToken');
+            console.log('🔍 Checking auth status...');
+            console.log('Token found:', token ? 'Yes' : 'No');
+            console.log('Token value:', token ? token.substring(0, 20) + '...' : 'None');
             
             if (token) {
                 loadUserData();
@@ -1122,7 +1131,8 @@
         // Load user data
         async function loadUserData() {
             try {
-                const token = localStorage.getItem('imageToken') || localStorage.getItem('token');
+                // Check both tokens - token for video users, imageToken for image users
+                const token = localStorage.getItem('token') || localStorage.getItem('imageToken');
                 const response = await fetch('/api/auth/me', {
                     headers: {
                         'Authorization': `Bearer ${token}`
@@ -1134,19 +1144,28 @@
                 }
                 
                 const userData = await response.json();
+                console.log('📊 User data response:', userData);
                 
-                if (userData.success) {
+                // Handle different response structures
+                if (userData.user) {
                     currentUser = userData.user;
                     showUserInfo();
                     console.log('✅ User logged in:', currentUser.email);
+                } else if (userData.email) {
+                    // Direct user object response
+                    currentUser = userData;
+                    showUserInfo();
+                    console.log('✅ User logged in:', currentUser.email);
                 } else {
-                    throw new Error('Invalid user data');
+                    throw new Error('Invalid user data structure');
                 }
                 
                 document.getElementById('loadingScreen').style.display = 'none';
                 
             } catch (error) {
                 console.error('❌ Error loading user data:', error);
+                console.error('Token used:', token);
+                console.error('Response details:', error.message);
                 showAuthRequired();
                 document.getElementById('loadingScreen').style.display = 'none';
             }
@@ -1154,12 +1173,19 @@
         
         // Show user info
         function showUserInfo() {
+            console.log('📋 Showing user info for:', currentUser);
             document.getElementById('authRequired').style.display = 'none';
             document.getElementById('userInfo').style.display = 'block';
             
-            document.getElementById('userName').textContent = `${currentUser.firstName} ${currentUser.lastName}`;
+            // Handle different user name formats
+            const userName = currentUser.name || `${currentUser.firstName || ''} ${currentUser.lastName || ''}`.trim() || currentUser.email;
+            document.getElementById('userName').textContent = userName;
+            
             document.getElementById('currentCredits').textContent = currentUser.credits?.available || 0;
             document.getElementById('totalImages').textContent = currentUser.totalImages || 0;
+            // Count total videos from editedVideos array
+            const totalVideos = currentUser.editedVideos?.length || 0;
+            document.getElementById('totalVideos').textContent = totalVideos;
         }
         
         // Show auth required
@@ -1185,8 +1211,8 @@
         async function purchaseCredits(packageId) {
             console.log('💳 Purchase credits clicked:', packageId);
             
-            // Check authentication
-            const token = localStorage.getItem('imageToken') || localStorage.getItem('token');
+            // Check authentication - token for video users, imageToken for image users
+            const token = localStorage.getItem('token') || localStorage.getItem('imageToken');
             if (!token) {
                 showStatus('Please log in first to purchase credits.', 'error');
                 setTimeout(() => {
@@ -1259,7 +1285,7 @@
             showStatus('Payment successful! Verifying and adding credits...', 'success');
             
             try {
-                const token = localStorage.getItem('imageToken') || localStorage.getItem('token');
+                const token = localStorage.getItem('token') || localStorage.getItem('imageToken');
                 
                 // ✅ FIXED: Use correct endpoint that matches server.js
                 const response = await fetch('/api/image-credits/verify-payment', {
@@ -1300,9 +1326,16 @@
                         loadUserData();
                     }, 2000);
                     
-                    // Redirect to image creation after success
+                    // Redirect back to where they came from after success
                     setTimeout(() => {
-                        window.location.href = '/image-studio';
+                        // Check which app they came from based on token type
+                        if (localStorage.getItem('token')) {
+                            // Video user
+                            window.location.href = '/editor';
+                        } else {
+                            // Image user
+                            window.location.href = '/image-studio';
+                        }
                     }, 4000);
                     
                 } else {
@@ -1333,6 +1366,7 @@
                         window.location.href = '/image-credits';
                     }, 3000);
                 }
+                return; // Early return for success case
             }
             
             // Handle cancellation
@@ -1344,6 +1378,7 @@
                 
                 // Clean URL
                 window.history.replaceState({}, document.title, window.location.pathname);
+                return; // Early return for cancel case
             }
             
             // Handle errors
@@ -1354,6 +1389,16 @@
                 
                 // Clean URL
                 window.history.replaceState({}, document.title, window.location.pathname);
+            }
+            
+            // If no special URL params, hide loading screen if still visible
+            if (!urlParams.get('success') && !urlParams.get('canceled') && !error) {
+                setTimeout(() => {
+                    const loadingScreen = document.getElementById('loadingScreen');
+                    if (loadingScreen && loadingScreen.style.display !== 'none') {
+                        loadingScreen.style.display = 'none';
+                    }
+                }, 500);
             }
         }
 
