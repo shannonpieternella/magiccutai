@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <!-- Universal UTM Tracking for MagicCutAI -->
+  <!-- UTM Tracking via Proxy - Add this to magiccutai.com -->
 <script>
     (function() {
       try {
-        // Configuration
-        var TRACKING_URL = 'https://41fa332f6a86.ngrok-free.app';
+        // IMPORTANT: This uses YOUR domain, not ngrok
+        var TRACKING_URL = 'https://magiccutai.com/track.php';
         var DOMAIN = 'magiccutai.com';
         
-        // Helper: Get cookie
+        // Helper functions
         function getCookie(name) {
           var value = '; ' + document.cookie;
           var parts = value.split('; ' + name + '=');
@@ -17,7 +17,6 @@
           return null;
         }
         
-        // Helper: Set cookie
         function setCookie(name, value, days) {
           var expires = '';
           if (days) {
@@ -25,99 +24,64 @@
             date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
             expires = '; expires=' + date.toUTCString();
           }
-          document.cookie = name + '=' + value + expires + '; path=/; SameSite=Lax';
+          document.cookie = name + '=' + value + expires + '; path=/';
         }
         
-        // Helper: Safe storage access
-        function safeGet(type, key) {
-          try {
-            if (type === 'local' && window.localStorage) {
-              return window.localStorage.getItem(key);
-            } else if (type === 'session' && window.sessionStorage) {
-              return window.sessionStorage.getItem(key);
-            }
-          } catch(e) {}
-          return getCookie(key);
-        }
-        
-        function safeSet(type, key, value) {
-          try {
-            if (type === 'local' && window.localStorage) {
-              window.localStorage.setItem(key, value);
-            } else if (type === 'session' && window.sessionStorage) {
-              window.sessionStorage.setItem(key, value);
-            }
-          } catch(e) {}
-          setCookie(key, value, type === 'local' ? 365 : null);
-        }
-        
-        // Generate IDs
-        var visitorId = safeGet('local', 'utm_visitor_id');
+        // Get or create visitor ID
+        var visitorId = getCookie('utm_visitor_id');
         if (!visitorId) {
           visitorId = 'v' + Date.now() + Math.random().toString(36).substr(2, 9);
-          safeSet('local', 'utm_visitor_id', visitorId);
+          setCookie('utm_visitor_id', visitorId, 365);
         }
         
-        var sessionId = safeGet('session', 'utm_session_id');
+        // Get or create session ID
+        var sessionId = getCookie('utm_session_id');
         if (!sessionId) {
           sessionId = 's' + Date.now() + Math.random().toString(36).substr(2, 9);
-          safeSet('session', 'utm_session_id', sessionId);
+          setCookie('utm_session_id', sessionId, 0.02); // 30 minutes
         }
         
-        // Parse URL params (IE11 compatible)
+        // Parse URL parameters
         function getParam(name) {
           var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
           return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
         }
         
         // Get UTM parameters
-        var utmSource = getParam('utm_source') || safeGet('local', 'utm_source') || 'direct';
-        var utmMedium = getParam('utm_medium') || safeGet('local', 'utm_medium') || 'none';
-        var utmCampaign = getParam('utm_campaign') || safeGet('local', 'utm_campaign') || '';
+        var utmSource = getParam('utm_source') || getCookie('utm_source') || 'direct';
+        var utmMedium = getParam('utm_medium') || getCookie('utm_medium') || 'none';
+        var utmCampaign = getParam('utm_campaign') || getCookie('utm_campaign') || '';
         
         // Store UTM if new
         if (getParam('utm_source')) {
-          safeSet('local', 'utm_source', utmSource);
-          safeSet('local', 'utm_medium', utmMedium);
-          safeSet('local', 'utm_campaign', utmCampaign);
+          setCookie('utm_source', utmSource, 30);
+          setCookie('utm_medium', utmMedium, 30);
+          setCookie('utm_campaign', utmCampaign, 30);
         }
         
-        // Build tracking URL
-        var data = {
-          sid: sessionId,
-          vid: visitorId,
-          d: DOMAIN,
-          p: window.location.pathname,
-          t: document.title || '',
-          r: document.referrer || '',
-          utm_source: utmSource,
-          utm_medium: utmMedium,
-          utm_campaign: utmCampaign,
-          ts: Date.now()
-        };
+        // Build tracking parameters
+        var params = [
+          'sid=' + encodeURIComponent(sessionId),
+          'vid=' + encodeURIComponent(visitorId),
+          'd=' + encodeURIComponent(DOMAIN),
+          'p=' + encodeURIComponent(window.location.pathname),
+          't=' + encodeURIComponent(document.title || ''),
+          'r=' + encodeURIComponent(document.referrer || ''),
+          'utm_source=' + encodeURIComponent(utmSource),
+          'utm_medium=' + encodeURIComponent(utmMedium),
+          'utm_campaign=' + encodeURIComponent(utmCampaign),
+          'ts=' + Date.now()
+        ];
         
-        var params = [];
-        for (var key in data) {
-          if (data.hasOwnProperty(key)) {
-            params.push(key + '=' + encodeURIComponent(data[key]));
-          }
-        }
-        
-        var pixelUrl = TRACKING_URL + '/t.gif?' + params.join('&');
-        
-        // Method 1: Image (works everywhere)
+        // Send tracking pixel
         var img = new Image();
-        img.src = pixelUrl;
+        img.src = TRACKING_URL + '?' + params.join('&');
         
-        // Method 2: Beacon (for page unload)
-        if ('sendBeacon' in navigator) {
-          window.addEventListener('beforeunload', function() {
-            navigator.sendBeacon(pixelUrl);
-          });
-        }
+        // Debug (remove in production)
+        console.log('UTM Tracking: Sending to ' + TRACKING_URL);
         
       } catch (e) {
-        // Silent fail
+        console.error('UTM Tracking Error:', e);
       }
     })();
     </script>
