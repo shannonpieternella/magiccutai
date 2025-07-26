@@ -1,88 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- UTM Tracking via Proxy - Add this to magiccutai.com -->
+  <!-- UTM Tracking Code -->
 <script>
     (function() {
-      try {
-        // IMPORTANT: This uses YOUR domain, not ngrok
-        var TRACKING_URL = 'https://magiccutai.com/track.php';
-        var DOMAIN = 'magiccutai.com';
-        
-        // Helper functions
-        function getCookie(name) {
-          var value = '; ' + document.cookie;
-          var parts = value.split('; ' + name + '=');
-          if (parts.length === 2) return parts.pop().split(';').shift();
-          return null;
-        }
-        
-        function setCookie(name, value, days) {
-          var expires = '';
-          if (days) {
-            var date = new Date();
-            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-            expires = '; expires=' + date.toUTCString();
-          }
-          document.cookie = name + '=' + value + expires + '; path=/';
-        }
-        
-        // Get or create visitor ID
-        var visitorId = getCookie('utm_visitor_id');
-        if (!visitorId) {
-          visitorId = 'v' + Date.now() + Math.random().toString(36).substr(2, 9);
-          setCookie('utm_visitor_id', visitorId, 365);
-        }
-        
-        // Get or create session ID
-        var sessionId = getCookie('utm_session_id');
-        if (!sessionId) {
-          sessionId = 's' + Date.now() + Math.random().toString(36).substr(2, 9);
-          setCookie('utm_session_id', sessionId, 0.02); // 30 minutes
-        }
-        
-        // Parse URL parameters
-        function getParam(name) {
-          var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
-          return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
-        }
-        
-        // Get UTM parameters
-        var utmSource = getParam('utm_source') || getCookie('utm_source') || 'direct';
-        var utmMedium = getParam('utm_medium') || getCookie('utm_medium') || 'none';
-        var utmCampaign = getParam('utm_campaign') || getCookie('utm_campaign') || '';
-        
-        // Store UTM if new
-        if (getParam('utm_source')) {
-          setCookie('utm_source', utmSource, 30);
-          setCookie('utm_medium', utmMedium, 30);
-          setCookie('utm_campaign', utmCampaign, 30);
-        }
-        
-        // Build tracking parameters
-        var params = [
-          'sid=' + encodeURIComponent(sessionId),
-          'vid=' + encodeURIComponent(visitorId),
-          'd=' + encodeURIComponent(DOMAIN),
-          'p=' + encodeURIComponent(window.location.pathname),
-          't=' + encodeURIComponent(document.title || ''),
-          'r=' + encodeURIComponent(document.referrer || ''),
-          'utm_source=' + encodeURIComponent(utmSource),
-          'utm_medium=' + encodeURIComponent(utmMedium),
-          'utm_campaign=' + encodeURIComponent(utmCampaign),
-          'ts=' + Date.now()
-        ];
-        
-        // Send tracking pixel
-        var img = new Image();
-        img.src = TRACKING_URL + '?' + params.join('&');
-        
-        // Debug (remove in production)
-        console.log('UTM Tracking: Sending to ' + TRACKING_URL);
-        
-      } catch (e) {
-        console.error('UTM Tracking Error:', e);
+      // Configuration
+      var TRACKING_URL = 'https://tracking.upsellbusinessagency.com';
+      var DOMAIN = 'magiccutai.com';
+      
+      // Generate unique visitor ID (persists across sessions)
+      var visitorId = localStorage.getItem('utm_visitor_id');
+      if (!visitorId) {
+        visitorId = 'v-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('utm_visitor_id', visitorId);
       }
+      
+      // Generate session ID (new for each browser session)
+      var sessionId = sessionStorage.getItem('utm_session_id');
+      if (!sessionId) {
+        sessionId = 's-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+        sessionStorage.setItem('utm_session_id', sessionId);
+      }
+      
+      // Get UTM parameters from URL
+      var urlParams = new URLSearchParams(window.location.search);
+      var utmSource = urlParams.get('utm_source') || localStorage.getItem('utm_source') || 'direct';
+      var utmMedium = urlParams.get('utm_medium') || localStorage.getItem('utm_medium') || 'none';
+      var utmCampaign = urlParams.get('utm_campaign') || localStorage.getItem('utm_campaign') || '';
+      
+      // Store UTM params for the session
+      if (urlParams.get('utm_source')) {
+        localStorage.setItem('utm_source', utmSource);
+        localStorage.setItem('utm_medium', utmMedium);
+        localStorage.setItem('utm_campaign', utmCampaign);
+      }
+      
+      // Send tracking pixel
+      var img = new Image(1, 1);
+      img.src = TRACKING_URL + '/t.gif?' + 
+        'sid=' + encodeURIComponent(sessionId) +
+        '&vid=' + encodeURIComponent(visitorId) +
+        '&d=' + encodeURIComponent(DOMAIN) +
+        '&p=' + encodeURIComponent(window.location.pathname) +
+        '&t=' + encodeURIComponent(document.title) +
+        '&r=' + encodeURIComponent(document.referrer) +
+        '&utm_source=' + encodeURIComponent(utmSource) +
+        '&utm_medium=' + encodeURIComponent(utmMedium) +
+        '&utm_campaign=' + encodeURIComponent(utmCampaign);
     })();
     </script>
 
