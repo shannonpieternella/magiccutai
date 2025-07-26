@@ -1,6 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- UTM Tracking for MagicCutAI -->
+<script>
+    (function() {
+      // Configuration - Using ngrok URL for testing
+      var TRACKING_URL = 'https://78d5b727c755.ngrok-free.app';
+      var DOMAIN = 'magiccutai.com';
+      
+      // Generate visitor ID
+      var visitorId = localStorage.getItem('utm_visitor_id');
+      if (!visitorId) {
+        visitorId = 'v-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+        localStorage.setItem('utm_visitor_id', visitorId);
+      }
+      
+      // Generate session ID
+      var sessionId = sessionStorage.getItem('utm_session_id');
+      if (!sessionId) {
+        sessionId = 's-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+        sessionStorage.setItem('utm_session_id', sessionId);
+      }
+      
+      // Get UTM parameters
+      var urlParams = new URLSearchParams(window.location.search);
+      var utmSource = urlParams.get('utm_source') || localStorage.getItem('utm_source') || 'direct';
+      var utmMedium = urlParams.get('utm_medium') || localStorage.getItem('utm_medium') || 'none';
+      var utmCampaign = urlParams.get('utm_campaign') || localStorage.getItem('utm_campaign') || '';
+      var utmContent = urlParams.get('utm_content') || '';
+      var utmTerm = urlParams.get('utm_term') || '';
+      
+      // Store UTM params for session
+      if (urlParams.get('utm_source')) {
+        localStorage.setItem('utm_source', utmSource);
+        localStorage.setItem('utm_medium', utmMedium);
+        localStorage.setItem('utm_campaign', utmCampaign);
+      }
+      
+      // Build tracking pixel URL
+      var pixelUrl = TRACKING_URL + '/t.gif?' + 
+        'sid=' + encodeURIComponent(sessionId) +
+        '&vid=' + encodeURIComponent(visitorId) +
+        '&d=' + encodeURIComponent(DOMAIN) +
+        '&p=' + encodeURIComponent(window.location.pathname) +
+        '&t=' + encodeURIComponent(document.title) +
+        '&r=' + encodeURIComponent(document.referrer) +
+        '&utm_source=' + encodeURIComponent(utmSource) +
+        '&utm_medium=' + encodeURIComponent(utmMedium) +
+        '&utm_campaign=' + encodeURIComponent(utmCampaign) +
+        '&utm_content=' + encodeURIComponent(utmContent) +
+        '&utm_term=' + encodeURIComponent(utmTerm);
+      
+      // Insert pixel
+      var img = new Image(1, 1);
+      img.src = pixelUrl;
+    })();
+    </script>
+
     <script>(function(w,d,t,r,u){var f,n,i;w[u]=w[u]||[],f=function(){var o={ti:"25131350", enableAutoSpaTracking: true};o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad")},n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function(){var s=this.readyState;s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)},i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)})(window,document,"script","//bat.bing.com/bat.js","uetq");</script>
     <!-- TikTok Pixel Code Start -->
 <script>
