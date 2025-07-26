@@ -1,59 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- UTM Tracking for MagicCutAII -->
+   <!-- Universal UTM Tracking for MagicCutAI -->
 <script>
     (function() {
-      // Configuration - Using ngrok URL for testing
-      var TRACKING_URL = 'https://41fa332f6a86.ngrok-free.app';
-      var DOMAIN = 'magiccutai.com';
-      
-      // Generate visitor ID
-      var visitorId = localStorage.getItem('utm_visitor_id');
-      if (!visitorId) {
-        visitorId = 'v-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
-        localStorage.setItem('utm_visitor_id', visitorId);
+      try {
+        // Configuration
+        var TRACKING_URL = 'https://41fa332f6a86.ngrok-free.app';
+        var DOMAIN = 'magiccutai.com';
+        
+        // Helper: Get cookie
+        function getCookie(name) {
+          var value = '; ' + document.cookie;
+          var parts = value.split('; ' + name + '=');
+          if (parts.length === 2) return parts.pop().split(';').shift();
+          return null;
+        }
+        
+        // Helper: Set cookie
+        function setCookie(name, value, days) {
+          var expires = '';
+          if (days) {
+            var date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            expires = '; expires=' + date.toUTCString();
+          }
+          document.cookie = name + '=' + value + expires + '; path=/; SameSite=Lax';
+        }
+        
+        // Helper: Safe storage access
+        function safeGet(type, key) {
+          try {
+            if (type === 'local' && window.localStorage) {
+              return window.localStorage.getItem(key);
+            } else if (type === 'session' && window.sessionStorage) {
+              return window.sessionStorage.getItem(key);
+            }
+          } catch(e) {}
+          return getCookie(key);
+        }
+        
+        function safeSet(type, key, value) {
+          try {
+            if (type === 'local' && window.localStorage) {
+              window.localStorage.setItem(key, value);
+            } else if (type === 'session' && window.sessionStorage) {
+              window.sessionStorage.setItem(key, value);
+            }
+          } catch(e) {}
+          setCookie(key, value, type === 'local' ? 365 : null);
+        }
+        
+        // Generate IDs
+        var visitorId = safeGet('local', 'utm_visitor_id');
+        if (!visitorId) {
+          visitorId = 'v' + Date.now() + Math.random().toString(36).substr(2, 9);
+          safeSet('local', 'utm_visitor_id', visitorId);
+        }
+        
+        var sessionId = safeGet('session', 'utm_session_id');
+        if (!sessionId) {
+          sessionId = 's' + Date.now() + Math.random().toString(36).substr(2, 9);
+          safeSet('session', 'utm_session_id', sessionId);
+        }
+        
+        // Parse URL params (IE11 compatible)
+        function getParam(name) {
+          var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
+          return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
+        }
+        
+        // Get UTM parameters
+        var utmSource = getParam('utm_source') || safeGet('local', 'utm_source') || 'direct';
+        var utmMedium = getParam('utm_medium') || safeGet('local', 'utm_medium') || 'none';
+        var utmCampaign = getParam('utm_campaign') || safeGet('local', 'utm_campaign') || '';
+        
+        // Store UTM if new
+        if (getParam('utm_source')) {
+          safeSet('local', 'utm_source', utmSource);
+          safeSet('local', 'utm_medium', utmMedium);
+          safeSet('local', 'utm_campaign', utmCampaign);
+        }
+        
+        // Build tracking URL
+        var data = {
+          sid: sessionId,
+          vid: visitorId,
+          d: DOMAIN,
+          p: window.location.pathname,
+          t: document.title || '',
+          r: document.referrer || '',
+          utm_source: utmSource,
+          utm_medium: utmMedium,
+          utm_campaign: utmCampaign,
+          ts: Date.now()
+        };
+        
+        var params = [];
+        for (var key in data) {
+          if (data.hasOwnProperty(key)) {
+            params.push(key + '=' + encodeURIComponent(data[key]));
+          }
+        }
+        
+        var pixelUrl = TRACKING_URL + '/t.gif?' + params.join('&');
+        
+        // Method 1: Image (works everywhere)
+        var img = new Image();
+        img.src = pixelUrl;
+        
+        // Method 2: Beacon (for page unload)
+        if ('sendBeacon' in navigator) {
+          window.addEventListener('beforeunload', function() {
+            navigator.sendBeacon(pixelUrl);
+          });
+        }
+        
+      } catch (e) {
+        // Silent fail
       }
-      
-      // Generate session ID
-      var sessionId = sessionStorage.getItem('utm_session_id');
-      if (!sessionId) {
-        sessionId = 's-' + Date.now() + '-' + Math.random().toString(36).substr(2, 9);
-        sessionStorage.setItem('utm_session_id', sessionId);
-      }
-      
-      // Get UTM parameters
-      var urlParams = new URLSearchParams(window.location.search);
-      var utmSource = urlParams.get('utm_source') || localStorage.getItem('utm_source') || 'direct';
-      var utmMedium = urlParams.get('utm_medium') || localStorage.getItem('utm_medium') || 'none';
-      var utmCampaign = urlParams.get('utm_campaign') || localStorage.getItem('utm_campaign') || '';
-      var utmContent = urlParams.get('utm_content') || '';
-      var utmTerm = urlParams.get('utm_term') || '';
-      
-      // Store UTM params for session
-      if (urlParams.get('utm_source')) {
-        localStorage.setItem('utm_source', utmSource);
-        localStorage.setItem('utm_medium', utmMedium);
-        localStorage.setItem('utm_campaign', utmCampaign);
-      }
-      
-      // Build tracking pixel URL
-      var pixelUrl = TRACKING_URL + '/t.gif?' + 
-        'sid=' + encodeURIComponent(sessionId) +
-        '&vid=' + encodeURIComponent(visitorId) +
-        '&d=' + encodeURIComponent(DOMAIN) +
-        '&p=' + encodeURIComponent(window.location.pathname) +
-        '&t=' + encodeURIComponent(document.title) +
-        '&r=' + encodeURIComponent(document.referrer) +
-        '&utm_source=' + encodeURIComponent(utmSource) +
-        '&utm_medium=' + encodeURIComponent(utmMedium) +
-        '&utm_campaign=' + encodeURIComponent(utmCampaign) +
-        '&utm_content=' + encodeURIComponent(utmContent) +
-        '&utm_term=' + encodeURIComponent(utmTerm);
-      
-      // Insert pixel
-      var img = new Image(1, 1);
-      img.src = pixelUrl;
     })();
     </script>
 
